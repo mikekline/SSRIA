@@ -81,7 +81,7 @@ async function Upload(e){
     ()=>{
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
         //gettting file url 
-        console.log(downloadURL)
+        saveFileURLtoRealTimeDB(downloadURL);
       })
     }
   );
@@ -101,7 +101,7 @@ function getProjectNameList() {
   get(child(dbRef, "Projects/")).then((snapshot)=>{
     snapshot.forEach((node)=>{
       let projectNameNode = node.val().ProjectName;
-      projectList.innerHTML+= `<option value=”${projectNameNode}”>${projectNameNode} </option>`;
+      projectList.innerHTML+= `<option value=${projectNameNode}>${projectNameNode}</option>`;
     })
   });  
 };
@@ -113,14 +113,24 @@ window.onload = () => {
 
 
 function addProjectName(e)  {
-  // e.preventDefault();  
   let projectNameUpload = projectName.value;
  
-  update(ref(realdb, "Projects/"+ projectNameUpload),{
-    ProjectName: projectNameUpload
+  set(ref(realdb, "Projects/"+ projectNameUpload),{
+    ProjectName: projectNameUpload,
   });
   
   getProjectNameList();
 };
+
+
+function saveFileURLtoRealTimeDB (URL){
+  let name = projectList.value
+
+  update(ref(realdb,"Projects/"+name),{
+    ImgUrl: URL
+  });
+}
+
+
 
 createProject.onsubmit = addProjectName;
