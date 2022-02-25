@@ -13,7 +13,7 @@
 
   const firebaseConfig = {
 
-  REDACTED
+    REDACTED
 
   };
 
@@ -33,8 +33,10 @@
 
 
 let files = [];
+let pNameList = [];
 const createProject = document.getElementById('addProject');
 const projectName = document.getElementById('projectName');
+const projectList = document.getElementById('projects');
 const fileInput = document.getElementById('file');
 const uploadForm = document.getElementById('uploadForm');
 const progressIndicator = document.getElementById('progress');
@@ -93,16 +95,15 @@ uploadForm.onsubmit = Upload;
 /*********************************************Functions for Realtime Database********************************************************/
 
 
-
 function getProjectNameList() {
   let dbRef = ref(realdb);
-
+  
   get(child(dbRef, "Projects/")).then((snapshot)=>{
     snapshot.forEach((node)=>{
-      let projectNameList = node.val().ProjectName;
-      console.log(projectNameList)
+      let projectNameNode = node.val().ProjectName;
+      projectList.innerHTML+= `<option value=”${projectNameNode}”>${projectNameNode} </option>`;
     })
-  });
+  });  
 };
 
 
@@ -111,9 +112,8 @@ window.onload = () => {
 };
 
 
-
 function addProjectName(e)  {
-  e.preventDefault();  
+  // e.preventDefault();  
   let projectNameUpload = projectName.value;
  
   update(ref(realdb, "Projects/"+ projectNameUpload),{
