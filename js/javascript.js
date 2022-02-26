@@ -13,7 +13,7 @@
 
   const firebaseConfig = {
 
-    REDACTED
+   REDACTED
 
   };
 
@@ -33,9 +33,10 @@
 
 
 let files = [];
-let pNameList = [];
+let fileNameOnly = [];
 const createProject = document.getElementById('addProject');
 const projectName = document.getElementById('projectName');
+const projectWebsite = document.getElementById('projectWebsite');
 const projectList = document.getElementById('projects');
 const fileInput = document.getElementById('file');
 const uploadForm = document.getElementById('uploadForm');
@@ -48,6 +49,18 @@ fileInput.addEventListener("change", (e) => {
 
 
 
+/*********************************************************selections********************************************************************/
+
+
+function GetFileName(file) {
+  let temp = file.name.split('.');
+  let fname = temp.slice(0,-1).join('.')
+  return fname
+}
+
+
+
+
 /*********************************************Uploading files to Cloud Storage********************************************************/
 
 
@@ -56,6 +69,7 @@ async function Upload(e){
 
   let fileToUpload = files[0];
   let fileName = files[0].name;
+  fileNameOnly = GetFileName(files[0]);
 
 
   const metaData = {
@@ -81,7 +95,7 @@ async function Upload(e){
     ()=>{
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
         //gettting file url 
-        saveFileURLtoRealTimeDB(downloadURL);
+        saveFileURLtoRealTimeDB(downloadURL, fileName);
       })
     }
   );
@@ -114,20 +128,24 @@ window.onload = () => {
 
 function addProjectName(e)  {
   let projectNameUpload = projectName.value;
- 
-  set(ref(realdb, "Projects/"+ projectNameUpload),{
+  let projectWebsiteUpload = projectWebsite.value;
+
+  update(ref(realdb, "Projects/"+ projectNameUpload),{
     ProjectName: projectNameUpload,
+    ProjectURL: projectWebsiteUpload
   });
   
   getProjectNameList();
 };
 
 
-function saveFileURLtoRealTimeDB (URL){
-  let name = projectList.value
-
-  update(ref(realdb,"Projects/"+name),{
-    ImgUrl: URL
+function saveFileURLtoRealTimeDB (URL, fileName){
+  let pName = projectList.value
+  
+  update(ref(realdb,`Projects/${pName}/${fileNameOnly}`),{
+    fileName:fileName,
+    fileURL: URL,
+    tags:""
   });
 }
 
