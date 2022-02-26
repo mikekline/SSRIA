@@ -13,3 +13,12 @@ h1 {
 #projects {
   width: 100px;
 }
+
+#uploadForm {
+  height: 450px;
+  width: 400px;
+  padding: 50px;
+  background-color: lightgray;
+  border-radius: 10%;
+  box-shadow: 6px 6px 10px black;
+}

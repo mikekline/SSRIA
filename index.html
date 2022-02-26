@@ -20,16 +20,74 @@
 		</form>
 
 		<form id='uploadForm'>
+			<h2>File to be uploaded</h2>
 			<div>
 				Select a Project: 
 				<select id='projects' name=”projects”></select>
 			</div>
+			Document Type:
+			<select name="documentType" id="documentType">
+				<option value="Database">Database</option>
+				<option value="Product Specs">Product Specs</option>
+				<option value="Surveys">Surveys</option>
+				<option value="Qualitative report">Qualitative report</option>
+				<option value="Technical report">Technical report</option>
+				<option value="Presentation">Presentation</option>
+				<option value="Videos">Videos</option>
+				<option value="Photos">Photos</option>
+				<option value="Renderings/Drawings">Renderings/Drawings</option>
+			</select>
+			<br/>
 
+			<label for="videoURL">Add a video URL:
+				<input type="text" id="videoURL" placeholder="Enter a video URL instead of a file to Upload"/>
+			</label>
+
+			<div id=''>
+	
+				<div id="buildingSector">
+					<h3>Building sector</h3>
+					<label  for="res">
+						<input type="checkbox" id="res" />Residential</label>
+					<label for="com">
+						<input type="checkbox" id="com" />Commercial</label>
+					<label for="ind">
+						<input type="checkbox" id="ind" />Industrial</label>
+					<label for="ins">
+						<input type="checkbox" id="ins" />Institutional</label>   
+				</div>
+				<div id="constructionType">
+					<h3>Construction Type</h3>
+					<label for="new">
+						<input type="checkbox" id="new" />New</label>
+					<label for="retrofit">
+						<input type="checkbox" id="retrofit" />Retrofit</label>   
+				</div>
+			</div>
+
+			<br/>
 			<input type="file" id='file'>
 			<button type="submit">Submit</button>
 		</form>
 
 		<div id="progress"></div>
+
+
+
+
+<!-- test -->
+
+<!-- 
+<form id="check">
+		<label  for="one">
+			<input  type="checkbox" id="one" class="classTest" value="chicken"/>Database</label>
+		<label for="two">
+			<input type="checkbox" id="two" class="classTest"  value="duck"/>Product Specs (pdf)</label>
+			<button type="submit">Submit</button>
+		</form> -->
+
+
+<!-- test -->
 
 
 		<script type="module" src="js/javascript.js"></script>

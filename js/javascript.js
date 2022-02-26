@@ -13,7 +13,7 @@
 
   const firebaseConfig = {
 
-   REDACTED
+    REDACTED
 
   };
 
@@ -60,6 +60,28 @@ function GetFileName(file) {
 
 
 
+//friday end of day test
+
+// const huh = document.getElementById('check')
+// function whatisthis(e){
+//   e.preventDefault();
+// var res = document.querySelectorAll("#one,#two");
+// let test=[];
+// res.forEach((check)=>{
+//   if (check.checked){
+//    test=check.value
+  
+//   }
+//   else{
+//     test = ''
+    
+//   }
+//   console.log(test)
+
+// })}
+// huh.onsubmit = whatisthis;
+
+
 
 /*********************************************Uploading files to Cloud Storage********************************************************/
 
@@ -86,8 +108,9 @@ async function Upload(e){
 
 
   uploadTask.on('state-changed', (snapshot) => {
-    let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    progressIndicator.innerHTML = "Uploaded: " + progress + "%"
+      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      progressIndicator.innerHTML = "Uploaded: " + progress + "%";
+      fileInput.value = '';
     },
     (error) => {
       alert("error: file not uploaded!");
