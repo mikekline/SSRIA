@@ -39,16 +39,18 @@
 			</select>
 			<br/>
 
-			<label for="videoURL">Add a video URL:
+			<label for="videoURL">Add a Video url:
 				<input type="text" id="videoURL" placeholder="Enter a video URL instead of a file to Upload"/>
 			</label>
+
+			<input type="file" id='file'>
 
 			<div id=''>
 	
 				<div id="buildingSector">
 					<h3>Building sector</h3>
 					<label  for="res">
-						<input type="checkbox" id="res" />Residential</label>
+						<input type="checkbox" id="res" value="Residential"/>Residential</label>
 					<label for="com">
 						<input type="checkbox" id="com" />Commercial</label>
 					<label for="ind">
@@ -59,9 +61,9 @@
 				<div id="constructionType">
 					<h3>Construction Type</h3>
 					<label for="new">
-						<input type="checkbox" id="new" />New</label>
+						<input type="checkbox" id="new" value="New" name="ConstructionType"/>New</label>
 					<label for="retrofit">
-						<input type="checkbox" id="retrofit" />Retrofit</label>   
+						<input type="checkbox" id="retrofit" value="Retrofit" name="ConstructionType"/>Retrofit</label>   
 				</div>
 
 
@@ -123,7 +125,7 @@
 			</div>
 
 			<br/>
-			<input type="file" id='file'>
+			
 			<button type="submit">Submit</button>
 		</form>
 

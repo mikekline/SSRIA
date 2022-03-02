@@ -13,7 +13,7 @@
 
   const firebaseConfig = {
 
-  REDACTED
+   REDACTED
 
   };
 
@@ -33,7 +33,7 @@
 
 
 let files = [];
-let counter = 1;
+let counter = 0;
 
 const createProject = document.getElementById('addProject');
 const projectName = document.getElementById('projectName');
@@ -44,6 +44,7 @@ const uploadForm = document.getElementById('uploadForm');
 const progressIndicator = document.getElementById('progress');
 const documentType = document.getElementById('documentType');
 const videoURL = document.getElementById('videoURL');
+
 
 fileInput.addEventListener("change", (e) => {
   files = e.target.files; 		
@@ -64,26 +65,6 @@ function GetFileName(file) {
 }
 
 
-
-//friday end of day test
-
-// const huh = document.getElementById('check')
-// function whatisthis(e){
-//   e.preventDefault();
-// var res = document.querySelectorAll("#one,#two");
-// let test=[];
-// res.forEach((check)=>{
-//   if (check.checked){
-//    test=check.value
-  
-//   }
-//   else{
-//     test = ''
-    
-//   }
-//   console.log(test)
-
-// })}
 // huh.onsubmit = whatisthis;
 
 
@@ -100,28 +81,23 @@ async function Upload(e){
   
   
  
-
- 
-
   
   if (files[0]==undefined){
-
     let dbRef = ref(realdb);
 
     get(child(dbRef, "Projects/" + pName)).then((snapshot)=>{
-     
-     counter = snapshot.val().counter; 
-     counter++
+      counter = snapshot.val().counter; 
+      counter++
    }).then(()=>{
-    fileName = 'video' + counter;
-    fileNameOnly = 'video' + counter;
-    let vURL = videoURL.value;
-    saveFileURLtoRealTimeDB(vURL, fileName, fileNameOnly);
-    console.log(counter)
+      fileName = 'video' + counter;
+      fileNameOnly = 'video' + counter;
+      let vURL = videoURL.value;
+      
+      update(ref(realdb, "Projects/"+ pName),{
+        counter: counter
+      });
 
-    update(ref(realdb, "Projects/"+ pName),{
-      counter: counter
-    });
+      saveFileURLtoRealTimeDB(vURL, fileName, fileNameOnly);
    })
 
     
@@ -133,44 +109,43 @@ async function Upload(e){
     fileNameOnly = GetFileName(files[0]);
   
 
- 
+
+    const metaData = {
+      contentType: fileToUpload.type
+    };
 
 
-  const metaData = {
-    contentType: fileToUpload.type
-  };
+    const storage = getStorage();
 
+    const storageRef = sRef(storage, 'Files/'+ fileName);
 
-  const storage = getStorage();
-
-  const storageRef = sRef(storage, 'Files/'+ fileName);
-
-  
-  const uploadTask = uploadBytesResumable(storageRef, fileToUpload, metaData);
+    
+    const uploadTask = uploadBytesResumable(storageRef, fileToUpload, metaData);
 
 
 
-  uploadTask.on('state-changed', (snapshot) => {
-      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      progressIndicator.innerHTML = "Uploaded: " + progress + "%";
-      fileInput.value = '';
-    },
-    (error) => {
-      alert("error: file not uploaded!");
-    },
-    ()=>{
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
-        
-          saveFileURLtoRealTimeDB(downloadURL, fileName, fileNameOnly);
-        
-      })
-    }
-  );
+    uploadTask.on('state-changed', (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        progressIndicator.innerHTML = "Uploaded: " + progress + "%";
+        fileInput.value = '';
+      },
+      (error) => {
+        alert("error: file not uploaded!");
+      },
+      ()=>{
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+          
+            saveFileURLtoRealTimeDB(downloadURL, fileName, fileNameOnly);
+          
+        })
+      }
+    );
   }
 };
 
-uploadForm.onsubmit = Upload;
-
+if(projectList) {
+  uploadForm.onsubmit = Upload;
+};
 
 
 
@@ -189,12 +164,14 @@ function getProjectNameList() {
 };
 
 
+
+
 window.onload = () => {
-
-
   getProjectNameList();
-  //if project list empty prevent subitting of form
+  //disable form submit if project list emty
 };
+
+
 
 
 function addProjectName(e)  {
@@ -206,39 +183,55 @@ function addProjectName(e)  {
     return;
     }
    
-
   update(ref(realdb, "Projects/"+ projectNameUpload),{
     ProjectName: projectNameUpload,
     ProjectURL: projectWebsiteUpload,
-    counter: 1
+    counter: 0
   });
   
   getProjectNameList();
- 
 };
 
 
-function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
-  let pName = projectList.value;
-  let dType = documentType.value;
 
+
+  
+  
+
+
+
+function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
+  const pName = projectList.value;
+  const dType = documentType.value;
+  const values = []
+  const tags = [dType, pName, values];
+  const checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+  
+  checkboxes.forEach((checkbox) => {
+    values.push(checkbox.value);
+  });
+  
+
+  const tagsToUpload=[].concat.apply([], tags);
+  
+  
+    
   update(ref(realdb,`Projects/${pName}/${fileNameOnly}`),{
     fileName:fileName,
     fileURL: URL,
-    tags: dType
+    tags: tagsToUpload
   });
-
 }
 
 
 
 
-
-//file name can't contain ".", "#", "$", "[", or "]"
+//Project name can't contain "spaces", ".", "#", "$", "[", or "]"
 function ValidateName(){
   let regex = /[\.#$\s\[\]]/
   return !(regex.test(projectName.value));
-  }
+}
 
 
 
