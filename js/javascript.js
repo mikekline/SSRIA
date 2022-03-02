@@ -16,7 +16,7 @@
    REDACTED
 
   };
-
+  
 
 /****************************************************Initialize Firebase****************************************************************/ 
 
@@ -34,6 +34,7 @@
 
 let files = [];
 let counter = 0;
+let expanded = false;
 
 const createProject = document.getElementById('addProject');
 const projectName = document.getElementById('projectName');
@@ -44,8 +45,8 @@ const uploadForm = document.getElementById('uploadForm');
 const progressIndicator = document.getElementById('progress');
 const documentType = document.getElementById('documentType');
 const videoURL = document.getElementById('videoURL');
-
-
+const btSelectBox = document.getElementById('btSelectBox');
+const checkboxesDropdown = document.getElementById("checkboxes");
 fileInput.addEventListener("change", (e) => {
   files = e.target.files; 		
 });
@@ -53,7 +54,7 @@ fileInput.addEventListener("change", (e) => {
 
 
 
-/*********************************************************selections********************************************************************/
+/*********************************************************Selections and Helpers***************************************************************/
 
 
 function GetFileName(file) {
@@ -65,7 +66,11 @@ function GetFileName(file) {
 }
 
 
-// huh.onsubmit = whatisthis;
+//Project name can't contain "spaces", ".", "#", "$", "[", or "]"
+function ValidateName(){
+  let regex = /[\.#$\s\[\]]/
+  return !(regex.test(projectName.value));
+}
 
 
 
@@ -80,6 +85,11 @@ async function Upload(e){
   let pName = projectList.value;
   
   
+  if(projectList.value == 0){
+    alert('Please add a project');
+    document.getElementById("btnUpload").disabled = true;
+    return;
+  }
  
   
   if (files[0]==undefined){
@@ -126,8 +136,12 @@ async function Upload(e){
 
     uploadTask.on('state-changed', (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        progressIndicator.innerHTML = "Uploaded: " + progress + "%";
+         progressIndicator.innerHTML = "Uploaded: " + progress + "%";
         fileInput.value = '';
+        
+        setTimeout(function(){
+          progressIndicator.innerHTML = '';
+        }, 2000);
       },
       (error) => {
         alert("error: file not uploaded!");
@@ -143,9 +157,12 @@ async function Upload(e){
   }
 };
 
-if(projectList) {
+
   uploadForm.onsubmit = Upload;
-};
+  
+
+  
+
 
 
 
@@ -168,7 +185,6 @@ function getProjectNameList() {
 
 window.onload = () => {
   getProjectNameList();
-  //disable form submit if project list emty
 };
 
 
@@ -195,10 +211,6 @@ function addProjectName(e)  {
 
 
 
-  
-  
-
-
 
 function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
   const pName = projectList.value;
@@ -222,18 +234,27 @@ function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
     fileURL: URL,
     tags: tagsToUpload
   });
+  checkboxes = false;
 }
-
-
-
-
-//Project name can't contain "spaces", ".", "#", "$", "[", or "]"
-function ValidateName(){
-  let regex = /[\.#$\s\[\]]/
-  return !(regex.test(projectName.value));
-}
-
-
-
 
 createProject.onsubmit = addProjectName;
+
+
+
+
+
+/*********************************************Function for Dropdown menu checkboxes********************************************************/
+
+
+function showCheckboxes() {
+  
+  if (!expanded) {
+    checkboxesDropdown.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxesDropdown.style.display = "none";
+    expanded = false;
+  }
+}
+
+btSelectBox.onclick = showCheckboxes;
