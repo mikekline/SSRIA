@@ -8,12 +8,13 @@
 
   import {getDatabase, ref, set, child, get, update, remove} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
 
+  import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, query, where, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js"
 
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
 
-   REDACTED
+REDACTED
 
   };
   
@@ -26,7 +27,7 @@
 
   const realdb = getDatabase();
 
-
+  const db = getFirestore();
 
 
 /**************************************************Variables, Referances and EventListeners*********************************************/ 
@@ -36,23 +37,25 @@ let files = [];
 let counter = 0;
 let expanded = false;
 
-const createProject = document.getElementById('addProject');
+const createProject = document.getElementById('projectButton');
 const projectName = document.getElementById('projectName');
 const projectWebsite = document.getElementById('projectWebsite');
 const projectList = document.getElementById('projects');
 const fileInput = document.getElementById('file');
 const uploadForm = document.getElementById('uploadForm');
-const progressIndicator = document.getElementById('progress');
+const progressIndicator1 = document.getElementById('progress1');
+const progressIndicator2 = document.getElementById('progress2');
 const documentType = document.getElementById('documentType');
 const videoURL = document.getElementById('videoURL');
 const btSelectBox = document.getElementById('btSelectBox');
 const checkboxesDropdown = document.getElementById("checkboxes");
+
 fileInput.addEventListener("change", (e) => {
   files = e.target.files; 		
 });
 
 
-
+projectButton
 
 /*********************************************************Selections and Helpers***************************************************************/
 
@@ -94,25 +97,37 @@ async function Upload(e){
   
   if (files[0]==undefined){
     let dbRef = ref(realdb);
+    
 
-    get(child(dbRef, "Projects/" + pName)).then((snapshot)=>{
-      counter = snapshot.val().counter; 
-      counter++
-   }).then(()=>{
+    const querySnapshot = await getDoc(doc(db, "Projects", pName));
+    counter = querySnapshot.data().counter;     
+    counter++  
+    
+
+
+
+
+  //   get(child(dbRef, "Projects/" + pName)).then((snapshot)=>{
+  //     counter = snapshot.val().counter; 
+  //     counter++
+  //  })
+  //  .then(()=>{
       fileName = 'video' + counter;
       fileNameOnly = 'video' + counter;
       let vURL = videoURL.value;
-      
-      update(ref(realdb, "Projects/"+ pName),{
+
+      const projectRef = doc(db, "Projects", pName);
+      await updateDoc(projectRef, {
         counter: counter
       });
 
-      saveFileURLtoRealTimeDB(vURL, fileName, fileNameOnly);
-   })
+      
+      // update(ref(realdb, "Projects/"+ pName),{
+      //   counter: counter
+      // });
 
-    
-   
-    
+      saveFileURLtoRealTimeDB(vURL, fileName, fileNameOnly);
+  //  }) 
   } else {
     fileName = files[0].name;
     fileToUpload = files[0];
@@ -136,12 +151,15 @@ async function Upload(e){
 
     uploadTask.on('state-changed', (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-         progressIndicator.innerHTML = "Uploaded: " + progress + "%";
+        progressIndicator1.innerHTML = "Uploaded: " + progress + "%";
+        progressIndicator2.style.display = 'block';
+        progressIndicator2.value =  progress;
         fileInput.value = '';
         
         setTimeout(function(){
-          progressIndicator.innerHTML = '';
-        }, 2000);
+          progressIndicator1.innerHTML = '';
+          progressIndicator2.style.display = 'none';
+        }, 2100);
       },
       (error) => {
         alert("error: file not uploaded!");
@@ -169,15 +187,25 @@ async function Upload(e){
 /*********************************************Functions for Realtime Database********************************************************/
 
 
-function getProjectNameList() {
-  let dbRef = ref(realdb);
+async function getProjectNameList() {
+
+projectList.innerHTML='';
+
+  const querySnapshot = await getDocs(collection(db, "Projects"));
+  querySnapshot.forEach((doc) => {
+    let projectNameDocument = doc.data().ProjectName;     
+    projectList.innerHTML+= `<option value=${projectNameDocument}>${projectNameDocument}</option>`;
+  });
+
+
+  // let dbRef = ref(realdb);
   
-  get(child(dbRef, "Projects/")).then((snapshot)=>{
-    snapshot.forEach((node)=>{
-      let projectNameNode = node.val().ProjectName; 
-      projectList.innerHTML+= `<option value=${projectNameNode}>${projectNameNode}</option>`;
-    })
-  });  
+  // get(child(dbRef, "Projects/")).then((snapshot)=>{
+  //   snapshot.forEach((node)=>{
+  //     let projectNameNode = node.val().ProjectName; 
+  //     projectList.innerHTML+= `<option value=${projectNameNode}>${projectNameNode}</option>`;
+  //   })
+  // });  
 };
 
 
@@ -190,34 +218,65 @@ window.onload = () => {
 
 
 
-function addProjectName(e)  {
+ function addProjectName()  {
+  
   let projectNameUpload = projectName.value;
   let projectWebsiteUpload = projectWebsite.value;
   
   if(!ValidateName() || projectNameUpload == ''){
     alert(`Project name can't contain "spaces", ".", "#", "$", "[", or "]"`);
     return;
+  }else if (projectWebsiteUpload == ''){
+    alert ('Please add a Project Website');
+    return;
+  }
+
+
+
+
+
+  const ref = doc(db, "Projects", projectNameUpload);
+
+
+
+  const docRef =  setDoc(ref, {
+      ProjectName: projectNameUpload,
+      ProjectURL: projectWebsiteUpload,
+      counter: 0
+    },
+    {
+      merge: true
     }
-   
-  update(ref(realdb, "Projects/"+ projectNameUpload),{
-    ProjectName: projectNameUpload,
-    ProjectURL: projectWebsiteUpload,
-    counter: 0
-  });
+  )
+  .then(()=>{
+    alert(projectNameUpload + ' was added');
+  })
+  .catch((error)=>{
+    alert("Project was not added: " + error)
+  })
+
+    
+  // update(ref(realdb, "Projects/"+ projectNameUpload),{
+  //   ProjectName: projectNameUpload,
+  //   ProjectURL: projectWebsiteUpload,
+  //   counter: 0
+  // });
   
   getProjectNameList();
 };
 
+createProject.onclick = addProjectName;
 
 
 
-
-function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
+async function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
   const pName = projectList.value;
   const dType = documentType.value;
   const values = []
   const tags = [dType, pName, values];
-  const checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+  const ref = doc(db, "Projects", pName);
+  const fileRef = doc(ref, pName, fileNameOnly)
+  let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
   
   checkboxes.forEach((checkbox) => {
@@ -228,16 +287,32 @@ function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
   const tagsToUpload=[].concat.apply([], tags);
   
   
-    
-  update(ref(realdb,`Projects/${pName}/${fileNameOnly}`),{
+  
+
+
+
+  await  setDoc(fileRef, {
     fileName:fileName,
     fileURL: URL,
     tags: tagsToUpload
-  });
-  checkboxes = false;
+  }
+ 
+)
+ 
+
+
+  // update(ref(realdb,`Projects/${pName}/${fileNameOnly}`),{
+  //   fileName:fileName,
+  //   fileURL: URL,
+  //   tags: tagsToUpload
+  // });
+
+  // const ref = doc(db, "Projects", projectNameUpload);
+
+  // checkboxes = false;
 }
 
-createProject.onsubmit = addProjectName;
+
 
 
 

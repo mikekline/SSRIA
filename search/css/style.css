@@ -1,0 +1,123 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+h1 {
+  color: gray;
+}
+
+#addProject {
+  margin: -100px 0;
+}
+
+#projects {
+  width: 100px;
+}
+
+.addFile {
+  margin-top: 0;
+  font-size: smaller;
+  color: red;
+}
+
+#btnGetData {
+  margin-left: 400px;
+  padding: 5px 10px;
+}
+
+#progress {
+  margin: 0 180px;
+}
+
+#getDataForm {
+  height: 550px;
+  width: 500px;
+  padding: 50px;
+  background-color: lightgray;
+  border-radius: 12%;
+  box-shadow: 4px 4px 14px 2px black;
+}
+
+/******************** multi select checkbox dropdowns ****************************/
+
+.multiselect {
+  width: 200px;
+}
+
+#btSelectBox {
+  position: relative;
+}
+
+#btSelectBox select {
+  width: 100%;
+  /* font-weight: bold; */
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  position: absolute;
+  padding: 5px;
+  border: 1px solid #dadada;
+  background-color: lightgray;
+  box-shadow: 2px 2px 4px black;
+  z-index: 5;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+
+/* background-color: #36c;
+background-color: #9c0; */
+
+/*
+select {
+  background-color: white;
+
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-width: 1px;
+  border-bottom-color: red;
+}
+
+ #checkbox2 {
+  display: none;
+  position: absolute;
+  border: 1px #dadada solid;
+  background-color: #1e90ff;
+}
+
+#checkbox2 label {
+  display: block;
+}
+
+input {
+  border: none;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"]:checked {
+  display: inline;
+} */
+
+/* ---------------------------------------------- */

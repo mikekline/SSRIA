@@ -11,7 +11,7 @@ h1 {
 }
 
 #addProject {
-  margin: -100px 0;
+  /* margin: -100px 0; */
 }
 
 #projects {
@@ -29,8 +29,13 @@ h1 {
   padding: 5px 10px;
 }
 
-#progress {
+#progress1,
+#progress2 {
   margin: 0 180px;
+}
+
+#progress2 {
+  display: none;
 }
 
 #uploadForm {

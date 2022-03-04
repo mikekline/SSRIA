@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+		
+		<h1>Resource Library Upload</h1>
+
+		<form id='addProject'>
+			<label for="projectName">Add a project: 
+				<input type="text" id="projectName" placeholder="Project name"/>
+			</label>	
+				<input type="text" id="projectWebsite" placeholder="Project Web Site"/>
+				<button Id="projectButton" type="button">Add Project</button>
+		</form>
+
+		<form id='uploadForm'>
+			<h2>File to be uploaded</h2>
+			<div>
+				Select a Project: 
+				<select id='projects' name=”projects”></select>
+			</div>
+			Document Type:
+			<select name="documentType" id="documentType">
+				<option value="Database">Database</option>
+				<option value="Product Specs">Product Specs</option>
+				<option value="Surveys">Surveys</option>
+				<option value="Qualitative report">Qualitative report</option>
+				<option value="Technical report">Technical report</option>
+				<option value="Presentation">Presentation</option>
+				<option value="Videos">Videos</option>
+				<option value="Photos">Photos</option>
+				<option value="Renderings/Drawings">Renderings/Drawings</option>
+			</select>
+			
+			<br/>
+			<br/>
+
+			<label for="videoURL">Add a Video url:
+				<input type="text" id="videoURL" placeholder="Enter a video URL instead of a file to Upload"/>
+			</label>
+
+			<br/>
+
+			Add a file: <input type="file" id='file'>
+
+			<p class="addFile">(Add only one)</p>	
+			
+			<div>
+				<div id="buildingSector">
+					<h3>Building sector</h3>
+					<label  for="Residential">
+						<input type="checkbox" id="Residential" value="Residential"/>Residential</label>
+					<label for="Commercial">
+						<input type="checkbox" id="Commercial" value="Commercial"/>Commercial</label>
+					<label for="Industrial">
+						<input type="checkbox" id="Industrial" value="Industrial"/>Industrial</label>
+					<label for="Institutional">
+						<input type="checkbox" id="Institutional" value="Institutional"/>Institutional</label>   
+				</div>
+				<div id="constructionType">
+					<h3>Construction Type</h3>
+					<label for="New">
+						<input type="checkbox" id="New" value="New"/>New</label>
+					<label for="Retrofit">
+						<input type="checkbox" id="Retrofit" value="Retrofit"/>Retrofit</label>   
+				</div>
+
+
+
+
+				
+					
+					
+							
+						<div id="buildingTypology">
+							<h3>Building Typology</h3>
+							<div class="multiselect">
+								<div id="btSelectBox" >
+									<select>
+										<option>Select all that apply</option>
+									</select>
+									<div class="overSelect"></div>
+								</div>
+								<div id="checkboxes">
+									<label for="Single-Family">
+										<input type="checkbox" id="Single-Family" value="Single-Family"/>Single-Family</label>
+									<label for="Multi-Family">
+										<input type="checkbox" id="Multi-Family" value="Multi-Family"/>Multi-Family</label>
+									<label for="Agricultural">
+										<input type="checkbox" id="Agricultural" value="Agricultural"/>Agricultural</label>
+									<label for="Low-rise">
+										<input type="checkbox" id="Low-rise" value="Low-rise"/>Low-rise</label>
+									<label for="Hi-Rise">
+										<input type="checkbox" id="Hi-Rise" value="Hi-Rise"/>Hi-Rise</label>
+									<label for="Office">
+										<input type="checkbox" id="Office" value="Office"/>Office</label>
+									<label for="School">
+										<input type="checkbox" id="School" value="School"/>School</label>
+									<label for="Health">
+										<input type="checkbox" id="Health" value="Health"/>Health</label>
+									<label for="Community Centre">
+										<input type="checkbox" id="Community Centre" value="Community Centre"/>Community Centre</label>     
+								</div>
+							</div>
+						</div> 
+					
+			
+
+
+
+
+
+				<div id="Region">
+					<h3>Region</h3>
+					<label  for="Urban">
+						<input type="checkbox" id="Urban" value="Urban"/>Urban</label>
+					<label for="Remote">
+						<input type="checkbox" id="Remote" value="Remote"/>Remote</label>
+					<label for="Rural">
+						<input type="checkbox" id="Rural" value="Rural"/>Rural</label>
+					<label for="Northern">
+						<input type="checkbox" id="Northern" value="Northern"/>Northern</label>   
+				</div>
+			</div>
+
+			<br/>
+
+			<button id="btnUpload" type="submit">Submit</button>
+			<div id="progress1"></div>
+			<progress id="progress2" value="0" max="100"></progress>
+		</form>
+
+		
+
+
+
+
+
+
+		<script type="module" src="js/javascript.js"></script>
+	</body>
+</html>

@@ -9,22 +9,17 @@
 
 	<body>
 		
-		<h1>Resource Library Upload</h1>
+		<h1>Resource Library </h1>
 
-		<form id='addProject'>
-			<label for="projectName">Add a project: 
-				<input type="text" id="projectName" placeholder="Project name"/>
-			</label>	
-				<input type="text" id="projectWebsite" placeholder="Project Web Site"/>
-				<button class="projectButton" type="submit">Add Project</button>
-		</form>
+	
 
-		<form id='uploadForm'>
-			<h2>File to be uploaded</h2>
-			<div>
-				Select a Project: 
-				<select id='projects' name=”projects”></select>
-			</div>
+		<form id='getDataForm'>
+			<h2>Search Library by:</h2>
+			
+			<br/>
+			<br/>
+			
+
 			Document Type:
 			<select name="documentType" id="documentType">
 				<option value="Database">Database</option>
@@ -39,17 +34,7 @@
 			</select>
 			
 			<br/>
-			<br/>
-
-			<label for="videoURL">Add a Video url:
-				<input type="text" id="videoURL" placeholder="Enter a video URL instead of a file to Upload"/>
-			</label>
-
-			<br/>
-
-			Add a file: <input type="file" id='file'>
-
-			<p class="addFile">(Add only one)</p>	
+	
 			
 			<div>
 				<div id="buildingSector">
@@ -131,7 +116,7 @@
 
 			<br/>
 
-			<button id="btnUpload" type="submit">Submit</button>
+			<button id="btnGetData" type="submit">Submit</button>
 			<div id="progress"></div>
 		</form>
 
