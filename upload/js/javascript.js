@@ -100,8 +100,15 @@ async function Upload(e){
     
 
     const querySnapshot = await getDoc(doc(db, "Projects", pName));
-    counter = querySnapshot.data().counter;     
-    counter++  
+    if (querySnapshot.exists()) {
+      counter = querySnapshot.data().counter;     
+      counter++  
+    } else {
+      alert('An error occurred, Please try again!');
+      return;
+    }
+    
+    
     
 
 
@@ -119,6 +126,10 @@ async function Upload(e){
       const projectRef = doc(db, "Projects", pName);
       await updateDoc(projectRef, {
         counter: counter
+      })
+      .catch((error) =>{
+        alert('An error occurred, did not upload: '+ error);
+        return;
       });
 
       
@@ -126,7 +137,7 @@ async function Upload(e){
       //   counter: counter
       // });
 
-      saveFileURLtoRealTimeDB(vURL, fileName, fileNameOnly);
+      saveFileURLtoDB(vURL, fileName, fileNameOnly);
   //  }) 
   } else {
     fileName = files[0].name;
@@ -167,7 +178,7 @@ async function Upload(e){
       ()=>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
           
-            saveFileURLtoRealTimeDB(downloadURL, fileName, fileNameOnly);
+            saveFileURLtoDB(downloadURL, fileName, fileNameOnly);
           
         })
       }
@@ -184,7 +195,7 @@ async function Upload(e){
 
 
 
-/*********************************************Functions for Realtime Database********************************************************/
+/*********************************************Functions for Database********************************************************/
 
 
 async function getProjectNameList() {
@@ -196,6 +207,7 @@ projectList.innerHTML='';
     let projectNameDocument = doc.data().ProjectName;     
     projectList.innerHTML+= `<option value=${projectNameDocument}>${projectNameDocument}</option>`;
   });
+
 
 
   // let dbRef = ref(realdb);
@@ -218,11 +230,12 @@ window.onload = () => {
 
 
 
- function addProjectName()  {
-  
+ async function addProjectName()  {
   let projectNameUpload = projectName.value;
   let projectWebsiteUpload = projectWebsite.value;
-  
+  const ref = doc(db, "Projects", projectNameUpload);
+  const docSnapshot = await getDoc(doc(db, "Projects", projectNameUpload));
+
   if(!ValidateName() || projectNameUpload == ''){
     alert(`Project name can't contain "spaces", ".", "#", "$", "[", or "]"`);
     return;
@@ -234,48 +247,51 @@ window.onload = () => {
 
 
 
-
-  const ref = doc(db, "Projects", projectNameUpload);
-
-
-
-  const docRef =  setDoc(ref, {
-      ProjectName: projectNameUpload,
-      ProjectURL: projectWebsiteUpload,
-      counter: 0
-    },
-    {
-      merge: true
-    }
-  )
-  .then(()=>{
-    alert(projectNameUpload + ' was added');
-  })
-  .catch((error)=>{
-    alert("Project was not added: " + error)
-  })
-
-    
-  // update(ref(realdb, "Projects/"+ projectNameUpload),{
-  //   ProjectName: projectNameUpload,
-  //   ProjectURL: projectWebsiteUpload,
-  //   counter: 0
-  // });
   
-  getProjectNameList();
+  if(docSnapshot.exists()){
+    alert('Project already exists, Please enter another name!')
+  } else {
+ 
+    await setDoc(ref, {
+        ProjectName: projectNameUpload,
+        ProjectURL: projectWebsiteUpload,
+        counter: 0
+      },
+      {
+        merge: true
+      }
+    )
+    .then(()=>{
+      alert(projectNameUpload + ' was added');
+    })
+    .catch((error)=>{
+      alert("Project was not added: " + error)
+    })
+
+      
+    // update(ref(realdb, "Projects/"+ projectNameUpload),{
+    //   ProjectName: projectNameUpload,
+    //   ProjectURL: projectWebsiteUpload,
+    //   counter: 0
+    // });
+    
+    getProjectNameList();
+  }
 };
 
 createProject.onclick = addProjectName;
 
 
 
-async function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
+async function saveFileURLtoDB (URL, fileName, fileNameOnly){
   const pName = projectList.value;
   const dType = documentType.value;
   const values = []
   const tags = [dType, pName, values];
   const ref = doc(db, "Projects", pName);
   const fileRef = doc(ref, pName, fileNameOnly)
+  const SnapshotRef = doc(db, "Projects", pName);
+  const docSnapshot = await getDoc(doc(SnapshotRef, pName, fileNameOnly))
   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
   
@@ -286,21 +302,30 @@ async function saveFileURLtoRealTimeDB (URL, fileName, fileNameOnly){
 
   const tagsToUpload=[].concat.apply([], tags);
   
-  
-  
-
-
-
-  await  setDoc(fileRef, {
-    fileName:fileName,
-    fileURL: URL,
-    tags: tagsToUpload
+  if(!(URL)){
+    alert("Please add a file or video url to be uploaded!");
+    return;
   }
- 
-)
- 
+  
 
+ 
+  if(docSnapshot.exists()){
+    alert('Project already exists, Please enter another name!')
+  } else {
 
+    await setDoc(fileRef, {
+        fileName:fileName,
+        fileURL: URL,
+        tags: tagsToUpload
+      }
+    )
+    .then(()=>{
+      alert('File was uploaded!');
+    })
+    .catch((error) =>{
+      alert('An error occurred, did not upload file: '+ error);
+    });
+  }
   // update(ref(realdb,`Projects/${pName}/${fileNameOnly}`),{
   //   fileName:fileName,
   //   fileURL: URL,
