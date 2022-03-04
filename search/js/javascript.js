@@ -7,12 +7,12 @@
   
   import {getDatabase, ref, set, child, get, update, remove, orderByChild, equalTo, query} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
 
-
+  import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, query, where, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js"
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
 
- REDACTED
+    REDACTED
 
   };
   
@@ -23,9 +23,9 @@
 
   const analytics = getAnalytics(app);
 
-  const db = getDatabase();
+  const realDB = getDatabase();
 
-
+  const db = getFirestore();
 
 
 /**************************************************Variables, Referances and EventListeners*********************************************/ 
@@ -66,21 +66,21 @@ async function getData (e) {
   e.preventDefault();
  
 
- const que = query(ref(db, "Projects"), orderByChild('01_BTW'), equalTo('Residential'))
+//  const que = query(ref(realdb, "Projects"), orderByChild('01_BTW'), equalTo('Residential'))
 
-get(que).then((snapshot)=>{
- snapshot.forEach((childSnapshot)=>{
-   console.log(childSnapshot.val()) 
- })
-})
+// get(que).then((snapshot)=>{
+//  snapshot.forEach((childSnapshot)=>{
+//    console.log(childSnapshot.val()) 
+//  })
+// })
 
 //  get(child(dbRef, "Projects/03_LGS/video1/tags")).then((snapshot)=>{
 //   console.log(snapshot.val())
   
-//   // snapshot.forEach((node)=>{
-//   //   let test = node.val(); 
-//   //  console.log(test)
-//   // })
+//   snapshot.forEach((node)=>{
+//     let test = node.val(); 
+//    console.log(test)
+//   })
 // });
 
    
