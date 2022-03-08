@@ -102,7 +102,8 @@ async function Upload(e){
     const querySnapshot = await getDoc(doc(db, "Projects", pName));
     if (querySnapshot.exists()) {
       counter = querySnapshot.data().counter;     
-      counter++  
+      counter++ 
+      //bug: adds to counter when file already exists 
     } else {
       alert('An error occurred, Please try again!');
       return;
@@ -290,8 +291,8 @@ async function saveFileURLtoDB (URL, fileName, fileNameOnly){
   const tags = [dType, pName, values];
   const ref = doc(db, "Projects", pName);
   const fileRef = doc(ref, pName, fileNameOnly)
-  const SnapshotRef = doc(db, "Projects", pName);
-  const docSnapshot = await getDoc(doc(SnapshotRef, pName, fileNameOnly))
+  const snapshotRef = doc(db, "Projects", pName);
+  const docSnapshot = await getDoc(doc(snapshotRef, pName, fileNameOnly))
   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
   
@@ -310,7 +311,7 @@ async function saveFileURLtoDB (URL, fileName, fileNameOnly){
 
  
   if(docSnapshot.exists()){
-    alert('Project already exists, Please enter another name!')
+    alert('File already exists, Please enter another name!')
   } else {
 
     await setDoc(fileRef, {
