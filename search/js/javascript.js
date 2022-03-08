@@ -7,12 +7,12 @@
   
   import {getDatabase, ref, set, child, get, update, remove, orderByChild, equalTo, query} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
 
-  import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, query, where, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js"
+  import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, query as store, where, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js"
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
 
-    REDACTED
+ REDACTED
 
   };
   
@@ -36,25 +36,29 @@ let expanded = false;
 
 
 const createProject = document.getElementById('addProject');
-const projectName = document.getElementById('projectName');
 const projectWebsite = document.getElementById('projectWebsite');
 const projectList = document.getElementById('projects');
 const fileInput = document.getElementById('file');
 const getDataForm = document.getElementById('getDataForm');
 const progressIndicator = document.getElementById('progress');
 const documentType = document.getElementById('documentType');
-const videoURL = document.getElementById('videoURL');
+const container = document.getElementById('container');
 const btSelectBox = document.getElementById('btSelectBox');
 const checkboxesDropdown = document.getElementById("checkboxes");
+const websiteRef = document.getElementById("websites");
 
-
-
-
+const displayData = document.getElementById("displayData");
+const displayData2 = document.getElementById("displayData2");
 
 /*********************************************************Selections and Helpers***************************************************************/
 
-  
-  
+
+
+
+
+              
+          
+
 
 
 
@@ -65,33 +69,105 @@ const checkboxesDropdown = document.getElementById("checkboxes");
 async function getData (e) {
   e.preventDefault();
  
-
-//  const que = query(ref(realdb, "Projects"), orderByChild('01_BTW'), equalTo('Residential'))
-
-// get(que).then((snapshot)=>{
-//  snapshot.forEach((childSnapshot)=>{
-//    console.log(childSnapshot.val()) 
-//  })
-// })
-
-//  get(child(dbRef, "Projects/03_LGS/video1/tags")).then((snapshot)=>{
-//   console.log(snapshot.val())
+  const projects = await getDocs(collection(db, "Projects"));
+  const projectName = [];
   
-//   snapshot.forEach((node)=>{
-//     let test = node.val(); 
-//    console.log(test)
-//   })
-// });
+  container.style.display = 'flex';
+  displayData.innerHTML = '';
+  websiteRef.innerHTML = '';
 
+   projects.forEach((documentRef) => {
+    const projectNameRef = documentRef.data().ProjectName;     
+    projectName.push(projectNameRef);
+  })
+  
+  
+ 
+
+
+  
+ 
+  
    
+  projectName.forEach((collectionRef)=>{
+    async function getFileName(){
+      const snapshotRef = doc(db, "Projects", collectionRef);
+      const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));
+      
+      
+  
+  
+  
+      
+      docSnapshot.forEach((documentRef)=>{
+        const file = documentRef.data();
+        const fileName = [];
+        const fileURL = [];
+        const checkboxValues = [];
+        const websiteURL = [];
+        let result = false;
+        
+        
+        
+        const dType = documentType.value;
+        //havn't gotten document type yet
+        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
 
+
+
+        checkboxes.forEach((checkbox) => {
+          checkboxValues.push(checkbox.value);
+        });
+       
+        if(checkboxValues.length===0){
+          result = false;
+        }else {
+          result = checkboxValues.every( (checkmarks)=>{
+          return file.tags.includes(checkmarks);
+          });
+        };
+
+
+        if (result === true){
+          fileName.push(file.fileName);
+          fileURL.push(file.fileURL);
+          
+         
+          async function websites(){
+            const website = await getDoc(snapshotRef)
+            websiteURL.push(website.data().ProjectURL)
+            
+            // const updatedWebsiteURL = new Set();
+            // let reduceArray = [...websiteURL] 
+            // updatedWebsiteURL.add(reduceArray);
+
+            
+            // updatedWebsiteURL.forEach((websiteUrlValue)=>{
+              websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
+            // })
+            
+          }
+          websites()
+         
+        } else {
+          return;
+        }
+    
+     
+        
+        displayData.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
+        displayData2.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
+      })
+    }
+  getFileName();  
+  })
 };
 
 
 
 getDataForm.onsubmit = getData;
 
-
+console.log(websiteRef)
 
 /*********************************************Function for Dropdown menu checkboxes********************************************************/
 
