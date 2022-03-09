@@ -13,7 +13,6 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-
 REDACTED
 
   };

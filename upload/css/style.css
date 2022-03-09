@@ -39,12 +39,21 @@ h1 {
 }
 
 #uploadForm {
-  height: 550px;
+  height: auto;
   width: 500px;
   padding: 50px;
   background-color: lightgray;
-  border-radius: 12%;
+  border-radius: 50px;
   box-shadow: 4px 4px 14px 2px black;
+}
+
+button:hover {
+  background-color: lightslategrey;
+}
+
+button {
+  border: 3px outset black;
+  font-weight: bolder;
 }
 
 /******************** multi select checkbox dropdowns ****************************/
@@ -60,6 +69,10 @@ h1 {
 #btSelectBox select {
   width: 100%;
   /* font-weight: bold; */
+}
+
+#btSelectBox:hover select {
+  background-color: whitesmoke;
 }
 
 .overSelect {
