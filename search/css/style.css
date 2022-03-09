@@ -2,7 +2,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -10,122 +10,141 @@ h1 {
   color: gray;
 }
 
+#pageContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#usedForSpacing {
+  width: 400px;
+}
+
+#boxcontainer {
+  display: flex;
+  height: auto;
+  width: 500px;
+  padding: 50px;
+  background-color: lightgrey;
+  /* background-color: #a6a6a6; */
+  border-radius: 50px;
+  box-shadow: 4px 4px 14px 2px black;
+}
+
 #btnGetData {
   margin-left: 400px;
   padding: 5px 10px;
 }
 
-#getDataForm {
-  height: 550px;
+#results {
+  flex-grow: 1;
+  height: auto;
   width: 500px;
-  padding: 50px;
-  background-color: lightgray;
-  border-radius: 12%;
-  box-shadow: 4px 4px 14px 2px black;
-}
-
-#container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 100px;
-  /* margin-bottom: 200px; */
   display: none;
-}
-
-#dataContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 400px;
-  margin-right: 200px;
-}
-
-#websiteContainer {
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  /* width: 300px; */
-  background-color: lightgray;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid black;
 }
 
-#displayData,
-#displayData2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 1px;
-  /* border: 1px solid black; */
-  border-radius: 12px;
-  margin-bottom: 40px;
+#resultsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#resultsBtn {
+  height: 35px;
+  width: 80px;
+  padding: 5px 10px;
+}
+
+#resultsContainer {
+  display: flex;
+  justify-content: center;
 }
 
 #data {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  border-radius: 8px;
-  color: black;
-  font-weight: 900;
-  border: 1px solid black;
-  /* margin: 50px 2px; */
+  padding: 5px;
 }
 
-a#data {
-  text-decoration: none;
-}
-
-#data:nth-child(even) {
-  background-color: #36c;
-  /* background-color: lightsteelblue; */
-}
-
-#data:nth-child(odd) {
-  background-color: lightgray;
-  /* background-color: lightsteelblue; */
-  /* background-color: #9c0; */
+#websiteContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  visibility: hidden;
+  height: auto;
+  width: 400px;
+  background-color: steelblue;
+  padding: 20px;
+  border-radius: 50px;
+  box-shadow: 4px 4px 14px 2px black;
 }
 
 #websites {
-  /* margin-top: 100px; */
-  margin-bottom: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  /* width: 400px; */
 }
 
 #webURL {
-  padding: 2px 0;
+  padding: 5px 0;
+}
+
+button:hover {
+  background-color: lightslategrey;
+}
+
+button {
+  border: 3px outset black;
+  font-weight: bolder;
+}
+
+#loading {
+  margin: 200px auto 0 auto;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 /******************** multi select checkbox dropdowns ****************************/
 
-.multiselect {
+.buildingTypologyMultiselect,
+.documentTypeMultiselect {
   width: 200px;
 }
 
-#btSelectBox {
+#buildingTypologySelectBox,
+#documentTypeSelectBox {
   position: relative;
 }
 
-#btSelectBox select {
+#buildingTypologySelectBox select,
+#documentTypeSelectBox select {
   width: 100%;
   /* font-weight: bold; */
 }
 
-.overSelect {
+#buildingTypologySelectBox:hover select,
+#documentTypeSelectBox:hover select {
+  background-color: whitesmoke;
+}
+
+.buildingTypologyOverSelect,
+.documentTypeOverSelect {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+  color: red;
 }
 
-#checkboxes {
+#buildingTypologycheckboxes,
+#documentTypeCheckboxes {
   display: none;
   position: absolute;
   padding: 5px;
@@ -135,11 +154,13 @@ a#data {
   z-index: 5;
 }
 
-#checkboxes label {
+#buildingTypologycheckboxes label,
+#documentTypeCheckboxes label {
   display: block;
 }
 
-#checkboxes label:hover {
+#checkboxes label:hover,
+#documentTypeCheckboxes label:hover {
   background-color: #1e90ff;
 }
 

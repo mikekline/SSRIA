@@ -8,134 +8,187 @@
 	</head>
 
 	<body>
-		
+	
+	
 		<h1>Resource Library </h1>
-
 	
+		<div id="pageContainer">
 
-		<form id='getDataForm'>
-			<h2>Search Library by:</h2>
-			
-			<br/>
-			<br/>
-			
-
-			Document Type:
-			<select name="documentType" id="documentType">
-				<option value="Database">Database</option>
-				<option value="Product Specs">Product Specs</option>
-				<option value="Surveys">Surveys</option>
-				<option value="Qualitative report">Qualitative report</option>
-				<option value="Technical report">Technical report</option>
-				<option value="Presentation">Presentation</option>
-				<option value="Videos">Videos</option>
-				<option value="Photos">Photos</option>
-				<option value="Renderings/Drawings">Renderings/Drawings</option>
-			</select>
-			
-			<br/>
+			<div id="usedForSpacing"></div>
 	
+		<div id="boxcontainer">
+			<form id='getDataForm'>
+				<h2>Search Library by:</h2>
 			
-			<div>
-				<div id="buildingSector">
-					<h3>Building sector</h3>
-					<label  for="Residential">
-						<input type="checkbox" id="Residential" value="Residential"/>Residential</label>
-					<label for="Commercial">
-						<input type="checkbox" id="Commercial" value="Commercial"/>Commercial</label>
-					<label for="Industrial">
-						<input type="checkbox" id="Industrial" value="Industrial"/>Industrial</label>
-					<label for="Institutional">
-						<input type="checkbox" id="Institutional" value="Institutional"/>Institutional</label>   
-				</div>
-				<div id="constructionType">
-					<h3>Construction Type</h3>
-					<label for="New">
-						<input type="checkbox" id="New" value="New"/>New</label>
-					<label for="Retrofit">
-						<input type="checkbox" id="Retrofit" value="Retrofit"/>Retrofit</label>   
-				</div>
+				<br/>
+				<br/>
+			
 
 
 
 
+				<div id="documentType">
+					<h3>Document Type:</h3>
+					<div class="documentTypeMultiselect">
+						<div id="documentTypeSelectBox" >
+							<select>
+								<option>Select all that apply</option>
+							</select>
+							<div class="documentTypeOverSelect"></div>
+						</div>
+						<div id="documentTypeCheckboxes">
+							<label for="Database">
+								<input type="checkbox" id="Database" value="Database"/>Database</label>
+							<label for="ProductSpecs">
+								<input type="checkbox" id="ProductSpecs" value="Product Specs"/>Product Specs</label>
+							<label for="Surveys">
+								<input type="checkbox" id="Surveys" value="Surveys"/>Surveys</label>
+							<label for="Qualitativereport">
+								<input type="checkbox" id="Qualitativereport" value="Qualitative report"/>Qualitative report</label>
+							<label for="Technicalreport">
+								<input type="checkbox" id="Technicalreport" value="Technical report"/>Technical report</label>
+							<label for="Presentation">
+								<input type="checkbox" id="Presentation" value="Presentation"/>Presentation</label>
+							<label for="Videos">
+								<input type="checkbox" id="Videos" value="Videos"/>Videos</label>
+							<label for="Photos">
+								<input type="checkbox" id="Photos" value="Photos"/>Photos</label>
+							<label for="RenderingsDrawings">
+								<input type="checkbox" id="RenderingsDrawings" value="Renderings/Drawings"/>Renderings/Drawings</label>     
+						</div>
+					</div>
+				</div>  
+
+
+
+
+
+
+
+
+
+			
+				<br/>
+		
 				
+				<div>
+					<div id="buildingSector">
+						<h3>Building sector</h3>
+						<label  for="Residential">
+							<input type="checkbox" id="Residential" value="Residential"/>Residential</label>
+						<label for="Commercial">
+							<input type="checkbox" id="Commercial" value="Commercial"/>Commercial</label>
+						<label for="Industrial">
+							<input type="checkbox" id="Industrial" value="Industrial"/>Industrial</label>
+						<label for="Institutional">
+							<input type="checkbox" id="Institutional" value="Institutional"/>Institutional</label>   
+					</div>
+					<div id="constructionType">
+						<h3>Construction Type</h3>
+						<label for="New">
+							<input type="checkbox" id="New" value="New"/>New</label>
+						<label for="Retrofit">
+							<input type="checkbox" id="Retrofit" value="Retrofit"/>Retrofit</label>   
+					</div>
+
+
+
+
 					
-					
-							
-						<div id="buildingTypology">
-							<h3>Building Typology</h3>
-							<div class="multiselect">
-								<div id="btSelectBox" >
-									<select>
-										<option>Select all that apply</option>
-									</select>
-									<div class="overSelect"></div>
+						
+						
+								
+							<div id="buildingTypology">
+								<h3>Building Typology</h3>
+								<div class="buildingTypologyMultiselect">
+									<div id="buildingTypologySelectBox" >
+										<select>
+											<option>Select all that apply</option>
+										</select>
+										<div class="buildingTypologyOverSelect"></div>
+									</div>
+									<div id="buildingTypologycheckboxes">
+										<label for="Single-Family">
+											<input type="checkbox" id="Single-Family" value="Single-Family"/>Single-Family</label>
+										<label for="Multi-Family">
+											<input type="checkbox" id="Multi-Family" value="Multi-Family"/>Multi-Family</label>
+										<label for="Agricultural">
+											<input type="checkbox" id="Agricultural" value="Agricultural"/>Agricultural</label>
+										<label for="Low-rise">
+											<input type="checkbox" id="Low-rise" value="Low-rise"/>Low-rise</label>
+										<label for="Hi-Rise">
+											<input type="checkbox" id="Hi-Rise" value="Hi-Rise"/>Hi-Rise</label>
+										<label for="OusedForSpacinge="checkbox" id="School" value="School"/>School</label>
+										<label for="Health">
+											<input type="checkbox" id="Health" value="Health"/>Health</label>
+										<label for="Community Centre">
+											<input type="checkbox" id="Community Centre" value="Community Centre"/>Community Centre</label>     
+									</div>
 								</div>
-								<div id="checkboxes">
-									<label for="Single-Family">
-										<input type="checkbox" id="Single-Family" value="Single-Family"/>Single-Family</label>
-									<label for="Multi-Family">
-										<input type="checkbox" id="Multi-Family" value="Multi-Family"/>Multi-Family</label>
-									<label for="Agricultural">
-										<input type="checkbox" id="Agricultural" value="Agricultural"/>Agricultural</label>
-									<label for="Low-rise">
-										<input type="checkbox" id="Low-rise" value="Low-rise"/>Low-rise</label>
-									<label for="Hi-Rise">
-										<input type="checkbox" id="Hi-Rise" value="Hi-Rise"/>Hi-Rise</label>
-									<label for="Office">
-										<input type="checkbox" id="Office" value="Office"/>Office</label>
-									<label for="School">
-										<input type="checkbox" id="School" value="School"/>School</label>
-									<label for="Health">
-										<input type="checkbox" id="Health" value="Health"/>Health</label>
-									<label for="Community Centre">
-										<input type="checkbox" id="Community Centre" value="Community Centre"/>Community Centre</label>     
-								</div>
-							</div>
-						</div> 
-					
-			
+							</div> 
+						
+				
 
 
-
-
-
-				<div id="Region">
-					<h3>Region</h3>
-					<label  for="Urban">
-						<input type="checkbox" id="Urban" value="Urban"/>Urban</label>
-					<label for="Remote">
-						<input type="checkbox" id="Remote" value="Remote"/>Remote</label>
-					<label for="Rural">
-						<input type="checkbox" id="Rural" value="Rural"/>Rural</label>
-					<label for="Northern">
-						<input type="checkbox" id="Northern" value="Northern"/>Northern</label>   
+					<div id="Region">
+						<h3>Region</h3>
+						<label  for="Urban">
+							<input type="checkbox" id="Urban" value="Urban"/>Urban</label>
+						<label for="Remote">
+							<input type="checkbox" id="Remote" value="Remote"/>Remote</label>
+						<label for="Rural">
+							<input type="checkbox" id="Rural" value="Rural"/>Rural</label>
+						<label for="Northern">
+							<input type="checkbox" id="Northern" value="Northern"/>Northern</label>   
+					</div>
 				</div>
-			</div>
 
-			<br/>
-			
+				<br/>
+				
+				<button id="btnGetData" type="submit">Submit</button>
+				<div id="progress"></div>
+			</form>
 
-			<button id="btnGetData" type="submit">Submit</button>
-			<div id="progress"></div>
-		</form>
 
-		<div id="container">
-			<div id="dataContainer">
-				Documents
-				<div id="displayData"></div>
-				Documents
-				<div id="displayData2"></div>
-			</div>
-			<div id="websiteContainer">
-				Assotiated Project Websites
-				<div id="websites"></div>
+
+
+
+			<div id="results">
+				<div id="resultsHeader">
+					<h2>	Search Results:</h2>
+					<button id="resultsBtn" type="button">Back</button>
+				</div>
+				
+				<div id="resultsContainer">
+						<div id="displayData"></div>
+				</div>
+				<div id="loading">loading...</div>
 			</div>
 			
 		</div>
 
+
+
+
+		<div id="websiteContainer">
+			<h3>Assotiated Project Websites</h3>
+			<div id="websites">
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-05-t5m-connect</a>
+				<a id="webURL">https://www.ssria.ca/gbtn-testbed-projects#02_ri</a>
 		
+
+			</div>
+		</div>
+	</div>
 
 		<script type="module" src="js/javascript.js"></script>
 	</body>

@@ -35,46 +35,61 @@ let files = [];
 let expanded = false;
 
 
-const createProject = document.getElementById('addProject');
-const projectWebsite = document.getElementById('projectWebsite');
-const projectList = document.getElementById('projects');
-const fileInput = document.getElementById('file');
 const getDataForm = document.getElementById('getDataForm');
-const progressIndicator = document.getElementById('progress');
-const documentType = document.getElementById('documentType');
-const container = document.getElementById('container');
-const btSelectBox = document.getElementById('btSelectBox');
-const checkboxesDropdown = document.getElementById("checkboxes");
-const websiteRef = document.getElementById("websites");
+const resultsBtn = document.getElementById('resultsBtn');
+const websiteContainer = document.getElementById('websiteContainer');
+const loadingElement = document.getElementById('loading');
 
+const results = document.getElementById('results');
+const websiteRef = document.getElementById("websites");
 const displayData = document.getElementById("displayData");
-const displayData2 = document.getElementById("displayData2");
+
+const documentTypeSelectBox = document.getElementById('documentTypeSelectBox');
+const documentTypeCheckboxes = document.getElementById("documentTypeCheckboxes");
+const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
+const buildingTypologycheckboxes = document.getElementById("buildingTypologycheckboxes");
 
 /*********************************************************Selections and Helpers***************************************************************/
 
 
 
-
-
-              
+// let websiteURL = [];    
           
 
+//     async function websites(snapshotRef){
+//             const website = await getDoc(snapshotRef)
+//             websiteURL.push(website.data().ProjectURL)
+            
+//             // const updatedWebsiteURL = new Set();
+//             // let reduceArray = [...websiteURL] 
+//             // updatedWebsiteURL.add(webCollection);
+            
+//             console.log(websiteURL)
+//             // updatedWebsiteURL.forEach((websiteUrlValue)=>{
+//               websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
+//             // })
+           
+//           }
 
-
-
-
+//           fileName.forEach((file)=>{
+      
+//             websites(snapshotRef)
+//           })
 
 /*********************************************Functions for Realtime Database********************************************************/
 
+
 async function getData (e) {
   e.preventDefault();
- 
+  loadingElement.style.visibility = 'visible';
   const projects = await getDocs(collection(db, "Projects"));
   const projectName = [];
   
-  container.style.display = 'flex';
+  getDataForm.style.display = 'none';
+  results.style.display = 'flex';
+  websiteContainer.style.visibility = "visible";
   displayData.innerHTML = '';
-  websiteRef.innerHTML = '';
+  // websiteRef.innerHTML = '';
 
    projects.forEach((documentRef) => {
     const projectNameRef = documentRef.data().ProjectName;     
@@ -85,39 +100,35 @@ async function getData (e) {
  
 
 
-  
+        const checkboxValues = [];
+        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+        checkboxes.forEach((checkbox) => {
+          checkboxValues.push(checkbox.value);
+        });
  
   
+
    
   projectName.forEach((collectionRef)=>{
     async function getFileName(){
       const snapshotRef = doc(db, "Projects", collectionRef);
       const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));
+      const website = await getDoc(snapshotRef)
       
       
-  
-  
-  
-      
-      docSnapshot.forEach((documentRef)=>{
+      await docSnapshot.forEach((documentRef)=>{
         const file = documentRef.data();
         const fileName = [];
         const fileURL = [];
-        const checkboxValues = [];
-        const websiteURL = [];
+        
+        // const websiteURL = [];
         let result = false;
+       
+      
         
+
         
-        
-        const dType = documentType.value;
-        //havn't gotten document type yet
-        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-
-
-        checkboxes.forEach((checkbox) => {
-          checkboxValues.push(checkbox.value);
-        });
        
         if(checkboxValues.length===0){
           result = false;
@@ -126,64 +137,76 @@ async function getData (e) {
           return file.tags.includes(checkmarks);
           });
         };
-
+      
+       
 
         if (result === true){
           fileName.push(file.fileName);
           fileURL.push(file.fileURL);
           
          
-          async function websites(){
-            const website = await getDoc(snapshotRef)
-            websiteURL.push(website.data().ProjectURL)
-            
-            // const updatedWebsiteURL = new Set();
-            // let reduceArray = [...websiteURL] 
-            // updatedWebsiteURL.add(reduceArray);
-
-            
-            // updatedWebsiteURL.forEach((websiteUrlValue)=>{
-              websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
-            // })
-            
-          }
-          websites()
-         
-        } else {
-          return;
-        }
-    
-     
+          displayData.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
         
-        displayData.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
-        displayData2.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
+       
+        } else {
+         return;
+        }
+        
+        
+       
+        
       })
     }
-  getFileName();  
+  getFileName()
+  
   })
+  
+  setTimeout(function(){
+    loadingElement.style.visibility = 'hidden';
+  }, 500);
 };
 
 
 
 getDataForm.onsubmit = getData;
 
-console.log(websiteRef)
+const backToSearch = () =>{
+  getDataForm.style.display = 'block';
+  results.style.display = 'none';
+  websiteContainer.style.visibility = "visible";
+}
+
+resultsBtn.onclick = backToSearch;
+
+
 
 /*********************************************Function for Dropdown menu checkboxes********************************************************/
 
 
-function showCheckboxes() {
+function documentTypeSelectBoxShowCheckboxes() {
   
   if (!expanded) {
-    checkboxesDropdown.style.display = "block";
+    documentTypeCheckboxes.style.display = "block";
     expanded = true;
   } else {
-    checkboxesDropdown.style.display = "none";
+    documentTypeCheckboxes.style.display = "none";
     expanded = false;
   }
 }
 
-btSelectBox.onclick = showCheckboxes;
+function buildingTypologyShowCheckboxes() {
+  
+  if (!expanded) {
+    buildingTypologycheckboxes.style.display = "block";
+    expanded = true;
+  } else {
+    buildingTypologycheckboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
+documentTypeSelectBox.onclick = documentTypeSelectBoxShowCheckboxes;
+buildingTypologySelectBox.onclick = buildingTypologyShowCheckboxes;
 
 
 
