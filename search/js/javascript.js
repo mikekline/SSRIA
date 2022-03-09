@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
- REDACTED
+    REDACTED
 
   };
   
@@ -50,7 +50,6 @@ const buildingTypologySelectBox = document.getElementById('buildingTypologySelec
 const buildingTypologycheckboxes = document.getElementById("buildingTypologycheckboxes");
 
 /*********************************************************Selections and Helpers***************************************************************/
-
 
 
 // let websiteURL = [];    
@@ -108,7 +107,17 @@ async function getData (e) {
         });
  
   
+        let test = [];
+        
 
+
+
+        //  const updatedWebsiteURL = new Set();
+        //      let reduceArray = [...test] 
+        //      updatedWebsiteURL.add(reduceArray);
+        // console.log(updatedWebsiteURL)
+        //flaten first??????????? dedupe??????
+        //otherwise, [1, 2] != [2, 1] from a set point of view
    
   projectName.forEach((collectionRef)=>{
     async function getFileName(){
@@ -116,18 +125,20 @@ async function getData (e) {
       const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));
       const website = await getDoc(snapshotRef)
       
+  
       
       await docSnapshot.forEach((documentRef)=>{
         const file = documentRef.data();
         const fileName = [];
         const fileURL = [];
+        const websiteURL = [];
         
-        // const websiteURL = [];
+        // console.log(websiteURL)
         let result = false;
        
       
-        
-
+       
+       
         
        
         if(checkboxValues.length===0){
@@ -144,7 +155,26 @@ async function getData (e) {
           fileName.push(file.fileName);
           fileURL.push(file.fileURL);
           
-         
+          
+          async function websites(){
+            
+            const website = await getDoc(snapshotRef)
+            websiteURL.push(website.data().ProjectURL)
+            // console.log(websiteURL)
+            
+            
+
+            
+            // updatedWebsiteURL.forEach((websiteUrlValue)=>{
+              websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
+            // })
+            return websiteURL
+          }
+          websites().then(
+            test.push(website.data().ProjectURL),
+            console.log('test:'+test),
+          
+          )
           displayData.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
         
        
