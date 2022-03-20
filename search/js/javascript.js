@@ -12,7 +12,22 @@
 
   const firebaseConfig = {
 
-    REDACTED
+    apiKey: "AIzaSyCm2Qbv0nYxcnwN3HHJg2c03mK7p5SaBSY",
+
+    authDomain: "resource-library-582d7.firebaseapp.com",
+
+    databaseURL: "https://resource-library-582d7-default-rtdb.firebaseio.com",
+
+    projectId: "resource-library-582d7",
+
+    storageBucket: "resource-library-582d7.appspot.com",
+
+    messagingSenderId: "58705463627",
+
+    appId: "1:58705463627:web:1980af966213d48d9900ce",
+
+    measurementId: "G-3BFTT2HXC0"
+
 
   };
   
@@ -48,8 +63,185 @@ const documentTypeSelectBox = document.getElementById('documentTypeSelectBox');
 const documentTypeCheckboxes = document.getElementById("documentTypeCheckboxes");
 const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
 const buildingTypologycheckboxes = document.getElementById("buildingTypologycheckboxes");
+const documentTypeAll = document.getElementById("documentTypeAll");
+const documentType = document.getElementsByName("documentType");
+const buildingTypologyAll = document.getElementById("buildingTypologyAll");
+const buildingTypology = document.getElementsByName("buildingTypology");
+
+
+documentTypeAll.addEventListener("change", () =>{
+  documentType.forEach((element)=>{
+    element.checked = documentTypeAll.checked;
+  })
+})
+
+buildingTypologyAll.addEventListener("change", () =>{
+  buildingTypology.forEach((element)=>{
+    element.checked = buildingTypologyAll.checked;
+  })
+})
 
 /*********************************************************Selections and Helpers***************************************************************/
+
+
+
+
+
+async function getProjects(){
+  const projects = await getDocs(collection(db, "Projects")); 
+  return projects
+}
+
+async function getProjectNames(){
+  const projectName = [];
+  const projects = await getProjects()
+
+  projects.forEach((documentRef) => {
+    const projectNameRef = documentRef.data().ProjectName;     
+    projectName.push(projectNameRef);
+  })
+
+  return projectName;
+}
+
+
+
+async function fileName(e){
+  e.preventDefault();
+  const eachProject = await getProjectNames()
+  const fileRef = []
+  let includeFile = []
+
+  getDataForm.style.display = 'none';
+  results.style.display = 'flex';
+  websiteContainer.style.visibility = "visible";
+  displayData.innerHTML = '';
+
+
+
+
+  const checkboxValues = [];
+  let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+  checkboxes.forEach((checkbox) => {
+    checkboxValues.push(checkbox.value);
+    checkbox.checked = false
+  });
+
+
+  console.log(includeFile)
+
+
+
+    eachProject.forEach((collectionRef)=>{
+      async function getfileRef(){
+        const snapshotRef = doc(db, "Projects", collectionRef);
+        const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));
+        
+        // fileRef.push(docSnapshot)
+        docSnapshot.forEach((Snapshot)=>{
+          const file = Snapshot.data()
+          // fileRef.push(Snapshot.data().fileName);
+
+          let result = false;
+        const test=[]
+         
+          // console.log(test)
+          console.log(file.fileName+includeFile.indexOf(file.fileName))
+         
+          if(checkboxValues.length===0){
+            result = false;
+          }else {
+            result = checkboxValues.forEach( (checkmarks)=>{
+               if(file.tags.includes(checkmarks)){
+
+
+                if(includeFile.indexOf(file.fileName) == -1) {
+                  includeFile.push(file.fileName)
+                  displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileName}</a>`;
+                } else {
+                  return;
+                }
+
+
+                  
+                
+                 
+                 
+                  
+                // console.log(file.fileName)
+                // displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileName}</a>`;
+               }else{
+                 return;
+               };
+            });
+          };
+
+        
+
+        })
+        
+      }
+      getfileRef()
+    })
+
+   
+
+  return fileRef;
+}
+
+
+getDataForm.onsubmit =fileName;
+
+// fileName().then(()=>{
+     
+// })
+
+
+
+// async function queryFile(){
+ 
+//   let fileRef = await fileName()
+//   let websiteURL = new Set();
+
+
+
+
+
+
+// fileRef.forEach((test)=>{
+//   console.log('test')
+// })
+// return fileRef
+// }
+// queryFile().then(()=>{
+//   let a= fileRef.length
+
+// console.log(a)
+// })
+
+// getDataForm.onsubmit = queryFile;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // let websiteURL = [];    
@@ -104,18 +296,20 @@ async function getData (e) {
 
         checkboxes.forEach((checkbox) => {
           checkboxValues.push(checkbox.value);
+          checkbox.checked= false
         });
  
   
-        let test = [];
         
+        
+        let websiteURL = new Set();
 
 
 
         //  const updatedWebsiteURL = new Set();
         //      let reduceArray = [...test] 
         //      updatedWebsiteURL.add(reduceArray);
-        // console.log(updatedWebsiteURL)
+        // console.log(updatedWebsiteURL)  ****************** needs a foreach   ****************
         //flaten first??????????? dedupe??????
         //otherwise, [1, 2] != [2, 1] from a set point of view
    
@@ -127,18 +321,18 @@ async function getData (e) {
       
   
       
-      await docSnapshot.forEach((documentRef)=>{
+       docSnapshot.forEach((documentRef)=>{
         const file = documentRef.data();
         const fileName = [];
         const fileURL = [];
-        const websiteURL = [];
+        
         
         // console.log(websiteURL)
         let result = false;
        
       
        
-       
+        console.log(checkboxValues)
         
        
         if(checkboxValues.length===0){
@@ -147,9 +341,24 @@ async function getData (e) {
           result = checkboxValues.every( (checkmarks)=>{
           return file.tags.includes(checkmarks);
           });
+          
         };
       
+        // let result = false;
        
+        // const test=[]
+         
+        //   console.log(test)
+          
+         //*************************usethis below to get to loop like */
+        //   if(checkboxValues.length===0){
+        //     result = false;
+        //   }else {
+        //     result = checkboxValues.forEach( (checkmarks)=>{
+        //       test.push( file.tags.includes(checkmarks));
+        //     });
+            
+        //   };
 
         if (result === true){
           fileName.push(file.fileName);
@@ -159,37 +368,82 @@ async function getData (e) {
           async function websites(){
             
             const website = await getDoc(snapshotRef)
-            websiteURL.push(website.data().ProjectURL)
+            
             // console.log(websiteURL)
             
             
+            
+           
+            return website
+          }
+          websites().then((website) =>{
+            
+             
+            websiteURL.add(website.data().ProjectURL)
+            
 
             
-            // updatedWebsiteURL.forEach((websiteUrlValue)=>{
-              websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
-            // })
-            return websiteURL
-          }
-          websites().then(
-            test.push(website.data().ProjectURL),
-            console.log('test:'+test),
-          
-          )
+             
+          })
+
+
           displayData.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
-        
+          
        
         } else {
          return;
         }
-        
-        
+         
+       
        
         
       })
+      //here = soemthing diferant than in then
+      // websiteURL.push(website.data().ProjectURL)
+
+
     }
   getFileName()
+
+  
   
   })
+  
+    console.log(Object.keys(websiteURL))  
+   
+
+//    var size=  Object.keys(websiteURL).length;
+
+// console.log(await size)
+
+
+//  console.log(  websiteURL)
+
+
+// for (let i = 0; i < websiteURL.length; i++) {
+//   console.log('test')
+//   const letter = await websiteURL[i];
+//    console.log( letter)
+// }
+
+
+
+// async function deDuplicate(data) {
+
+//   for await (const value of data) {
+//     console.log(
+//       "About to run displayValuesWithWait() process for value ",
+//       value
+//     );}
+// }
+
+// console.log( deDuplicate(websiteURL));
+ 
+    // test.forEach( (websiteUrlValue)=>{
+    //   console.log('test')
+    //            websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
+    //           })
+
   
   setTimeout(function(){
     loadingElement.style.visibility = 'hidden';
