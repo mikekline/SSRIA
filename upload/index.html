@@ -88,24 +88,26 @@
 									<div class="overSelect"></div>
 								</div>
 								<div id="checkboxes">
+									<label for="buildingTypologyAll">
+										<input type="checkbox" id="buildingTypologyAll" value="" />All</label> 
 									<label for="Single-Family">
-										<input type="checkbox" id="Single-Family" value="Single-Family"/>Single-Family</label>
+										<input type="checkbox" id="Single-Family" value="Single-Family" name="buildingTypology" />Single-Family</label>
 									<label for="Multi-Family">
-										<input type="checkbox" id="Multi-Family" value="Multi-Family"/>Multi-Family</label>
+										<input type="checkbox" id="Multi-Family" value="Multi-Family" name="buildingTypology" />Multi-Family</label>
 									<label for="Agricultural">
-										<input type="checkbox" id="Agricultural" value="Agricultural"/>Agricultural</label>
+										<input type="checkbox" id="Agricultural" value="Agricultural" name="buildingTypology" />Agricultural</label>
 									<label for="Low-rise">
-										<input type="checkbox" id="Low-rise" value="Low-rise"/>Low-rise</label>
+										<input type="checkbox" id="Low-rise" value="Low-rise" name="buildingTypology" />Low-rise</label>
 									<label for="Hi-Rise">
-										<input type="checkbox" id="Hi-Rise" value="Hi-Rise"/>Hi-Rise</label>
+										<input type="checkbox" id="Hi-Rise" value="Hi-Rise" name="buildingTypology" />Hi-Rise</label>
 									<label for="Office">
-										<input type="checkbox" id="Office" value="Office"/>Office</label>
+										<input type="checkbox" id="Office" value="Office" name="buildingTypology" />Office</label>
 									<label for="School">
-										<input type="checkbox" id="School" value="School"/>School</label>
+										<input type="checkbox" id="School" value="School" name="buildingTypology" />School</label>
 									<label for="Health">
-										<input type="checkbox" id="Health" value="Health"/>Health</label>
+										<input type="checkbox" id="Health" value="Health" name="buildingTypology" />Health</label>
 									<label for="Community Centre">
-										<input type="checkbox" id="Community Centre" value="Community Centre"/>Community Centre</label>     
+										<input type="checkbox" id="Community Centre" value="Community Centre" name="buildingTypology" />Community Centre</label>     
 								</div>
 							</div>
 						</div> 
@@ -128,6 +130,130 @@
 						<input type="checkbox" id="Northern" value="Northern"/>Northern</label>   
 				</div>
 			</div>
+
+			<br/>
+
+				
+			<div id="FocusArea">
+				<h3>Focus Area</h3>
+
+				<div id="focusAreaContainer1">
+					<div class="buildingEnvelopeMultiselect">
+						<h5>Building Envelope</h5>
+						<div id="buildingEnvelopeSelectBox" >
+							<select>
+								<option>Select all that apply</option>
+							</select>
+							<div class="buildingEnvelopeOverSelect"></div>
+						</div>
+						<div id="buildingEnvelopecheckboxes">
+							<label for="buildingEnvelopeAll">
+								<input type="checkbox" id="buildingEnvelopeAll" value="" />All</label> 
+							<label for="Walls">
+								<input type="checkbox" id="Walls" value="Walls" name="buildingEnvelope" />Walls</label>
+							<label for="Wallpanels">
+								<input type="checkbox" id="Wallpanels" value="Wall panels" name="buildingEnvelope" />Wall panels</label>
+							<label for="Windows">
+								<input type="checkbox" id="Windows" value="Windows" name="buildingEnvelope" />Windows</label>
+							<label for="Foundation">
+								<input type="checkbox" id="Foundation" value="Foundation" name="buildingEnvelope" />Foundation</label>
+							<label for="Roof">
+								<input type="checkbox" id="Roof" value="Roof" name="buildingEnvelope" />Roof</label>
+							<label for="CurtainWall">
+								<input type="checkbox" id="Curtainwall" value="CurtainWall" name="buildingEnvelope" />Curtain wall</label>  
+						</div>
+					</div>	
+					<div class="HeatingCoolingMultiselect">
+						<h5>Heating & Cooling</h5>
+						<div id="HeatingCoolingSelectBox">
+							<select>
+								<option>Select all that apply</option>
+							</select>
+							<div class="HeatingCoolingOverSelect"></div>
+						</div>
+						<div id="HeatingCoolingcheckboxes">
+							<label for="HeatingCoolingAll">
+								<input type="checkbox" id="HeatingCoolingAll" value="" />All</label> 
+							<label for="AirSourceHeatPump">
+								<input type="checkbox" id="AirSourceHeatPump" value="Air Source Heat Pump" name="HeatingCooling" />Air Source Heat Pump</label>
+							<label for="Boilersystem">
+								<input type="checkbox" id="Boilersystem" value="Boiler system" name="HeatingCooling" />Boiler system</label>
+							<label for="EarthTubes">
+								<input type="checkbox" id="EarthTubes" value="Earth Tubes" name="HeatingCooling" />Earth Tubes</label>
+							<label for="Geothermal">
+								<input type="checkbox" id="Geothermal" value="Geothermal" name="HeatingCooling" />Geothermal</label>
+							<label for="GeoPiles">
+								<input type="checkbox" id="GeoPiles" value="Geo Piles" name="HeatingCooling" />Geo Piles</label>
+						</div>
+					</div>			
+				</div>
+
+				<div id="focusAreaContainer2">	
+					<div class="MechanicalElectricalMultiselect">
+						<h5>Mechanical & Electrical</h5>
+						<div id="MechanicalElectricalSelectBox" >
+							<select>
+								<option>Select all that apply</option>
+							</select>
+							<div class="MechanicalElectricalOverSelect"></div>
+						</div>
+						<div id="MechanicalElectricalcheckboxes">
+							<label for="MechanicalElectricalAll">
+								<input type="checkbox" id="MechanicalElectricalAll" value="" />All</label> 
+							<label for="Ventilation">
+								<input type="checkbox" id="Ventilation" value="Ventilation" name="MechanicalElectrical" />Ventilation</label>
+							<label for="Smartcontrols">
+								<input type="checkbox" id="Smartcontrols" value="Smart controls" name="MechanicalElectrical" />Smart controls</label>
+							<label for="MicroCHP">
+								<input type="checkbox" id="MicroCHP" value="Micro CHP" name="MechanicalElectrical" />Micro CHP</label>
+							<label for="HRVERV">
+								<input type="checkbox" id="HRVERV" value="HRVERV" name="MechanicalElectrical" />HRV/ERV</label>
+							<label for="EVCharging">
+								<input type="checkbox" id="EVCharging" value="EV Charging" name="MechanicalElectrical" />EV Charging</label>
+						</div>
+					</div>		
+					<div class="DesignProcessMultiselect">
+						<h5>Design Process</h5>
+						<div id="DesignProcessSelectBox" >
+							<select>
+								<option>Select all that apply</option>
+							</select>
+							<div class="DesignProcessOverSelect"></div>
+						</div>
+						<div id="DesignProcesscheckboxes">
+							<label for="DesignProcessAll">
+								<input type="checkbox" id="DesignProcessAll" value="" />All</label> 
+							<label for="NetZero">
+								<input type="checkbox" id="NetZero" value="NetZero" name="DesignProcess" />Net-zero</label>
+							<label for="PassiveHouse">
+								<input type="checkbox" id="PassiveHouse" value="Passive House" name="DesignProcess" />Passive House</label>
+							<label for="DeepEnergyRetrofit">
+								<input type="checkbox" id="DeepEnergyRetrofit" value="Deep Energy Retrofit" name="DesignProcess" />Deep Energy Retrofit</label>
+							<label for="EmbodiedCarbon">
+								<input type="checkbox" id="EmbodiedCarbon" value="Embodied Carbon" name="DesignProcess" />Embodied Carbon</label>
+							<label for="ModularConstruction">
+								<input type="checkbox" id="ModularConstruction" value="Modular Construction" name="DesignProcess" />Modular Construction</label>
+						</div>
+					</div>
+				</div>
+
+				<div id="RenewableEnergy">
+					<h5>Renewable Energy</h5>
+					<label  for="SolarPV">
+						<input type="checkbox" id="SolarPV" value="Solar PV"/>Solar PV</label>
+					<label for="WindEnergy">
+						<input type="checkbox" id="WindEnergy" value="Wind Energy "/>Wind Energy</label>
+				</div>
+
+				<div id="energyMonitoring">
+					<h5>Energy Monitoring</h5>
+					<label  for="MachineLearning">
+						<input type="checkbox" id="MachineLearning" value="Machine Learning"/>Machine Learning</label>
+					<label for="ArtificialIntelligence">
+						<input type="checkbox" id="ArtificialIntelligence" value="Artificial Intelligence"/>Artificial Intelligence</label>
+				</div>
+			</div> 
+
 
 			<br/>
 

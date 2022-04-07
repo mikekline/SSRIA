@@ -10,6 +10,14 @@ h1 {
   color: gray;
 }
 
+h3 {
+  margin-bottom: 10px;
+}
+
+h5 {
+  margin-bottom: 5px;
+}
+
 #pageContainer {
   display: flex;
   justify-content: space-around;
@@ -29,6 +37,17 @@ h1 {
   /* background-color: #a6a6a6; */
   border-radius: 50px;
   box-shadow: 4px 4px 14px 2px black;
+}
+
+#focusAreaContainer1 {
+  margin-top: -20px;
+}
+
+#focusAreaContainer1,
+#focusAreaContainer2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #btnGetData {
@@ -113,28 +132,48 @@ button {
 /******************** multi select checkbox dropdowns ****************************/
 
 .buildingTypologyMultiselect,
-.documentTypeMultiselect {
+.documentTypeMultiselect,
+.buildingEnvelopeMultiselect,
+.HeatingCoolingMultiselect,
+.MechanicalElectricalMultiselect,
+.DesignProcessMultiselect {
   width: 200px;
 }
 
 #buildingTypologySelectBox,
-#documentTypeSelectBox {
+#documentTypeSelectBox,
+#buildingEnvelopeSelectBox,
+#HeatingCoolingSelectBox,
+#MechanicalElectricalSelectBox,
+#DesignProcessSelectBox {
   position: relative;
 }
 
 #buildingTypologySelectBox select,
-#documentTypeSelectBox select {
+#documentTypeSelectBox select,
+#buildingEnvelopeSelectBox select,
+#HeatingCoolingSelectBox select,
+#MechanicalElectricalSelectBox select,
+#DesignProcessSelectBox select {
   width: 100%;
   /* font-weight: bold; */
 }
 
 #buildingTypologySelectBox:hover select,
-#documentTypeSelectBox:hover select {
+#documentTypeSelectBox:hover select,
+#buildingEnvelopeSelectBox:hover select,
+#HeatingCoolingSelectBox:hover select,
+#MechanicalElectricalSelectBox:hover select,
+#DesignProcessSelectBox:hover select {
   background-color: whitesmoke;
 }
 
 .buildingTypologyOverSelect,
-.documentTypeOverSelect {
+.documentTypeOverSelect,
+.buildingEnvelopeOverSelect,
+.HeatingCoolingOverSelect,
+.MechanicalElectricalOverSelect,
+.DesignProcessOverSelect {
   position: absolute;
   left: 0;
   right: 0;
@@ -144,7 +183,11 @@ button {
 }
 
 #buildingTypologycheckboxes,
-#documentTypeCheckboxes {
+#documentTypeCheckboxes,
+#buildingEnvelopecheckboxes,
+#HeatingCoolingcheckboxes,
+#MechanicalElectricalcheckboxes,
+#DesignProcesscheckboxes {
   display: none;
   position: absolute;
   padding: 5px;
@@ -155,12 +198,20 @@ button {
 }
 
 #buildingTypologycheckboxes label,
-#documentTypeCheckboxes label {
+#documentTypeCheckboxes label,
+#buildingEnvelopecheckboxes label,
+#HeatingCoolingcheckboxes label,
+#MechanicalElectricalcheckboxes label,
+#DesignProcesscheckboxes label {
   display: block;
 }
 
-#checkboxes label:hover,
-#documentTypeCheckboxes label:hover {
+#buildingTypologycheckboxes label:hover,
+#documentTypeCheckboxes label:hover,
+#buildingEnvelopecheckboxes label:hover,
+#HeatingCoolingcheckboxes label:hover,
+#MechanicalElectricalcheckboxes label:hover,
+#DesignProcesscheckboxes label:hover {
   background-color: #1e90ff;
 }
 

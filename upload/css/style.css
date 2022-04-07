@@ -10,6 +10,14 @@ h1 {
   color: gray;
 }
 
+h3 {
+  margin-bottom: 10px;
+}
+
+h5 {
+  margin-bottom: 5px;
+}
+
 #addProject {
   /* margin: -100px 0; */
 }
@@ -47,6 +55,17 @@ h1 {
   box-shadow: 4px 4px 14px 2px black;
 }
 
+#focusAreaContainer1 {
+  margin-top: -20px;
+}
+
+#focusAreaContainer1,
+#focusAreaContainer2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 button:hover {
   background-color: lightslategrey;
 }
@@ -58,24 +77,44 @@ button {
 
 /******************** multi select checkbox dropdowns ****************************/
 
-.multiselect {
+.multiselect,
+.buildingEnvelopeMultiselect,
+.HeatingCoolingMultiselect,
+.MechanicalElectricalMultiselect,
+.DesignProcessMultiselect {
   width: 200px;
 }
 
-#btSelectBox {
+#btSelectBox,
+#buildingEnvelopeSelectBox,
+#HeatingCoolingSelectBox,
+#MechanicalElectricalSelectBox,
+#DesignProcessSelectBox {
   position: relative;
 }
 
-#btSelectBox select {
+#btSelectBox select,
+#buildingEnvelopeSelectBox select,
+#HeatingCoolingSelectBox select,
+#MechanicalElectricalSelectBox select,
+#DesignProcessSelectBox select {
   width: 100%;
   /* font-weight: bold; */
 }
 
-#btSelectBox:hover select {
+#btSelectBox:hover select,
+#buildingEnvelopeSelectBox:hover select,
+#HeatingCoolingSelectBox:hover select,
+#MechanicalElectricalSelectBox:hover select,
+#DesignProcessSelectBox:hover select {
   background-color: whitesmoke;
 }
 
-.overSelect {
+.overSelect,
+.buildingEnvelopeOverSelect,
+.HeatingCoolingOverSelect,
+.MechanicalElectricalOverSelect,
+.DesignProcessOverSelect {
   position: absolute;
   left: 0;
   right: 0;
@@ -83,7 +122,11 @@ button {
   bottom: 0;
 }
 
-#checkboxes {
+#checkboxes,
+#buildingEnvelopecheckboxes,
+#HeatingCoolingcheckboxes,
+#MechanicalElectricalcheckboxes,
+#DesignProcesscheckboxes {
   display: none;
   position: absolute;
   padding: 5px;
@@ -93,11 +136,19 @@ button {
   z-index: 5;
 }
 
-#checkboxes label {
+#checkboxes label,
+#buildingEnvelopecheckboxes label,
+#HeatingCoolingcheckboxes label,
+#MechanicalElectricalcheckboxes label,
+#DesignProcesscheckboxes label {
   display: block;
 }
 
-#checkboxes label:hover {
+#checkboxes label:hover,
+#buildingEnvelopecheckboxes label:hover,
+#HeatingCoolingcheckboxes label:hover,
+#MechanicalElectricalcheckboxes label:hover,
+#DesignProcesscheckboxes label:hover {
   background-color: #1e90ff;
 }
 

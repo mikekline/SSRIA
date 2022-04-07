@@ -13,7 +13,9 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-REDACTED
+
+ REDACTED
+
 
   };
   
@@ -48,13 +50,63 @@ const documentType = document.getElementById('documentType');
 const videoURL = document.getElementById('videoURL');
 const btSelectBox = document.getElementById('btSelectBox');
 const checkboxesDropdown = document.getElementById("checkboxes");
+const buildingEnvelopeSelectBox = document.getElementById('buildingEnvelopeSelectBox');
+const buildingEnvelopecheckboxes= document.getElementById("buildingEnvelopecheckboxes");
+const HeatingCoolingSelectBox = document.getElementById('HeatingCoolingSelectBox');
+const HeatingCoolingcheckboxes = document.getElementById("HeatingCoolingcheckboxes");
+const MechanicalElectricalSelectBox = document.getElementById('MechanicalElectricalSelectBox');
+const MechanicalElectricalcheckboxes = document.getElementById("MechanicalElectricalcheckboxes");
+const DesignProcessSelectBox = document.getElementById('DesignProcessSelectBox');
+const DesignProcesscheckboxes = document.getElementById("DesignProcesscheckboxes");
+const buildingTypologyAll = document.getElementById("buildingTypologyAll");
+const buildingTypology = document.getElementsByName("buildingTypology");
+const buildingEnvelopeAll = document.getElementById("buildingEnvelopeAll");
+const buildingEnvelope = document.getElementsByName("buildingEnvelope");
+const HeatingCoolingAll = document.getElementById("HeatingCoolingAll");
+const HeatingCooling = document.getElementsByName("HeatingCooling");
+const MechanicalElectricalAll = document.getElementById("MechanicalElectricalAll");
+const MechanicalElectrical = document.getElementsByName("MechanicalElectrical");
+const DesignProcessAll = document.getElementById("DesignProcessAll");
+const DesignProcess = document.getElementsByName("DesignProcess");
+
+
+
 
 fileInput.addEventListener("change", (e) => {
   files = e.target.files; 		
 });
 
+buildingTypologyAll.addEventListener("change", () =>{
+  buildingTypology.forEach((element)=>{
+    element.checked = buildingTypologyAll.checked;
+  })
+})
 
-projectButton
+buildingEnvelopeAll.addEventListener("change", () =>{
+  buildingEnvelope.forEach((element)=>{
+    element.checked = buildingEnvelopeAll.checked;
+  })
+})
+
+HeatingCoolingAll.addEventListener("change", () =>{
+  HeatingCooling.forEach((element)=>{
+    element.checked = HeatingCoolingAll.checked;
+  })
+})
+
+MechanicalElectricalAll.addEventListener("change", () =>{
+  MechanicalElectrical.forEach((element)=>{
+    element.checked = MechanicalElectricalAll.checked;
+  })
+})
+
+DesignProcessAll.addEventListener("change", () =>{
+  DesignProcess.forEach((element)=>{
+    element.checked = DesignProcessAll.checked;
+  })
+})
+
+
 
 /*********************************************************Selections and Helpers***************************************************************/
 
@@ -296,9 +348,12 @@ async function saveFileURLtoDB (URL, fileName, fileNameOnly){
 
   
   checkboxes.forEach((checkbox) => {
+
     values.push(checkbox.value);
-  });
+    checkbox.checked= false
+  })
   
+
 
   const tagsToUpload=[].concat.apply([], tags);
   
@@ -357,4 +412,53 @@ function showCheckboxes() {
   }
 }
 
+function buildingEnvelopeShowCheckboxes() {
+  
+  if (!expanded) {
+    buildingEnvelopecheckboxes.style.display = "block";
+    expanded = true;
+  } else {
+    buildingEnvelopecheckboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
+function HeatingCoolingShowCheckboxes() {
+  
+  if (!expanded) {
+    HeatingCoolingcheckboxes.style.display = "block";
+    expanded = true;
+  } else {
+    HeatingCoolingcheckboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
+function MechanicalElectricalShowCheckboxes() {
+  
+  if (!expanded) {
+    MechanicalElectricalcheckboxes.style.display = "block";
+    expanded = true;
+  } else {
+    MechanicalElectricalcheckboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
+function DesignProcessShowCheckboxes() {
+  
+  if (!expanded) {
+    DesignProcesscheckboxes.style.display = "block";
+    expanded = true;
+  } else {
+    DesignProcesscheckboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
 btSelectBox.onclick = showCheckboxes;
+buildingEnvelopeSelectBox.onclick = buildingEnvelopeShowCheckboxes;
+HeatingCoolingSelectBox.onclick = HeatingCoolingShowCheckboxes;
+MechanicalElectricalSelectBox.onclick = MechanicalElectricalShowCheckboxes;
+DesignProcessSelectBox.onclick = DesignProcessShowCheckboxes;
+
