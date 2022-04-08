@@ -83,7 +83,7 @@ button {
 
 /******************** multi select checkbox dropdowns ****************************/
 
-.multiselect,
+.buildingTypologyMultiselect,
 .buildingEnvelopeMultiselect,
 .HeatingCoolingMultiselect,
 .MechanicalElectricalMultiselect,
@@ -91,7 +91,7 @@ button {
   width: 200px;
 }
 
-#btSelectBox,
+#buildingTypologySelectBox,
 #buildingEnvelopeSelectBox,
 #HeatingCoolingSelectBox,
 #MechanicalElectricalSelectBox,
@@ -99,7 +99,7 @@ button {
   position: relative;
 }
 
-#btSelectBox select,
+#buildingTypologySelectBox select,
 #buildingEnvelopeSelectBox select,
 #HeatingCoolingSelectBox select,
 #MechanicalElectricalSelectBox select,
@@ -108,7 +108,7 @@ button {
   /* font-weight: bold; */
 }
 
-#btSelectBox:hover select,
+#buildingTypologySelectBox:hover select,
 #buildingEnvelopeSelectBox:hover select,
 #HeatingCoolingSelectBox:hover select,
 #MechanicalElectricalSelectBox:hover select,
@@ -116,7 +116,7 @@ button {
   background-color: whitesmoke;
 }
 
-.overSelect,
+.buildingTypologyOverSelect,
 .buildingEnvelopeOverSelect,
 .HeatingCoolingOverSelect,
 .MechanicalElectricalOverSelect,
@@ -128,7 +128,7 @@ button {
   bottom: 0;
 }
 
-#checkboxes,
+#buildingTypologycheckboxes,
 #buildingEnvelopecheckboxes,
 #HeatingCoolingcheckboxes,
 #MechanicalElectricalcheckboxes,
@@ -142,7 +142,7 @@ button {
   z-index: 5;
 }
 
-#checkboxes label,
+#buildingTypologycheckboxes label,
 #buildingEnvelopecheckboxes label,
 #HeatingCoolingcheckboxes label,
 #MechanicalElectricalcheckboxes label,
@@ -150,7 +150,7 @@ button {
   display: block;
 }
 
-#checkboxes label:hover,
+#buildingTypologycheckboxes label:hover,
 #buildingEnvelopecheckboxes label:hover,
 #HeatingCoolingcheckboxes label:hover,
 #MechanicalElectricalcheckboxes label:hover,

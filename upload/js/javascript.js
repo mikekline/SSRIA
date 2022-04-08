@@ -14,21 +14,7 @@
 
   const firebaseConfig = {
 
-    apiKey: "AIzaSyCm2Qbv0nYxcnwN3HHJg2c03mK7p5SaBSY",
-
-    authDomain: "resource-library-582d7.firebaseapp.com",
-
-    databaseURL: "https://resource-library-582d7-default-rtdb.firebaseio.com",
-
-    projectId: "resource-library-582d7",
-
-    storageBucket: "resource-library-582d7.appspot.com",
-
-    messagingSenderId: "58705463627",
-
-    appId: "1:58705463627:web:1980af966213d48d9900ce",
-
-    measurementId: "G-3BFTT2HXC0"
+Redacted
 
 
   };
@@ -65,8 +51,8 @@ const progressIndicator2 = document.getElementById('progress2');
 const documentType = document.getElementById('documentType');
 const fileTitle = document.getElementById('fileTitle');
 const videoURLRef = document.getElementById('videoURL');
-const btSelectBox = document.getElementById('btSelectBox');
-const checkboxesDropdown = document.getElementById("checkboxes");
+const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
+const buildingTypologycheckboxes = document.getElementById("buildingTypologycheckboxes");
 const buildingEnvelopeSelectBox = document.getElementById('buildingEnvelopeSelectBox');
 const buildingEnvelopecheckboxes= document.getElementById("buildingEnvelopecheckboxes");
 const HeatingCoolingSelectBox = document.getElementById('HeatingCoolingSelectBox');
@@ -87,6 +73,13 @@ const DesignProcessAll = document.getElementById("DesignProcessAll");
 const DesignProcess = document.getElementsByName("DesignProcess");
 
 
+const allDropdownsCheckboxes = [
+  buildingTypologycheckboxes,
+  buildingEnvelopecheckboxes,
+  HeatingCoolingcheckboxes,
+  MechanicalElectricalcheckboxes,
+  DesignProcesscheckboxes,
+]
 
 
 fileInput.addEventListener("change", (e) => {
@@ -136,22 +129,21 @@ function GetFileName(file) {
   } 
 }
 
-
 //Project name can't contain "spaces", ".", "#", "$", "[", or "]"
 function ValidateProjectName(){
   let regex = /[\.#$\s\[\]]/
   return !(regex.test(projectName.value));
 }
 
-// function ValidateFileName(fileName){
-//   let regex = /[\.#$\s\[\]]/
-//   return !(regex.test(fileName));
-// }
+function ValidateFileTitle(fileTitle){
+  let regex = /\//ig;
+  return !(regex.test(fileTitle));
+}
 
 function ValidateFileName(fileName){
     let regex = /^[a-zA-Z0-9_]+$/g
     return (regex.test(fileName));
-  }
+}
 
 
 async function TestForExistingFile(URL, uploadFile){
@@ -210,7 +202,7 @@ async function Upload(e){
   e.preventDefault();
   let fileName ='';
   let fileToUpload = '';
- 
+  let fileNameOnly = GetFileName(files[0])
   
   
   if(projectList.value == 0){
@@ -218,23 +210,28 @@ async function Upload(e){
     document.getElementById("btnUpload").disabled = true;
     return;
   }
+
+  if (!ValidateFileTitle(fileTitle.value)){
+    alert(`File title can't contain a forward slash!`);
+    return;
+   }
  
   if(!(files[0]==undefined) && !(videoURLRef.value == '')){
     alert('There can be only one or the other! Either a Video url or a file to upload!')
     fileInput.value = '';
     return;
   }
+
   
   if (files[0]==undefined){
 
     let videoURL = videoURLRef.value;      
     saveFileURLtoDB(videoURL, videoURL, fileTitle.value);
-   
   } else {
     fileName = files[0].name;
     fileToUpload = files[0];
    
-    let fileNameOnly = GetFileName(files[0])
+    
      if (!ValidateFileName(fileNameOnly)){
       alert(`File name can't contain spaces or any special characters, except for Underscore!`);
       fileInput.value = '';
@@ -290,6 +287,9 @@ async function Upload(e){
       );
     }
   }
+  allDropdownsCheckboxes.forEach((countainer)=>{
+    countainer.style.display = "none";
+  })
 };
 
 
@@ -300,7 +300,7 @@ async function Upload(e){
 
 
 
-
+  
 /*********************************************Functions for Database********************************************************/
 
 
@@ -446,13 +446,13 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 /*********************************************Function for Dropdown menu checkboxes********************************************************/
 
 
-function showCheckboxes() {
+function buildingTypologyShowCheckboxes() {
   
   if (!expanded) {
-    checkboxesDropdown.style.display = "block";
+    buildingTypologycheckboxes.style.display = "block";
     expanded = true;
   } else {
-    checkboxesDropdown.style.display = "none";
+    buildingTypologycheckboxes.style.display = "none";
     expanded = false;
   }
 }
@@ -501,7 +501,7 @@ function DesignProcessShowCheckboxes() {
   }
 }
 
-btSelectBox.onclick = showCheckboxes;
+buildingTypologySelectBox.onclick = buildingTypologyShowCheckboxes;
 buildingEnvelopeSelectBox.onclick = buildingEnvelopeShowCheckboxes;
 HeatingCoolingSelectBox.onclick = HeatingCoolingShowCheckboxes;
 MechanicalElectricalSelectBox.onclick = MechanicalElectricalShowCheckboxes;

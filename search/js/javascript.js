@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
- Redacted
+    Redacted
 
 
   };
@@ -73,7 +73,14 @@ const MechanicalElectrical = document.getElementsByName("MechanicalElectrical");
 const DesignProcessAll = document.getElementById("DesignProcessAll");
 const DesignProcess = document.getElementsByName("DesignProcess");
 
-
+const allDropdownsCheckboxes = [
+  documentTypeCheckboxes,
+  buildingTypologycheckboxes,
+  buildingEnvelopecheckboxes,
+  HeatingCoolingcheckboxes,
+  MechanicalElectricalcheckboxes,
+  DesignProcesscheckboxes,
+]
 
 
 documentTypeAll.addEventListener("change", () =>{
@@ -164,7 +171,7 @@ async function getData(e){
   displayData.innerHTML = '';
   websiteRef.innerHTML = '';
 
-
+ 
   
 
   checkboxes.forEach((checkbox) => {
@@ -214,7 +221,7 @@ async function getData(e){
       }
       getfileRef().then(async ()=>{
         if (await displayData.childNodes.length == 0){
-          console.log("test")
+
           websiteContainer.style.visibility = "hidden";
         }
         if (await displayData.childNodes.length > 0){
@@ -224,6 +231,9 @@ async function getData(e){
       )
     })
 
+    allDropdownsCheckboxes.forEach((countainer)=>{
+      countainer.style.display = "none";
+    })
 
     setTimeout(function(){
       loadingElement.style.visibility = 'hidden';
