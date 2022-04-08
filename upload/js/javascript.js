@@ -14,7 +14,7 @@
 
   const firebaseConfig = {
 
- REDACTED
+   Redacted
 
 
   };
@@ -31,7 +31,7 @@
   const db = getFirestore();
 
 
-/**************************************************Variables, Referances and EventListeners*********************************************/ 
+/**************************************************Global Variables, Referances and EventListeners*********************************************/ 
 
 
 let files = [];
@@ -47,7 +47,8 @@ const uploadForm = document.getElementById('uploadForm');
 const progressIndicator1 = document.getElementById('progress1');
 const progressIndicator2 = document.getElementById('progress2');
 const documentType = document.getElementById('documentType');
-const videoURL = document.getElementById('videoURL');
+const fileTitle = document.getElementById('fileTitle');
+const videoURLRef = document.getElementById('videoURL');
 const btSelectBox = document.getElementById('btSelectBox');
 const checkboxesDropdown = document.getElementById("checkboxes");
 const buildingEnvelopeSelectBox = document.getElementById('buildingEnvelopeSelectBox');
@@ -128,6 +129,56 @@ function ValidateName(){
 
 
 
+
+async function testForExistingFile(URL, uploadFile){
+  const projects = await getDocs(collection(db, "Projects")); 
+  const projectName = []
+  let flag =false
+  let URLtest = []
+  let shouldSkip = false;
+  
+  projects.forEach((documentRef) => {
+    const projectNameRef = documentRef.data().ProjectName;    
+    projectName.push(projectNameRef);
+  })
+  
+  
+  projectName.forEach((collectionRef)=>{
+    async function getfileRef(){
+      const snapshotRef = doc(db, "Projects", collectionRef);
+      const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));     
+      
+      docSnapshot.forEach((Snapshot)=>{
+        const file = Snapshot.data() 
+        if (URL == file.fileURL){
+          flag = true
+          URLtest.push(flag);
+        } else{
+          flag = false
+          URLtest.push(flag);
+        } 
+      })
+      return URLtest
+    }
+    
+    
+    getfileRef().then((result)=>{
+      if (shouldSkip) {
+        return;
+      }
+      
+      if (result.includes(true)){
+        alert('File already exists! Please choose a differant one!')
+        shouldSkip = true;
+      }else{
+        uploadFile()
+        shouldSkip = true;
+      }
+    })
+  })
+}
+
+
 /*************************************Uploading files to Cloud Storage and video url to Database*********************************************/
 
 
@@ -160,20 +211,10 @@ async function Upload(e){
       return;
     }
     
+   
     
-    
-
-
-
-
-  //   get(child(dbRef, "Projects/" + pName)).then((snapshot)=>{
-  //     counter = snapshot.val().counter; 
-  //     counter++
-  //  })
-  //  .then(()=>{
-      fileName = 'video' + counter;
-      fileNameOnly = 'video' + counter;
-      let vURL = videoURL.value;
+      
+      let videoURL = videoURLRef.value;
 
       const projectRef = doc(db, "Projects", pName);
       await updateDoc(projectRef, {
@@ -185,17 +226,14 @@ async function Upload(e){
       });
 
       
-      // update(ref(realdb, "Projects/"+ pName),{
-      //   counter: counter
-      // });
+     
 
-      saveFileURLtoDB(vURL, fileName, fileNameOnly);
-  //  }) 
+      saveFileURLtoDB(videoURL, videoURL, fileTitle.value);
+   
   } else {
     fileName = files[0].name;
     fileToUpload = files[0];
-    fileNameOnly = GetFileName(files[0]);
-  
+   
 
 
     const metaData = {
@@ -230,7 +268,7 @@ async function Upload(e){
       ()=>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
           
-            saveFileURLtoDB(downloadURL, fileName, fileNameOnly);
+            saveFileURLtoDB(downloadURL, fileName, fileTitle.value);
           
         })
       }
@@ -259,17 +297,6 @@ projectList.innerHTML='';
     let projectNameDocument = doc.data().ProjectName;     
     projectList.innerHTML+= `<option value=${projectNameDocument}>${projectNameDocument}</option>`;
   });
-
-
-
-  // let dbRef = ref(realdb);
-  
-  // get(child(dbRef, "Projects/")).then((snapshot)=>{
-  //   snapshot.forEach((node)=>{
-  //     let projectNameNode = node.val().ProjectName; 
-  //     projectList.innerHTML+= `<option value=${projectNameNode}>${projectNameNode}</option>`;
-  //   })
-  // });  
 };
 
 
@@ -319,13 +346,6 @@ window.onload = () => {
     .catch((error)=>{
       alert("Project was not added: " + error)
     })
-
-      
-    // update(ref(realdb, "Projects/"+ projectNameUpload),{
-    //   ProjectName: projectNameUpload,
-    //   ProjectURL: projectWebsiteUpload,
-    //   counter: 0
-    // });
     
     getProjectNameList();
   }
@@ -335,40 +355,53 @@ createProject.onclick = addProjectName;
 
 
 
-async function saveFileURLtoDB (URL, fileName, fileNameOnly){
-  const pName = projectList.value;
-  const dType = documentType.value;
-  const values = []
-  const tags = [dType, pName, values];
-  const ref = doc(db, "Projects", pName);
-  const fileRef = doc(ref, pName, fileNameOnly)
-  const snapshotRef = doc(db, "Projects", pName);
-  const docSnapshot = await getDoc(doc(snapshotRef, pName, fileNameOnly))
-  let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-
-  
-  checkboxes.forEach((checkbox) => {
-
-    values.push(checkbox.value);
-    checkbox.checked= false
-  })
-  
-
-
-  const tagsToUpload=[].concat.apply([], tags);
-  
+async function saveFileURLtoDB (URL, fileName, fileTitle){
+  if(!(fileTitle)){
+    alert("Please add a Title for the file!");
+    return;
+  }
   if(!(URL)){
     alert("Please add a file or video url to be uploaded!");
     return;
   }
   
+  const pName = projectList.value;
+  const docType = documentType.value;
+  const checkboxValues = []
+  const tags = [docType, pName, checkboxValues];
+  const ref = doc(db, "Projects", pName);
+  const fileRef = doc(ref, pName, fileTitle)
+  const snapshotRef = doc(db, "Projects", pName);
+  const docSnapshot = await getDoc(doc(snapshotRef, pName, fileTitle))
+  let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
+
+
+  
  
+
+
+  
+  checkboxes.forEach((checkbox) => {
+    checkboxValues.push(checkbox.value);
+    checkbox.checked = false
+  })
+  
+
+
+  const tagsToUpload=[].concat.apply([], tags);
+// console.log(test)
+
+
+ async function uploadFile(){
   if(docSnapshot.exists()){
-    alert('File already exists, Please enter another name!')
+    alert('This Title already exists, Please enter another Title name!')
+  // } else if (getfiles(URL)){
+
   } else {
 
     await setDoc(fileRef, {
+        fileTitle: fileTitle,
         fileName:fileName,
         fileURL: URL,
         tags: tagsToUpload
@@ -381,15 +414,11 @@ async function saveFileURLtoDB (URL, fileName, fileNameOnly){
       alert('An error occurred, did not upload file: '+ error);
     });
   }
-  // update(ref(realdb,`Projects/${pName}/${fileNameOnly}`),{
-  //   fileName:fileName,
-  //   fileURL: URL,
-  //   tags: tagsToUpload
-  // });
 
-  // const ref = doc(db, "Projects", projectNameUpload);
-
-  // checkboxes = false;
+ }
+ 
+ await testForExistingFile(URL, uploadFile)
+ 
 }
 
 
@@ -461,4 +490,3 @@ buildingEnvelopeSelectBox.onclick = buildingEnvelopeShowCheckboxes;
 HeatingCoolingSelectBox.onclick = HeatingCoolingShowCheckboxes;
 MechanicalElectricalSelectBox.onclick = MechanicalElectricalShowCheckboxes;
 DesignProcessSelectBox.onclick = DesignProcessShowCheckboxes;
-

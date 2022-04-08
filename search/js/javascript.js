@@ -11,7 +11,8 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-REDACTED
+
+ Redacted
 
 
   };
@@ -121,8 +122,7 @@ async function getProjects(){
 }
 
 async function getProjectNames(){
-  const projectName = [];
-  
+  const projectName = []
   const projects = await getProjects()
 
   projects.forEach((documentRef) => {
@@ -195,10 +195,10 @@ async function getData(e){
                if(file.tags.includes(checkmarks)){
               // must iterate over many includes maybe in abover includes to iterate over or below
                 //use check against .every for checkmarks and includes
-                if(includeFile.indexOf(file.fileName) == -1) {
-                  includeFile.push(file.fileName)
+                if(includeFile.indexOf(file.fileTitle) == -1) {
+                  includeFile.push(file.fileTitle)
                   //use includes, but must iterate over many includes here or above
-                  displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileName}</a>`;
+                  displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
                   if(includeWebsite.indexOf(websiteURL) == -1){
                     includeWebsite.push(websiteURL)
                     websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
@@ -369,17 +369,56 @@ DesignProcessSelectBox.onclick = DesignProcessShowCheckboxes;
 
 
 
+ 
 
 
+//***********************************************use*************************************************************** */
+
+ let tags2 = ['a', 'b', 'y', 'z'];
+ let checkmarks2 = ['a', 'y'];
+ 
+ 
+ 
+ let intersection = tags2.filter(x => checkmarks2.includes(x)); 
+ 
+ 
+ 
+ console.log(intersection);
 
 
+ intersection.sort();
+checkmarks2.sort()
+
+let str1 = intersection.toString();
+let str2 = checkmarks2.toString();
+console.log(str1)
+console.log(str2)
+
+if (str1 == str2){
+  console.log("sucess")
+}
+//************************************************************************************************************
+// let test = []
 
 
+//  for(let i=0; i<tags2.length; i++) {
+//    if (checkmarks2.includes(tags2[i])){
+//      test.push('true')
+     
+//    }
+//    if (!checkmarks2.includes(tags2[i])){
+//     test.push('false')
+    
+//   }
+//  }
 
+//  console.log(test)
 
-
-
-
+// if (test.includes("false")){
+//   console.log("nope")
+// } else {
+//   console.log('sucsess')
+// }
 
 
 
