@@ -14,7 +14,7 @@
 
   const firebaseConfig = {
 
-Redacted
+ Redacted
 
 
   };
@@ -45,11 +45,22 @@ const projectName = document.getElementById('projectName');
 const projectWebsite = document.getElementById('projectWebsite');
 const projectList = document.getElementById('projects');
 const fileInput = document.getElementById('file');
+const addProjectForm = document.getElementById('addProjectForm');
 const uploadForm = document.getElementById('uploadForm');
+const mainMenu = document.getElementById('mainMenu');
+const addProject = document.getElementById('addProject');
+const uploadBtn = document.getElementById('upload');
+const deleteBtn = document.getElementById('delete');
+const ProjectBackMainMenu = document.getElementById('ProjectBackMainMenu');
+const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
+const confirm = document.getElementById('confirm');
+const confirmData = document.getElementById('confirmData');
+const cancelBtn = document.getElementById('cancelBtn');
+const okBtn = document.getElementById('okBtn');
 const progressIndicator1 = document.getElementById('progress1');
 const progressIndicator2 = document.getElementById('progress2');
 const documentType = document.getElementById('documentType');
-const fileTitle = document.getElementById('fileTitle');
+const fileTitleRef = document.getElementById('fileTitle');
 const videoURLRef = document.getElementById('videoURL');
 const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
 const buildingTypologycheckboxes = document.getElementById("buildingTypologycheckboxes");
@@ -211,7 +222,7 @@ async function Upload(e){
     return;
   }
 
-  if (!ValidateFileTitle(fileTitle.value)){
+  if (!ValidateFileTitle(fileTitleRef.value)){
     alert(`File title can't contain a forward slash!`);
     return;
    }
@@ -226,7 +237,7 @@ async function Upload(e){
   if (files[0]==undefined){
 
     let videoURL = videoURLRef.value;      
-    saveFileURLtoDB(videoURL, videoURL, fileTitle.value);
+    saveFileURLtoDB(videoURL, videoURL, fileTitleRef.value);
   } else {
     fileName = files[0].name;
     fileToUpload = files[0];
@@ -280,7 +291,7 @@ async function Upload(e){
         ()=>{
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
             
-              saveFileURLtoDB(downloadURL, fileName, fileTitle.value);
+              saveFileURLtoDB(downloadURL, fileName, fileTitleRef.value);
             
           })
         }
@@ -328,8 +339,7 @@ window.onload = () => {
  async function addProjectName()  {
   let projectNameUpload = projectName.value;
   let projectWebsiteUpload = projectWebsite.value;
-  const ref = doc(db, "Projects", projectNameUpload);
-  const docSnapshot = await getDoc(doc(db, "Projects", projectNameUpload));
+  
 
   if(!ValidateProjectName() || projectNameUpload == ''){
     alert(`Project name can't contain "spaces", ".", "#", "$", "[", or "]"`);
@@ -340,7 +350,8 @@ window.onload = () => {
   }
 
 
-
+  const ref = doc(db, "Projects", projectNameUpload);
+  const docSnapshot = await getDoc(doc(db, "Projects", projectNameUpload));
 
   
   if(docSnapshot.exists()){
@@ -384,7 +395,7 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
   const pName = projectList.value;
   const docType = documentType.value;
   const checkboxValues = []
-  const tags = [docType, pName, checkboxValues];
+  const tags = [pName, docType, checkboxValues];
   const ref = doc(db, "Projects", pName);
   const fileRef = doc(ref, pName, fileTitle)
   const snapshotRef = doc(db, "Projects", pName);
@@ -406,6 +417,8 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
 
   const tagsToUpload=[].concat.apply([], tags);
+  const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
+  const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
 
 
 
@@ -416,19 +429,53 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
   } else {
 
-    await setDoc(fileRef, {
-        fileTitle: fileTitle,
-        fileName:fileName,
-        fileURL: URL,
-        tags: tagsToUpload
-      }
-    )
-    .then(()=>{
-      alert('File was uploaded!');
-    })
-    .catch((error) =>{
-      alert('An error occurred, did not upload file: '+ error);
-    });
+    const cancel = () => {
+      uploadForm.style.display = "block";
+      confirm.style.display = "none";
+    }
+
+    uploadForm.style.display = "none";
+    confirm.style.display = "flex";
+    cancelBtn.onclick = cancel;
+    
+
+    confirmData.innerHTML = `
+      <h3 class='dataHeader'>File Title</h3>
+      <p class='datacontent'>${fileTitle}</p>
+      <h3 class='dataHeader'>File Name</h3>
+      <p class='datacontent'>${fileName}</p>
+      <h3 class='dataHeader'>File URL</h3>
+      <P><a class='datacontent' href="${URL}" target="_blank" rel="noopener noreferrer">${URL}</a></p>
+      <h3 class='dataHeader'>Document Type</h3>
+      <p class='datacontent'>${docType}</p>
+      <h3 class='dataHeader'>Tags for Files</h3>
+      <p class='datacontent'>${filteredTagsToDisplay}</p>
+    `;
+
+    const okay = async () => {
+      await setDoc(fileRef, {
+          fileTitle: fileTitle,
+          fileName:fileName,
+          fileURL: URL,
+          documentType: docType,
+          tags: filteredTagsToUpload
+        }
+      )
+      .then(()=>{
+        alert('File was uploaded!');
+      })
+      .catch((error) =>{
+        alert('An error occurred, did not upload file: '+ error);
+      });
+
+      fileTitleRef.value = '';
+      videoURLRef.value = '';
+      uploadForm.style.display = "block";
+      confirm.style.display = "none";
+
+    }
+   okBtn.onclick = okay;
+   
   }
 
  }
@@ -443,7 +490,7 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
 
 
-/*********************************************Function for Dropdown menu checkboxes********************************************************/
+/*********************************************Functions for Dropdown menu checkboxes********************************************************/
 
 
 function buildingTypologyShowCheckboxes() {
@@ -508,7 +555,30 @@ MechanicalElectricalSelectBox.onclick = MechanicalElectricalShowCheckboxes;
 DesignProcessSelectBox.onclick = DesignProcessShowCheckboxes;
 
 
+/*********************************************Functions for Main Menu********************************************************/
 
+const mainMenuProjectPage = () => {
+  addProjectForm.style.display = "flex";
+  mainMenu.style.display = "none";
+}
+
+const mainMenuUpload = () => {
+  uploadForm.style.display = "block";
+  mainMenu.style.display = "none";
+}
+
+const returnToMainMenu = () => {
+  fileTitleRef.value = '';
+  videoURLRef.value = '';
+  addProjectForm.style.display = "none";
+  uploadForm.style.display = "none";
+  mainMenu.style.display = "flex";
+}
+
+addProject.onclick = mainMenuProjectPage;
+uploadBtn.onclick = mainMenuUpload;
+ProjectBackMainMenu.onclick = returnToMainMenu;
+uploadBackMainMenu.onclick = returnToMainMenu;
 
 // .catch((error) =>{
       //   alert('An error occurred, did not upload: '+ error);
