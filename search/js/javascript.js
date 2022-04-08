@@ -12,8 +12,7 @@
 
   const firebaseConfig = {
 
- Redacted
-
+Redacted
 
   };
   

@@ -13,8 +13,7 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-
-   Redacted
+Redacted
 
 
   };
@@ -29,6 +28,8 @@
   const realdb = getDatabase();
 
   const db = getFirestore();
+
+  const storage = getStorage();
 
 
 /**************************************************Global Variables, Referances and EventListeners*********************************************/ 
@@ -241,38 +242,47 @@ async function Upload(e){
     };
 
 
-    const storage = getStorage();
+    
 
     const storageRef = sRef(storage, 'Files/'+ fileName);
 
     
-    const uploadTask = uploadBytesResumable(storageRef, fileToUpload, metaData);
+    getDownloadURL(storageRef).then(onResolve, onNotFound);
 
+    function onResolve(foundURL) {
+      alert("File already exists! Please choose a differant one!");
+      fileInput.value = '';
+      return;
+    }
+  
 
+    function onNotFound() {
+      const uploadTask = uploadBytesResumable(storageRef, fileToUpload, metaData);
 
-    uploadTask.on('state-changed', (snapshot) => {
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        progressIndicator1.innerHTML = "Uploaded: " + progress + "%";
-        progressIndicator2.style.display = 'block';
-        progressIndicator2.value =  progress;
-        fileInput.value = '';
-        
-        setTimeout(function(){
-          progressIndicator1.innerHTML = '';
-          progressIndicator2.style.display = 'none';
-        }, 2100);
-      },
-      (error) => {
-        alert("error: file not uploaded!");
-      },
-      ()=>{
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+      uploadTask.on('state-changed', (snapshot) => {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          progressIndicator1.innerHTML = "Uploaded: " + progress + "%";
+          progressIndicator2.style.display = 'block';
+          progressIndicator2.value =  progress;
+          fileInput.value = '';
           
-            saveFileURLtoDB(downloadURL, fileName, fileTitle.value);
-          
-        })
-      }
-    );
+          setTimeout(function(){
+            progressIndicator1.innerHTML = '';
+            progressIndicator2.style.display = 'none';
+          }, 2100);
+        },
+        (error) => {
+          alert("error: file not uploaded!");
+        },
+        ()=>{
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+            
+              saveFileURLtoDB(downloadURL, fileName, fileTitle.value);
+            
+          })
+        }
+      );
+    }
   }
 };
 
