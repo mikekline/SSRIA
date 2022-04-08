@@ -12,7 +12,8 @@
 
   const firebaseConfig = {
 
-Redacted
+ Redacted
+
 
   };
   
@@ -81,7 +82,7 @@ documentTypeAll.addEventListener("change", () =>{
   })
 })
 
-buildingTypologyAll.addEventListener("change", () =>{
+buildingTypologyAll.addEventListener("change", () =>{alert
   buildingTypology.forEach((element)=>{
     element.checked = buildingTypologyAll.checked;
   })
@@ -160,12 +161,10 @@ async function getData(e){
 
   getDataForm.style.display = 'none';
   results.style.display = 'flex';
-  websiteContainer.style.visibility = "visible";
   displayData.innerHTML = '';
   websiteRef.innerHTML = '';
 
 
-  
   
 
   checkboxes.forEach((checkbox) => {
@@ -213,8 +212,18 @@ async function getData(e){
         })
         
       }
-      getfileRef()
+      getfileRef().then(async ()=>{
+        if (await displayData.childNodes.length == 0){
+          console.log("test")
+          websiteContainer.style.visibility = "hidden";
+        }
+        if (await displayData.childNodes.length > 0){
+          websiteContainer.style.visibility = "visible";
+        }
+      }
+      )
     })
+
 
     setTimeout(function(){
       loadingElement.style.visibility = 'hidden';

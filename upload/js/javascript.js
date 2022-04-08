@@ -13,7 +13,22 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-Redacted
+
+    apiKey: "AIzaSyCm2Qbv0nYxcnwN3HHJg2c03mK7p5SaBSY",
+
+    authDomain: "resource-library-582d7.firebaseapp.com",
+
+    databaseURL: "https://resource-library-582d7-default-rtdb.firebaseio.com",
+
+    projectId: "resource-library-582d7",
+
+    storageBucket: "resource-library-582d7.appspot.com",
+
+    messagingSenderId: "58705463627",
+
+    appId: "1:58705463627:web:1980af966213d48d9900ce",
+
+    measurementId: "G-3BFTT2HXC0"
 
 
   };
@@ -36,7 +51,7 @@ Redacted
 
 
 let files = [];
-let counter = 0;
+// let counter = 0;
 let expanded = false;
 
 const createProject = document.getElementById('projectButton');
@@ -123,15 +138,23 @@ function GetFileName(file) {
 
 
 //Project name can't contain "spaces", ".", "#", "$", "[", or "]"
-function ValidateName(){
+function ValidateProjectName(){
   let regex = /[\.#$\s\[\]]/
   return !(regex.test(projectName.value));
 }
 
+// function ValidateFileName(fileName){
+//   let regex = /[\.#$\s\[\]]/
+//   return !(regex.test(fileName));
+// }
+
+function ValidateFileName(fileName){
+    let regex = /^[a-zA-Z0-9_]+$/g
+    return (regex.test(fileName));
+  }
 
 
-
-async function testForExistingFile(URL, uploadFile){
+async function TestForExistingFile(URL, uploadFile){
   const projects = await getDocs(collection(db, "Projects")); 
   const projectName = []
   let flag =false
@@ -187,8 +210,7 @@ async function Upload(e){
   e.preventDefault();
   let fileName ='';
   let fileToUpload = '';
-  let fileNameOnly = '';
-  let pName = projectList.value;
+ 
   
   
   if(projectList.value == 0){
@@ -197,44 +219,28 @@ async function Upload(e){
     return;
   }
  
+  if(!(files[0]==undefined) && !(videoURLRef.value == '')){
+    alert('There can be only one or the other! Either a Video url or a file to upload!')
+    fileInput.value = '';
+    return;
+  }
   
   if (files[0]==undefined){
-    let dbRef = ref(realdb);
-    
 
-    const querySnapshot = await getDoc(doc(db, "Projects", pName));
-    if (querySnapshot.exists()) {
-      counter = querySnapshot.data().counter;     
-      counter++ 
-      //bug: adds to counter when file already exists 
-    } else {
-      alert('An error occurred, Please try again!');
-      return;
-    }
-    
-   
-    
-      
-      let videoURL = videoURLRef.value;
-
-      const projectRef = doc(db, "Projects", pName);
-      await updateDoc(projectRef, {
-        counter: counter
-      })
-      .catch((error) =>{
-        alert('An error occurred, did not upload: '+ error);
-        return;
-      });
-
-      
-     
-
-      saveFileURLtoDB(videoURL, videoURL, fileTitle.value);
+    let videoURL = videoURLRef.value;      
+    saveFileURLtoDB(videoURL, videoURL, fileTitle.value);
    
   } else {
     fileName = files[0].name;
     fileToUpload = files[0];
    
+    let fileNameOnly = GetFileName(files[0])
+     if (!ValidateFileName(fileNameOnly)){
+      alert(`File name can't contain spaces or any special characters, except for Underscore!`);
+      fileInput.value = '';
+      return;
+     }
+
 
 
     const metaData = {
@@ -325,7 +331,7 @@ window.onload = () => {
   const ref = doc(db, "Projects", projectNameUpload);
   const docSnapshot = await getDoc(doc(db, "Projects", projectNameUpload));
 
-  if(!ValidateName() || projectNameUpload == ''){
+  if(!ValidateProjectName() || projectNameUpload == ''){
     alert(`Project name can't contain "spaces", ".", "#", "$", "[", or "]"`);
     return;
   }else if (projectWebsiteUpload == ''){
@@ -400,13 +406,13 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
 
   const tagsToUpload=[].concat.apply([], tags);
-// console.log(test)
+
 
 
  async function uploadFile(){
   if(docSnapshot.exists()){
     alert('This Title already exists, Please enter another Title name!')
-  // } else if (getfiles(URL)){
+  
 
   } else {
 
@@ -427,7 +433,7 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
  }
  
- await testForExistingFile(URL, uploadFile)
+ await TestForExistingFile(URL, uploadFile)
  
 }
 
@@ -500,3 +506,11 @@ buildingEnvelopeSelectBox.onclick = buildingEnvelopeShowCheckboxes;
 HeatingCoolingSelectBox.onclick = HeatingCoolingShowCheckboxes;
 MechanicalElectricalSelectBox.onclick = MechanicalElectricalShowCheckboxes;
 DesignProcessSelectBox.onclick = DesignProcessShowCheckboxes;
+
+
+
+
+// .catch((error) =>{
+      //   alert('An error occurred, did not upload: '+ error);
+      //   return;
+      // });
