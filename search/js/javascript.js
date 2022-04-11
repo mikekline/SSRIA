@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-  Redacted
+Redacted
 
 
   };
@@ -42,6 +42,7 @@ const websiteContainer = document.getElementById('websiteContainer');
 const loadingElement = document.getElementById('loading');
 
 const results = document.getElementById('results');
+const documentTypeHeaderRef = document.getElementById('documentTypeHeader');
 const websiteRef = document.getElementById("websites");
 const displayData = document.getElementById("displayData");
 
@@ -164,6 +165,7 @@ async function getData(e){
   let includeFile = []
   let websiteURL = '';
   let includeWebsite = [];
+  let includeDocumentType = [];
   const checkboxValues = [];
 
   getDataForm.style.display = 'none';
@@ -202,8 +204,25 @@ async function getData(e){
                 //use check against .every for checkmarks and includes
                 if(includeFile.indexOf(file.fileTitle) == -1) {
                   includeFile.push(file.fileTitle)
+
+                
+
+
+                  if(includeDocumentType.indexOf(file.documentType) == -1){
+                    includeDocumentType.push(file.documentType)
+                    displayData.innerHTML += `<h2 id='documentTypeHeader'>${file.documentType}</h2>`;
+                  
+                   
+                  }
+
+                  includeDocumentType.forEach((type)=>{
+                    if (type==file.documentType){
+                      displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
+                      }
+                  })
+
                   //use includes, but must iterate over many includes here or above
-                  displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
+                  // displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
                   if(includeWebsite.indexOf(websiteURL) == -1){
                     includeWebsite.push(websiteURL)
                     websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;

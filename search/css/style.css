@@ -101,11 +101,21 @@ h5 {
   word-break: break-all;
 }
 
+#displayData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #data {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
+}
+
+#documentTypeHeader {
+  font-weight: lighter;
 }
 
 #websiteContainer {

@@ -29,6 +29,12 @@ h5 {
   align-items: center;
 }
 
+#deleteForm {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
 #projects {
   width: 100px;
 }

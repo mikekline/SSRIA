@@ -46,6 +46,7 @@ const projectWebsite = document.getElementById('projectWebsite');
 const projectList = document.getElementById('projects');
 const fileInput = document.getElementById('file');
 const addProjectForm = document.getElementById('addProjectForm');
+const deleteForm = document.getElementById('deleteForm');
 const uploadForm = document.getElementById('uploadForm');
 const mainMenu = document.getElementById('mainMenu');
 const addProject = document.getElementById('addProject');
@@ -53,6 +54,7 @@ const uploadBtn = document.getElementById('upload');
 const deleteBtn = document.getElementById('delete');
 const ProjectBackMainMenu = document.getElementById('ProjectBackMainMenu');
 const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
+const deleteBackMainMenu = document.getElementById('deleteBackMainMenu');
 const confirm = document.getElementById('confirm');
 const confirmData = document.getElementById('confirmData');
 const cancelBtn = document.getElementById('cancelBtn');
@@ -361,7 +363,7 @@ window.onload = () => {
     await setDoc(ref, {
         ProjectName: projectNameUpload,
         ProjectURL: projectWebsiteUpload,
-        counter: 0
+        // counter: 0
       },
       {
         merge: true
@@ -369,6 +371,8 @@ window.onload = () => {
     )
     .then(()=>{
       alert(projectNameUpload + ' was added');
+       projectName.value = '';
+       projectWebsite.value = '';
     })
     .catch((error)=>{
       alert("Project was not added: " + error)
@@ -468,8 +472,7 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
         alert('An error occurred, did not upload file: '+ error);
       });
 
-      fileTitleRef.value = '';
-      videoURLRef.value = '';
+      
       uploadForm.style.display = "block";
       confirm.style.display = "none";
 
@@ -477,7 +480,8 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
    okBtn.onclick = okay;
    
   }
-
+  fileTitleRef.value = '';
+  videoURLRef.value = '';
  }
  
  await TestForExistingFile(URL, uploadFile)
@@ -567,18 +571,26 @@ const mainMenuUpload = () => {
   mainMenu.style.display = "none";
 }
 
+const deletePage = () => {
+  deleteForm.style.display = "flex";
+  mainMenu.style.display = "none";
+}
+
 const returnToMainMenu = () => {
   fileTitleRef.value = '';
   videoURLRef.value = '';
   addProjectForm.style.display = "none";
   uploadForm.style.display = "none";
+  deleteForm.style.display = "none";
   mainMenu.style.display = "flex";
 }
 
 addProject.onclick = mainMenuProjectPage;
 uploadBtn.onclick = mainMenuUpload;
+deleteBtn.onclick = deletePage;
 ProjectBackMainMenu.onclick = returnToMainMenu;
 uploadBackMainMenu.onclick = returnToMainMenu;
+deleteBackMainMenu.onclick = returnToMainMenu
 
 // .catch((error) =>{
       //   alert('An error occurred, did not upload: '+ error);
