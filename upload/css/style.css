@@ -35,6 +35,28 @@ h5 {
   align-items: center;
 }
 
+#deleteFileContainer {
+  display: flex;
+}
+
+#deleteFileContainer .deleteBtn {
+  margin-left: 8px;
+  padding: 3px;
+  height: 30px;
+  border-radius: 0px;
+}
+
+#filestoBeDeleted {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+}
+
+#filestoBeDeleted .datacontent {
+  margin: 8px 0 8px 0;
+}
+
 #projects {
   width: 100px;
 }
@@ -59,14 +81,20 @@ h5 {
 }
 
 .buttonContainer,
-.addProjectbuttonContainer {
+.addProjectbuttonContainer,
+.deletebuttonContainer {
   display: flex;
   justify-content: space-between;
   margin-top: 70px;
 }
 
-.addProjectbuttonContainer {
+.addProjectbuttonContainer,
+.deletebuttonContainer {
   width: 500px;
+}
+
+#deleteProjects:hover {
+  background-color: whitesmoke;
 }
 
 #boxcontainer {

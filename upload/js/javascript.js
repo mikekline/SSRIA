@@ -14,7 +14,7 @@
 
   const firebaseConfig = {
 
- Redacted
+  Redacted
 
 
   };
@@ -44,6 +44,7 @@ const createProject = document.getElementById('projectButton');
 const projectName = document.getElementById('projectName');
 const projectWebsite = document.getElementById('projectWebsite');
 const projectList = document.getElementById('projects');
+const deleteProjects = document.getElementById('deleteProjects');
 const fileInput = document.getElementById('file');
 const addProjectForm = document.getElementById('addProjectForm');
 const deleteForm = document.getElementById('deleteForm');
@@ -51,7 +52,10 @@ const uploadForm = document.getElementById('uploadForm');
 const mainMenu = document.getElementById('mainMenu');
 const addProject = document.getElementById('addProject');
 const uploadBtn = document.getElementById('upload');
-const deleteBtn = document.getElementById('delete');
+const deleteMenu = document.getElementById('deleteMenu');
+const deleteBtn = document.getElementById('deleteBtn');
+const deleteSelectProject = document.getElementById('deleteSelectProject');
+const filestoBeDeleted = document.getElementById('filestoBeDeleted');
 const ProjectBackMainMenu = document.getElementById('ProjectBackMainMenu');
 const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
 const deleteBackMainMenu = document.getElementById('deleteBackMainMenu');
@@ -324,7 +328,8 @@ projectList.innerHTML='';
   const querySnapshot = await getDocs(collection(db, "Projects"));
   querySnapshot.forEach((doc) => {
     let projectNameDocument = doc.data().ProjectName;     
-    projectList.innerHTML+= `<option value=${projectNameDocument}>${projectNameDocument}</option>`;
+    projectList.innerHTML += `<option value=${projectNameDocument}>${projectNameDocument}</option>`;
+    deleteProjects.innerHTML += `<option value=${projectNameDocument}>${projectNameDocument}</option>`;
   });
 };
 
@@ -574,11 +579,13 @@ const mainMenuUpload = () => {
 const deletePage = () => {
   deleteForm.style.display = "flex";
   mainMenu.style.display = "none";
+  deleteSelectProject.onclick = deleteFiles;
 }
 
 const returnToMainMenu = () => {
   fileTitleRef.value = '';
   videoURLRef.value = '';
+  filestoBeDeleted.innerHTML = '';
   addProjectForm.style.display = "none";
   uploadForm.style.display = "none";
   deleteForm.style.display = "none";
@@ -587,10 +594,71 @@ const returnToMainMenu = () => {
 
 addProject.onclick = mainMenuProjectPage;
 uploadBtn.onclick = mainMenuUpload;
-deleteBtn.onclick = deletePage;
+deleteMenu.onclick = deletePage;
 ProjectBackMainMenu.onclick = returnToMainMenu;
 uploadBackMainMenu.onclick = returnToMainMenu;
-deleteBackMainMenu.onclick = returnToMainMenu
+deleteBackMainMenu.onclick = returnToMainMenu;
+
+
+// document.getElementById("deleteBtn").addEventListener("click", deleteFile);
+
+
+
+
+async function deleteFiles () {
+  const projectName = deleteProjects.value;
+  filestoBeDeleted.innerHTML = '';
+  let counter = 0;
+  
+  const snapshotRef = doc(db, "Projects", projectName);
+  const docSnapshot = await getDocs(collection(snapshotRef, projectName));
+  // const fileRef = doc(snapshotRef, pName, fileTitle)
+  // const docSnapshot = await getDoc(doc(snapshotRef, pName, fileTitle))
+  
+
+  docSnapshot.forEach((Snapshot)=>{
+    
+    const file = Snapshot.data()  
+    const fileRef = doc(snapshotRef, projectName, file.fileTitle)
+    
+
+    filestoBeDeleted.innerHTML += `
+      <div id='deleteFileContainer'>
+        <div id='${counter}' class='datacontent'>${file.fileTitle}</div>
+        <button class='deleteBtn' type="button" >Delete</button>
+      </div>`
+     
+    
+      const deleteBtns = document.getElementsByClassName("deleteBtn")
+      for (const eachBtn of deleteBtns) {
+        console.log(eachBtn)
+        eachBtn.onclick =  async function() {
+          
+           await deleteDoc(fileRef)
+            .then(()=>{
+              alert('File Deleted')
+              datacontent.remove()
+            })
+            .catch((error)=>{
+              alert('Deletion Unsuccessful, error: '+ error)
+            })
+          
+        }
+        
+      }
+    
+      
+      counter++ 
+  });
+  
+
+}
+
+
+
+
+
+
 
 // .catch((error) =>{
       //   alert('An error occurred, did not upload: '+ error);

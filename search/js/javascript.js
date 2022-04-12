@@ -11,7 +11,6 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-
 Redacted
 
 
@@ -130,7 +129,7 @@ async function getProjects(){
 }
 
 async function getProjectNames(){
-  const projectName = []
+  const projectNames = []
   const projects = await getProjects()
 
   projects.forEach((documentRef) => {
@@ -138,7 +137,7 @@ async function getProjectNames(){
     projectName.push(projectNameRef);
   })
 
-  return projectName;
+  return projectNames;
 }
 
 
@@ -412,7 +411,7 @@ DesignProcessSelectBox.onclick = DesignProcessShowCheckboxes;
 //***********************************************use*************************************************************** */
 
  let tags2 = ['a', 'b', 'y', 'z'];
- let checkmarks2 = ['a', 'y'];
+ let checkmarks2 = ['a', 'y', 'k'];
  
  
  

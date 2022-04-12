@@ -18,7 +18,7 @@
 				<h2>Main Menu</h2>
 				<button id="addProject" class="menuBtn" type="submit">Add a Project</button>
 				<button id="upload" class="menuBtn" type="submit">Upload a File</button>
-				<button id="delete" class="menuBtn" type="submit">Delete a Project or File</button>
+				<button id="deleteMenu" class="menuBtn" type="submit">Delete a Project or File</button>
 			</div>
 
 			<form id='addProjectForm'>
@@ -291,11 +291,20 @@
 
 
 			<form id='deleteForm'>
-				<h2>Delete Project or File</h2>
+				<h2>Delete Files</h2>
+
+				<div>
+					Select a Project: 
+						<select id='deleteProjects' name=”projects”>
+							<option>Select a Project</option>
+						</select>
+				</div>
 				
+				<div id="filestoBeDeleted"></div>
 
 					<div class="deletebuttonContainer">
 						<button id="deleteBackMainMenu" type="button">Back to Main Menu</button>
+						<button id="deleteSelectProject" type="button">Select Project</button>
 					</div>
 			</form>
 		</div>
