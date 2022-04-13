@@ -11,7 +11,8 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-Redacted
+
+   Redacted
 
 
   };
@@ -32,8 +33,9 @@ Redacted
 
 
 let files = [];
-// let counter = 0;
 let expanded = false;
+let reader = new FileReader();
+let fileURL = null;
 
 const createProject = document.getElementById('projectButton');
 const projectName = document.getElementById('projectName');
@@ -94,9 +96,22 @@ const allDropdownsCheckboxes = [
 ]
 
 
+
+
+
+
+
 fileInput.addEventListener("change", (e) => {
   files = e.target.files; 		
+  reader.readAsDataURL(files[0]);
 });
+
+
+reader.onload = () =>{
+  fileURL = reader.result  
+}
+
+
 
 buildingTypologyAll.addEventListener("change", () =>{
   buildingTypology.forEach((element)=>{
@@ -207,6 +222,72 @@ async function TestForExistingFile(URL, uploadFile){
 }
 
 
+
+
+
+
+
+
+
+function checkFileToBeUploaded(URL, fileName, fileTitle){
+  const projectName = projectList.value;
+  const docType = documentType.value;
+  let check=false;
+  const checkboxValues = []
+  const tags = [projectName, docType, checkboxValues];
+  const tagsToUpload=[].concat.apply([], tags);
+  const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
+  const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
+  let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+  
+  checkboxes.forEach((checkbox) => {
+    checkboxValues.push(checkbox.value);
+  })
+  
+  uploadForm.style.display = "none";
+  confirmPage.style.display = "flex";
+
+
+  
+   
+    console.log('test2: '+ fileURL)
+
+    // confirmData.innerHTML = `
+    //   <h3 class='dataHeader'>File Title</h3>
+    //   <p class='datacontent'>${fileTitle}</p>
+    //   <h3 class='dataHeader'>File Name</h3>
+    //   <p class='datacontent'>${fileName}</p>
+    //   <h3 class='dataHeader'>File URL</h3>
+    //   <P><a class='datacontent' href="${URL}" target="_blank" rel="noopener noreferrer">${URL}</a></p>
+    //   <h3 class='dataHeader'>Document Type</h3>
+    //   <p class='datacontent'>${docType}</p>
+    //   <h3 class='dataHeader'>Tags for Files</h3>
+    //   <p class='datacontent'>${filteredTagsToDisplay}</p>
+    // `;
+
+    const cancel = () => {
+      uploadForm.style.display = "block";
+      confirmPage.style.display = "none";
+      return
+    }
+
+    const okay = async () => {
+      uploadForm.style.display = "block";
+      confirmPage.style.display = "none";
+      saveFileURLtoDB(URL, fileName, fileTitle);
+    }
+
+  cancelBtn.onclick = cancel;
+  okBtn.onclick = okay;
+
+  allDropdownsCheckboxes.forEach((countainer)=>{
+    countainer.style.display = "none";
+  })
+  fileTitleRef.value = '';
+  videoURLRef.value = '';
+}
+
+
 /*************************************Uploading files to Cloud Storage and video url to Database*********************************************/
 
 
@@ -237,8 +318,9 @@ async function Upload(e){
   
   if (files[0]==undefined){
 
-    let videoURL = videoURLRef.value;      
-    saveFileURLtoDB(videoURL, videoURL, fileTitleRef.value);
+    let videoURL = videoURLRef.value; 
+     checkFileToBeUploaded(videoURL, videoURL, fileTitleRef.value);
+
   } else {
     fileName = files[0].name;
     fileToUpload = files[0];
@@ -291,17 +373,14 @@ async function Upload(e){
         },
         ()=>{
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
-            
-              saveFileURLtoDB(downloadURL, fileName, fileTitleRef.value);
-            
+
+            checkFileToBeUploaded(downloadURL, fileName, fileTitleRef.value);
+
           })
         }
       );
     }
   }
-  allDropdownsCheckboxes.forEach((countainer)=>{
-    countainer.style.display = "none";
-  })
 };
 
 
@@ -360,23 +439,28 @@ window.onload = () => {
     alert('Project already exists, Please enter another name!')
   } else {
  
-    await setDoc(ref, {
-        ProjectName: projectNameUpload,
-        ProjectURL: projectWebsiteUpload,
-        // counter: 0
-      },
-      {
-        merge: true
-      }
-    )
-    .then(()=>{
-      alert(projectNameUpload + ' was added');
-       projectName.value = '';
-       projectWebsite.value = '';
-    })
-    .catch((error)=>{
-      alert("Project was not added: " + error)
-    })
+
+    const confirmProject = confirm("Project to be added: " + projectNameUpload + " " + projectWebsiteUpload);
+
+    if(confirmProject){
+      await setDoc(ref, {
+          ProjectName: projectNameUpload,
+          ProjectURL: projectWebsiteUpload,
+          // counter: 0
+        },
+        {
+          merge: true
+        }
+      )
+      .then(()=>{
+        alert(projectNameUpload + ' was added');
+        projectName.value = '';
+        projectWebsite.value = '';
+      })
+      .catch((error)=>{
+        alert("Project was not added: " + error)
+      })
+    }
     
     getProjectNameList();
   }
@@ -396,14 +480,14 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
     return;
   }
   
-  const pName = projectList.value;
+  const projectName = projectList.value;
   const docType = documentType.value;
   const checkboxValues = []
-  const tags = [pName, docType, checkboxValues];
-  const ref = doc(db, "Projects", pName);
-  const fileRef = doc(ref, pName, fileTitle)
-  const snapshotRef = doc(db, "Projects", pName);
-  const docSnapshot = await getDoc(doc(snapshotRef, pName, fileTitle))
+  const tags = [projectName, docType, checkboxValues];
+  const ref = doc(db, "Projects", projectName);
+  const fileRef = doc(ref, projectName, fileTitle)
+  const snapshotRef = doc(db, "Projects", projectName);
+  const docSnapshot = await getDoc(doc(snapshotRef, projectName, fileTitle))
   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
 
@@ -422,62 +506,31 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
   const tagsToUpload=[].concat.apply([], tags);
   const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
-  const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
+  
 
 
 
  async function uploadFile(){
   if(docSnapshot.exists()){
     alert('This Title already exists, Please enter another Title name!')
-  
+    return
 
   } else {
 
-    const cancel = () => {
-      uploadForm.style.display = "block";
-      confirmPage.style.display = "none";
+    await setDoc(fileRef, {
+      fileTitle: fileTitle,
+      fileName:fileName,
+      fileURL: URL,
+      documentType: docType,
+      tags: filteredTagsToUpload
     }
-
-    uploadForm.style.display = "none";
-    confirmPage.style.display = "flex";
-    cancelBtn.onclick = cancel;
-    
-
-    confirmData.innerHTML = `
-      <h3 class='dataHeader'>File Title</h3>
-      <p class='datacontent'>${fileTitle}</p>
-      <h3 class='dataHeader'>File Name</h3>
-      <p class='datacontent'>${fileName}</p>
-      <h3 class='dataHeader'>File URL</h3>
-      <P><a class='datacontent' href="${URL}" target="_blank" rel="noopener noreferrer">${URL}</a></p>
-      <h3 class='dataHeader'>Document Type</h3>
-      <p class='datacontent'>${docType}</p>
-      <h3 class='dataHeader'>Tags for Files</h3>
-      <p class='datacontent'>${filteredTagsToDisplay}</p>
-    `;
-
-    const okay = async () => {
-      await setDoc(fileRef, {
-          fileTitle: fileTitle,
-          fileName:fileName,
-          fileURL: URL,
-          documentType: docType,
-          tags: filteredTagsToUpload
-        }
-      )
-      .then(()=>{
-        alert('File was uploaded!');
-      })
-      .catch((error) =>{
-        alert('An error occurred, did not upload file: '+ error);
-      });
-
-      
-      uploadForm.style.display = "block";
-      confirmPage.style.display = "none";
-
-    }
-   okBtn.onclick = okay;
+  )
+  .then(()=>{
+    alert('File was uploaded!');
+  })
+  .catch((error) =>{
+    alert('An error occurred, did not upload file: '+ error);
+  });
    
   }
   fileTitleRef.value = '';
@@ -609,8 +662,7 @@ async function deleteFiles () {
 
   const snapshotRef = doc(db, "Projects", projectName);
   const docSnapshot = await getDocs(collection(snapshotRef, projectName));
-  // const fileRef = doc(snapshotRef, pName, fileTitle)
-  // const docSnapshot = await getDoc(doc(snapshotRef, pName, fileTitle))
+  
   
 
   docSnapshot.forEach((Snapshot)=>{

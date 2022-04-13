@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-Redacted
+ Redacted
 
 
   };
@@ -90,7 +90,7 @@ documentTypeAll.addEventListener("change", () =>{
   })
 })
 
-buildingTypologyAll.addEventListener("change", () =>{alert
+buildingTypologyAll.addEventListener("change", () =>{
   buildingTypology.forEach((element)=>{
     element.checked = buildingTypologyAll.checked;
   })
