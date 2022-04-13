@@ -4,17 +4,14 @@
 	
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-analytics.js";
 
-  import { getStorage, ref as sRef, uploadBytes, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-storage.js";
-
-  import {getDatabase, ref, set, child, get, update, remove} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
+  import { getStorage, ref as sRef, uploadBytes, uploadBytesResumable, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-storage.js";
 
   import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, query, where, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js"
 
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-
-  Redacted
+Redacted
 
 
   };
@@ -25,8 +22,6 @@
   const app = initializeApp(firebaseConfig);
 
   const analytics = getAnalytics(app);
-
-  const realdb = getDatabase();
 
   const db = getFirestore();
 
@@ -59,7 +54,7 @@ const filestoBeDeleted = document.getElementById('filestoBeDeleted');
 const ProjectBackMainMenu = document.getElementById('ProjectBackMainMenu');
 const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
 const deleteBackMainMenu = document.getElementById('deleteBackMainMenu');
-const confirm = document.getElementById('confirm');
+const confirmPage = document.getElementById('confirmPage');
 const confirmData = document.getElementById('confirmData');
 const cancelBtn = document.getElementById('cancelBtn');
 const okBtn = document.getElementById('okBtn');
@@ -440,11 +435,11 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
     const cancel = () => {
       uploadForm.style.display = "block";
-      confirm.style.display = "none";
+      confirmPage.style.display = "none";
     }
 
     uploadForm.style.display = "none";
-    confirm.style.display = "flex";
+    confirmPage.style.display = "flex";
     cancelBtn.onclick = cancel;
     
 
@@ -479,7 +474,7 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
       
       uploadForm.style.display = "block";
-      confirm.style.display = "none";
+      confirmPage.style.display = "none";
 
     }
    okBtn.onclick = okay;
@@ -600,16 +595,18 @@ uploadBackMainMenu.onclick = returnToMainMenu;
 deleteBackMainMenu.onclick = returnToMainMenu;
 
 
-// document.getElementById("deleteBtn").addEventListener("click", deleteFile);
+
 
 
 
 
 async function deleteFiles () {
-  const projectName = deleteProjects.value;
   filestoBeDeleted.innerHTML = '';
+  const projectName = deleteProjects.value;
   let counter = 0;
-  
+  let fileRefs = [];
+  let fileNames = [];
+
   const snapshotRef = doc(db, "Projects", projectName);
   const docSnapshot = await getDocs(collection(snapshotRef, projectName));
   // const fileRef = doc(snapshotRef, pName, fileTitle)
@@ -617,50 +614,70 @@ async function deleteFiles () {
   
 
   docSnapshot.forEach((Snapshot)=>{
-    
     const file = Snapshot.data()  
     const fileRef = doc(snapshotRef, projectName, file.fileTitle)
-    
+    fileRefs.push(fileRef)
+    fileNames.push(file.fileName)
 
     filestoBeDeleted.innerHTML += `
-      <div id='deleteFileContainer'>
-        <div id='${counter}' class='datacontent'>${file.fileTitle}</div>
-        <button class='deleteBtn' type="button" >Delete</button>
-      </div>`
-     
-    
-      const deleteBtns = document.getElementsByClassName("deleteBtn")
-      for (const eachBtn of deleteBtns) {
-        console.log(eachBtn)
-        eachBtn.onclick =  async function() {
-          
-           await deleteDoc(fileRef)
-            .then(()=>{
-              alert('File Deleted')
-              datacontent.remove()
-            })
-            .catch((error)=>{
-              alert('Deletion Unsuccessful, error: '+ error)
-            })
-          
-        }
-        
-      }
-    
-      
+    <div id='deleteFileContainer${counter}' class='deleteFileContainer'>
+      <div id='dataContent${counter}' class='dataContent'>${file.fileTitle}</div>
+      <button class='deleteBtn' type="button" >Delete</button>
+    </div>`
+           
       counter++ 
   });
+ 
+
+  const deleteBtns = document.getElementsByClassName('deleteBtn')
+
+  for (var i = 0; i < deleteBtns.length; i++) {
+    const fileContainer = await document.getElementById('deleteFileContainer'+[i]);
+    const fileTitle = await document.getElementById('dataContent'+[i]).innerHTML;
+    let fileRef = fileRefs[i];
+    let fileName = fileNames[i];
+    const storageRef = sRef(storage, 'Files/' + fileName);
+    
   
+    deleteBtns[i].onclick = async function() { 
+      const confirmDelete = confirm("Delete: " + fileTitle);
 
+      if(confirmDelete){
+        await deleteDoc(fileRef)
+        .then(()=>{
+          alert('File Deleted')
+          fileContainer.remove()
+        })
+        .catch((error)=>{
+          alert('Deletion Unsuccessful, error: '+ error)
+          return;
+        })
+        
+        getDownloadURL(storageRef).then(
+          () => {
+            deleteObject(storageRef)
+            .catch((error)=>{
+              alert('Deletion of storage file Unsuccessful, error: '+ error)
+              return;
+            })
+          },
+          () => {
+            console.log("File to be deleted is a URL!");
+            return;
+          })
+          .catch((error)=>{
+            alert('Deletion of storage file Unsuccessful, error: '+ error)
+            return;
+        })
+      }
+    }
+  }
 }
-
-
-
-
-
 
 
 // .catch((error) =>{
       //   alert('An error occurred, did not upload: '+ error);
       //   return;
       // });
+
+      

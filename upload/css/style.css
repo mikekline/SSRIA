@@ -35,7 +35,7 @@ h5 {
   align-items: center;
 }
 
-#deleteFileContainer {
+.deleteFileContainer {
   display: flex;
 }
 
@@ -99,7 +99,7 @@ h5 {
 
 #boxcontainer {
   height: auto;
-  width: 500px;
+  min-width: 500px;
   padding: 50px;
   font-size: 16px;
   background-color: lightgray;
@@ -144,7 +144,7 @@ button {
   border-radius: 10px;
 }
 
-#confirm {
+#confirmPage {
   display: none;
   flex-direction: column;
   align-items: center;
