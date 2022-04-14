@@ -4,15 +4,12 @@
 	
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-analytics.js";
 
-  
-  import {getDatabase, ref, set, child, get, update, remove, orderByChild, equalTo, query} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
-
   import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, query as store, where, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js"
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
 
- Redacted
+    Redacted
 
 
   };
@@ -23,8 +20,6 @@
   const app = initializeApp(firebaseConfig);
 
   const analytics = getAnalytics(app);
-
-  const realDB = getDatabase();
 
   const db = getFirestore();
 

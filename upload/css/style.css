@@ -176,6 +176,17 @@ button {
   color: blue;
 }
 
+#loading {
+  margin: 0 200px;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 /******************** multi select checkbox dropdowns ****************************/
 
 .buildingTypologyMultiselect,

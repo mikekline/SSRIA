@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-   Redacted
+    Redacted
 
 
   };
@@ -48,6 +48,7 @@ const deleteForm = document.getElementById('deleteForm');
 const uploadForm = document.getElementById('uploadForm');
 const mainMenu = document.getElementById('mainMenu');
 const addProject = document.getElementById('addProject');
+const loadingElement = document.getElementById('loading');
 const uploadBtn = document.getElementById('upload');
 const deleteMenu = document.getElementById('deleteMenu');
 const deleteBtn = document.getElementById('deleteBtn');
@@ -146,7 +147,7 @@ DesignProcessAll.addEventListener("change", () =>{
 
 
 /*********************************************************Selections and Helpers***************************************************************/
-
+loadingElement.style.visibility = 'hidden';
 
 function GetFileName(file) {
   if(file){
@@ -170,6 +171,12 @@ function ValidateFileTitle(fileTitle){
 function ValidateFileName(fileName){
     let regex = /^[a-zA-Z0-9_]+$/g
     return (regex.test(fileName));
+}
+
+function ValidateURL(URLTest){
+  if (URLTest.includes('https://')) {
+    return true
+  }
 }
 
 
@@ -230,40 +237,60 @@ async function TestForExistingFile(URL, uploadFile){
 
 
 function checkFileToBeUploaded(URL, fileName, fileTitle){
+  let URLToDisplay = null;
+
+  if (files[0]==undefined){
+    if (!ValidateURL(URL)){
+      alert(`URL must conatin https:// at the begining!`);
+      return;
+    }
+    URLToDisplay = URL
+  } else {
+    URLToDisplay = fileURL
+  }
+
+  
+
+  if(!(fileTitleRef.value)){
+    alert("Please add a Title for the file!");
+    return;
+  }
+
+  uploadForm.style.display = "none";
+  confirmPage.style.display = "flex";
+
+  
   const projectName = projectList.value;
   const docType = documentType.value;
-  let check=false;
   const checkboxValues = []
   const tags = [projectName, docType, checkboxValues];
-  const tagsToUpload=[].concat.apply([], tags);
-  const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
-  const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
   
   checkboxes.forEach((checkbox) => {
     checkboxValues.push(checkbox.value);
+    checkbox.checked = false
   })
+
+  const tagsToUpload=[].concat.apply([], tags);
+  const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
+  const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
   
-  uploadForm.style.display = "none";
-  confirmPage.style.display = "flex";
-
-
   
-   
-    console.log('test2: '+ fileURL)
 
-    // confirmData.innerHTML = `
-    //   <h3 class='dataHeader'>File Title</h3>
-    //   <p class='datacontent'>${fileTitle}</p>
-    //   <h3 class='dataHeader'>File Name</h3>
-    //   <p class='datacontent'>${fileName}</p>
-    //   <h3 class='dataHeader'>File URL</h3>
-    //   <P><a class='datacontent' href="${URL}" target="_blank" rel="noopener noreferrer">${URL}</a></p>
-    //   <h3 class='dataHeader'>Document Type</h3>
-    //   <p class='datacontent'>${docType}</p>
-    //   <h3 class='dataHeader'>Tags for Files</h3>
-    //   <p class='datacontent'>${filteredTagsToDisplay}</p>
-    // `;
+
+
+    confirmData.innerHTML = `
+      <h3 class='dataHeader'>File Title</h3>
+      <p class='datacontent'>${fileTitle}</p>
+      <h3 class='dataHeader'>Project</h3>
+      <p class='datacontent'>${projectName}</p>
+      <h3 class='dataHeader'>File or URL to be uploaded</h3>
+      <P><a class='datacontent' href="${URLToDisplay}" target="_blank" rel="noopener noreferrer">${fileName}</a></p>
+      <h3 class='dataHeader'>Document Type</h3>
+      <p class='datacontent'>${docType}</p>
+      <h3 class='dataHeader'>Tags for Files</h3>
+      <p class='datacontent'>${filteredTagsToDisplay}</p>
+    `;
 
     const cancel = () => {
       uploadForm.style.display = "block";
@@ -271,20 +298,17 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
       return
     }
 
-    const okay = async () => {
-      uploadForm.style.display = "block";
-      confirmPage.style.display = "none";
-      saveFileURLtoDB(URL, fileName, fileTitle);
-    }
+   
 
   cancelBtn.onclick = cancel;
-  okBtn.onclick = okay;
+  
 
   allDropdownsCheckboxes.forEach((countainer)=>{
     countainer.style.display = "none";
   })
   fileTitleRef.value = '';
   videoURLRef.value = '';
+  fileInput.value = '';
 }
 
 
@@ -293,9 +317,7 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 
 async function Upload(e){
   e.preventDefault();
-  let fileName ='';
-  let fileToUpload = '';
-  let fileNameOnly = GetFileName(files[0])
+  
   
   
   if(projectList.value == 0){
@@ -308,78 +330,98 @@ async function Upload(e){
     alert(`File title can't contain a forward slash!`);
     return;
    }
+
+   if((files[0]==undefined) && (videoURLRef.value == '')){
+    alert("Please add a file or video url to be uploaded!");
+    return;
+  }
  
   if(!(files[0]==undefined) && !(videoURLRef.value == '')){
     alert('There can be only one or the other! Either a Video url or a file to upload!')
+    videoURLRef.value = '';
     fileInput.value = '';
     return;
   }
-
+  
   
   if (files[0]==undefined){
-
-    let videoURL = videoURLRef.value; 
-     checkFileToBeUploaded(videoURL, videoURL, fileTitleRef.value);
+    let videoURL = videoURLRef.value;
+    
+    const okay = async (fileTitle) => {
+      uploadForm.style.display = "block";
+      confirmPage.style.display = "none";
+      saveFileURLtoDB(videoURL, videoURL, fileTitle);
+      loadingElement.style.visibility = 'visible';
+    } 
+    okBtn.onclick = okay.bind(okBtn, fileTitleRef.value);
+    checkFileToBeUploaded(videoURL, videoURL, fileTitleRef.value);
 
   } else {
-    fileName = files[0].name;
-    fileToUpload = files[0];
-   
+
+    let fileName = files[0].name;
+    let fileToUpload = files[0];
+    let fileNameOnly = GetFileName(files[0])
     
-     if (!ValidateFileName(fileNameOnly)){
+    if (!ValidateFileName(fileNameOnly)){
       alert(`File name can't contain spaces or any special characters, except for Underscore!`);
       fileInput.value = '';
       return;
-     }
-
-
-
-    const metaData = {
-      contentType: fileToUpload.type
-    };
-
-
-    
-
-    const storageRef = sRef(storage, 'Files/'+ fileName);
-
-    
-    getDownloadURL(storageRef).then(onResolve, onNotFound);
-
-    function onResolve(foundURL) {
-      alert("File already exists! Please choose a differant one!");
-      fileInput.value = '';
-      return;
     }
-  
 
-    function onNotFound() {
-      const uploadTask = uploadBytesResumable(storageRef, fileToUpload, metaData);
+    const okay = async (fileTitle) => {
+      uploadForm.style.display = "block";
+      confirmPage.style.display = "none";
 
-      uploadTask.on('state-changed', (snapshot) => {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          progressIndicator1.innerHTML = "Uploaded: " + progress + "%";
-          progressIndicator2.style.display = 'block';
-          progressIndicator2.value =  progress;
+      const metaData = {
+        contentType: fileToUpload.type
+      };
+
+      const storageRef = sRef(storage, 'Files/'+ fileName);
+
+      
+      getDownloadURL(storageRef).then(
+
+        () => {
+          alert("File already exists! Please choose a differant one!");
           fileInput.value = '';
-          
-          setTimeout(function(){
-            progressIndicator1.innerHTML = '';
-            progressIndicator2.style.display = 'none';
-          }, 2100);
+          return;
         },
-        (error) => {
-          alert("error: file not uploaded!");
-        },
-        ()=>{
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+        () => {
+          const uploadTask = uploadBytesResumable(storageRef, fileToUpload, metaData);
 
-            checkFileToBeUploaded(downloadURL, fileName, fileTitleRef.value);
+          uploadTask.on('state-changed', (snapshot) => {
+              let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progressIndicator1.innerHTML = "Uploaded: " + progress + "%";
+              progressIndicator2.style.display = 'block';
+              progressIndicator2.value =  progress;
+              fileInput.value = '';
+              
+              setTimeout(function(){
+                progressIndicator1.innerHTML = '';
+                progressIndicator2.style.display = 'none';
+              }, 2100);
+            },
+            (error) => {
+              alert("error: file not uploaded!");
+            },
+            ()=>{
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{  
+                
+                
+              
+              saveFileURLtoDB(downloadURL, fileName, fileTitle);
+                
 
-          })
-        }
-      );
-    }
+              })
+            }
+          );
+        }).catch((error)=>{
+          alert('File not uploaded, error: '+ error)
+          return;
+      });
+    } 
+    okBtn.onclick = okay.bind(okBtn, fileTitleRef.value);
+    checkFileToBeUploaded(fileName, fileName, fileTitleRef.value);
   }
 };
 
@@ -446,7 +488,6 @@ window.onload = () => {
       await setDoc(ref, {
           ProjectName: projectNameUpload,
           ProjectURL: projectWebsiteUpload,
-          // counter: 0
         },
         {
           merge: true
@@ -471,14 +512,7 @@ createProject.onclick = addProjectName;
 
 
 async function saveFileURLtoDB (URL, fileName, fileTitle){
-  if(!(fileTitle)){
-    alert("Please add a Title for the file!");
-    return;
-  }
-  if(!(URL)){
-    alert("Please add a file or video url to be uploaded!");
-    return;
-  }
+  
   
   const projectName = projectList.value;
   const docType = documentType.value;
@@ -526,6 +560,9 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
     }
   )
   .then(()=>{
+    setTimeout(function(){
+      loadingElement.style.visibility = 'hidden';
+    }, 500);
     alert('File was uploaded!');
   })
   .catch((error) =>{
