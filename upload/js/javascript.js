@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-    Redacted
+  Redacted
 
 
   };
@@ -668,6 +668,8 @@ const deletePage = () => {
 }
 
 const returnToMainMenu = () => {
+  projectName.value = '';
+  projectWebsite.value = '';
   fileTitleRef.value = '';
   videoURLRef.value = '';
   filestoBeDeleted.innerHTML = '';

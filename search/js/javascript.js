@@ -130,7 +130,7 @@ async function getProjectNames(){
 
   projects.forEach((documentRef) => {
     const projectNameRef = documentRef.data().ProjectName;    
-    projectName.push(projectNameRef);
+    projectNames.push(projectNameRef);
   })
 
   return projectNames;
