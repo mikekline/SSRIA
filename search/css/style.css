@@ -132,7 +132,7 @@ h5 {
   visibility: hidden;
   margin-top: 100px;
   inline-size: 500px;
-  word-break: break-all;
+  word-break: normal;
   /* height: auto; */
 
   /* background-color: steelblue;

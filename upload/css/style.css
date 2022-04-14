@@ -1,9 +1,14 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  height: 100%;
 }
 
 h1 {
@@ -21,6 +26,14 @@ h3 {
 
 h5 {
   margin-bottom: 5px;
+}
+
+#mainCountainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 #addProjectForm {
@@ -155,7 +168,7 @@ button {
   flex-direction: column;
   align-items: center;
   inline-size: 500px;
-  word-break: break-all;
+  word-break: normal;
 }
 
 #confirmButtonContainer {
@@ -185,6 +198,44 @@ button {
   50% {
     opacity: 0;
   }
+}
+
+#alertBackground {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+#alertBox,
+#confirmBox {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 125px;
+  width: 450px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.alertHeader {
+  align-self: center;
+  margin-bottom: 15px;
+}
+
+.alertContent {
+  align-self: center;
+  margin-bottom: 10px;
+  font-size: small;
 }
 
 /******************** multi select checkbox dropdowns ****************************/

@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-  Redacted
+Redacted
 
 
   };
@@ -86,7 +86,10 @@ const MechanicalElectricalAll = document.getElementById("MechanicalElectricalAll
 const MechanicalElectrical = document.getElementsByName("MechanicalElectrical");
 const DesignProcessAll = document.getElementById("DesignProcessAll");
 const DesignProcess = document.getElementsByName("DesignProcess");
-
+const alertContent = document.getElementById("alertContent");
+const alertBackground = document.getElementById("alertBackground");
+const alertBox = document.getElementById("alertBox");
+const alertBtn = document.getElementById("alertBtn");
 
 const allDropdownsCheckboxes = [
   buildingTypologycheckboxes,
@@ -218,7 +221,7 @@ async function TestForExistingFile(URL, uploadFile){
       }
       
       if (result.includes(true)){
-        alert('File already exists! Please choose a differant one!')
+        Alert('File already exists! Please choose a differant one!')
         shouldSkip = true;
       }else{
         uploadFile()
@@ -231,17 +234,12 @@ async function TestForExistingFile(URL, uploadFile){
 
 
 
-
-
-
-
-
 function checkFileToBeUploaded(URL, fileName, fileTitle){
   let URLToDisplay = null;
 
   if (files[0]==undefined){
     if (!ValidateURL(URL)){
-      alert(`URL must conatin https:// at the begining!`);
+      Alert(`URL must conatin https:// at the begining!`);
       return;
     }
     URLToDisplay = URL
@@ -252,7 +250,7 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
   
 
   if(!(fileTitleRef.value)){
-    alert("Please add a Title for the file!");
+    Alert("Please add a Title for the file!");
     return;
   }
 
@@ -312,6 +310,31 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 }
 
 
+
+
+function Alert(alertText){
+  alertContent.innerHTML = alertText;
+  alertBackground.style.display = "flex";
+  alertBox.style.display = "flex";
+  const alertOk = () => {
+    alertBackground.style.display = "none";
+    alertBox.style.display = "none";
+    projectName.value = '';
+    projectWebsite.value = '';
+    fileTitleRef.value = '';
+    videoURLRef.value = '';
+    fileInput.value = '';
+    let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+  
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false
+    })
+  }
+  alertBtn.onclick = alertOk
+  return;
+}
+
+
 /*************************************Uploading files to Cloud Storage and video url to Database*********************************************/
 
 
@@ -321,23 +344,23 @@ async function Upload(e){
   
   
   if(projectList.value == 0){
-    alert('Please add a project');
+    Alert('Please add a project');
     document.getElementById("btnUpload").disabled = true;
     return;
   }
 
   if (!ValidateFileTitle(fileTitleRef.value)){
-    alert(`File title can't contain a forward slash!`);
+    Alert(`File title can't contain a forward slash!`);
     return;
    }
 
    if((files[0]==undefined) && (videoURLRef.value == '')){
-    alert("Please add a file or video url to be uploaded!");
+    Alert("Please add a file or video url to be uploaded!");
     return;
   }
  
   if(!(files[0]==undefined) && !(videoURLRef.value == '')){
-    alert('There can be only one or the other! Either a Video url or a file to upload!')
+    Alert('There can be only one or the other! Either a Video url or a file to upload!')
     videoURLRef.value = '';
     fileInput.value = '';
     return;
@@ -363,7 +386,7 @@ async function Upload(e){
     let fileNameOnly = GetFileName(files[0])
     
     if (!ValidateFileName(fileNameOnly)){
-      alert(`File name can't contain spaces or any special characters, except for Underscore!`);
+      Alert(`File name can't contain spaces or any special characters, except for Underscore!`);
       fileInput.value = '';
       return;
     }
@@ -382,7 +405,7 @@ async function Upload(e){
       getDownloadURL(storageRef).then(
 
         () => {
-          alert("File already exists! Please choose a differant one!");
+          Alert("File already exists! Please choose a differant one!");
           fileInput.value = '';
           return;
         },
@@ -402,7 +425,7 @@ async function Upload(e){
               }, 2100);
             },
             (error) => {
-              alert("error: file not uploaded!");
+              Alert("error: file not uploaded!");
             },
             ()=>{
               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{  
@@ -416,7 +439,7 @@ async function Upload(e){
             }
           );
         }).catch((error)=>{
-          alert('File not uploaded, error: '+ error)
+          Alert('File not uploaded, error: '+ error)
           return;
       });
     } 
@@ -465,10 +488,10 @@ window.onload = () => {
   
 
   if(!ValidateProjectName() || projectNameUpload == ''){
-    alert(`Project name can't contain "spaces", ".", "#", "$", "[", or "]"`);
+    Alert(`Project name can't contain "spaces", ".", "#", "$", "[", or "]"`);
     return;
   }else if (projectWebsiteUpload == ''){
-    alert ('Please add a Project Website');
+    Alert ('Please add a Project Website');
     return;
   }
 
@@ -478,7 +501,7 @@ window.onload = () => {
 
   
   if(docSnapshot.exists()){
-    alert('Project already exists, Please enter another name!')
+    Alert('Project already exists, Please enter another name!')
   } else {
  
 
@@ -494,12 +517,12 @@ window.onload = () => {
         }
       )
       .then(()=>{
-        alert(projectNameUpload + ' was added');
+        Alert(projectNameUpload + ' was added');
         projectName.value = '';
         projectWebsite.value = '';
       })
       .catch((error)=>{
-        alert("Project was not added: " + error)
+        Alert("Project was not added: " + error)
       })
     }
     
@@ -546,7 +569,7 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
  async function uploadFile(){
   if(docSnapshot.exists()){
-    alert('This Title already exists, Please enter another Title name!')
+    Alert('This Title already exists, Please enter another Title name!')
     return
 
   } else {
@@ -563,10 +586,10 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
     setTimeout(function(){
       loadingElement.style.visibility = 'hidden';
     }, 500);
-    alert('File was uploaded!');
+    Alert('File was uploaded!');
   })
   .catch((error) =>{
-    alert('An error occurred, did not upload file: '+ error);
+    Alert('An error occurred, did not upload file: '+ error);
   });
    
   }
@@ -736,11 +759,11 @@ async function deleteFiles () {
       if(confirmDelete){
         await deleteDoc(fileRef)
         .then(()=>{
-          alert('File Deleted')
+          Alert('File Deleted')
           fileContainer.remove()
         })
         .catch((error)=>{
-          alert('Deletion Unsuccessful, error: '+ error)
+          Alert('Deletion Unsuccessful, error: '+ error)
           return;
         })
         
@@ -748,7 +771,7 @@ async function deleteFiles () {
           () => {
             deleteObject(storageRef)
             .catch((error)=>{
-              alert('Deletion of storage file Unsuccessful, error: '+ error)
+              Alert('Deletion of storage file Unsuccessful, error: '+ error)
               return;
             })
           },
@@ -757,7 +780,7 @@ async function deleteFiles () {
             return;
           })
           .catch((error)=>{
-            alert('Deletion of storage file Unsuccessful, error: '+ error)
+            Alert('Deletion of storage file Unsuccessful, error: '+ error)
             return;
         })
       }
