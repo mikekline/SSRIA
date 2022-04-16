@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-Redacted
+  Redacted
 
 
   };
@@ -90,6 +90,10 @@ const alertContent = document.getElementById("alertContent");
 const alertBackground = document.getElementById("alertBackground");
 const alertBox = document.getElementById("alertBox");
 const alertBtn = document.getElementById("alertBtn");
+const confirmCancel = document.getElementById("confirmCancel");
+const confirmOk = document.getElementById("confirmOk");
+const confirmContent = document.getElementById("confirmContent");
+const confirmBox = document.getElementById("confirmBox");
 
 const allDropdownsCheckboxes = [
   buildingTypologycheckboxes,
@@ -335,13 +339,38 @@ function Alert(alertText){
 }
 
 
+
+
+
+
+function Confirm(confirmText){
+  confirmContent.innerHTML = confirmText
+  alertBackground.style.display = "flex";
+  confirmBox.style.display = "flex";
+
+}
+
+function clearForms(){
+  alertBackground.style.display = "none";
+  alertBox.style.display = "none";
+  confirmBox.style.display = "none";
+  projectName.value = '';
+  projectWebsite.value = '';
+  fileTitleRef.value = '';
+  videoURLRef.value = '';
+  fileInput.value = '';
+  let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+checkboxes.forEach((checkbox) => {
+  checkbox.checked = false
+})
+}
+
 /*************************************Uploading files to Cloud Storage and video url to Database*********************************************/
 
 
 async function Upload(e){
   e.preventDefault();
-  
-  
   
   if(projectList.value == 0){
     Alert('Please add a project');
@@ -482,7 +511,7 @@ window.onload = () => {
 
 
 
- async function addProjectName()  {
+async function addProjectName()  {
   let projectNameUpload = projectName.value;
   let projectWebsiteUpload = projectWebsite.value;
   
@@ -505,29 +534,39 @@ window.onload = () => {
   } else {
  
 
-    const confirmProject = confirm("Project to be added: " + projectNameUpload + " " + projectWebsiteUpload);
+    // const confirmProject = confirm("Project to be added: " + projectNameUpload + " " + projectWebsiteUpload);0000000000000000000000000000000000000000000000000000000000000000
 
-    if(confirmProject){
-      await setDoc(ref, {
-          ProjectName: projectNameUpload,
-          ProjectURL: projectWebsiteUpload,
-        },
-        {
-          merge: true
-        }
-      )
-      .then(()=>{
-        Alert(projectNameUpload + ' was added');
-        projectName.value = '';
-        projectWebsite.value = '';
-      })
-      .catch((error)=>{
-        Alert("Project was not added: " + error)
-      })
-    }
+    Confirm("<h4>Project to be added: </h4>" + "<br/>" + projectNameUpload + "<br/>" + projectWebsiteUpload)
+
+    confirmOk.addEventListener('click', async () => {
+      
+        await setDoc(ref, {
+            ProjectName: projectNameUpload,
+            ProjectURL: projectWebsiteUpload,
+          },
+          {
+            merge: true
+          }
+        )
+        .then(()=>{
+          clearForms();
+          Alert(projectNameUpload + ' was added');
+        })
+        .catch((error)=>{
+          clearForms();
+          Alert("Project was not added: " + error)
+        })
+    })
+
+
+
+
     
     getProjectNameList();
   }
+  confirmCancel.addEventListener('click', () => {
+    clearForms();
+  })
 };
 
 createProject.onclick = addProjectName;
@@ -753,37 +792,45 @@ async function deleteFiles () {
     const storageRef = sRef(storage, 'Files/' + fileName);
     
   
-    deleteBtns[i].onclick = async function() { 
-      const confirmDelete = confirm("Delete: " + fileTitle);
+    deleteBtns[i].onclick =  async function() { 
+      Confirm("Delete: " + fileTitle)
 
-      if(confirmDelete){
-        await deleteDoc(fileRef)
-        .then(()=>{
-          Alert('File Deleted')
-          fileContainer.remove()
-        })
-        .catch((error)=>{
-          Alert('Deletion Unsuccessful, error: '+ error)
-          return;
-        })
+      confirmOk.addEventListener('click', async () => {
         
-        getDownloadURL(storageRef).then(
-          () => {
-            deleteObject(storageRef)
-            .catch((error)=>{
-              Alert('Deletion of storage file Unsuccessful, error: '+ error)
-              return;
-            })
-          },
-          () => {
-            console.log("File to be deleted is a URL!");
-            return;
+          await deleteDoc(fileRef)
+          .then(()=>{
+            clearForms();
+            Alert('File Deleted')
+            fileContainer.remove()
           })
           .catch((error)=>{
-            Alert('Deletion of storage file Unsuccessful, error: '+ error)
+            clearForms();
+            Alert('Deletion Unsuccessful, error: '+ error)
             return;
-        })
-      }
+          })
+          
+          getDownloadURL(storageRef).then(
+            () => {
+              deleteObject(storageRef)
+              .catch((error)=>{
+                clearForms();
+                Alert('Deletion of storage file Unsuccessful, error: '+ error)
+                return;
+              })
+            },
+            () => {
+              console.log("File to be deleted is a URL!");
+              return;
+            })
+            .catch((error)=>{
+              clearForms();
+              Alert('Deletion of storage file Unsuccessful, error: '+ error)
+              return;
+          })
+      })
+      confirmCancel.addEventListener('click', () => {
+        clearForms();
+      })
     }
   }
 }
