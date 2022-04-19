@@ -8,8 +8,7 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-
-    Redacted
+Redacted
 
 
   };
@@ -205,14 +204,14 @@ async function getData(e){
 
                   if(includeDocumentType.indexOf(file.documentType) == -1){
                     includeDocumentType.push(file.documentType)
-                    displayData.innerHTML += `<h2 id='documentTypeHeader'>${file.documentType}</h2>`;
+                    // displayData.innerHTML += `<h2 id='documentTypeHeader'>${file.documentType}</h2>`;
                   
                    
                   }
 
                   includeDocumentType.forEach((type)=>{
                     if (type==file.documentType){
-                      displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
+                      // displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
                       }
                   })
 
@@ -234,6 +233,8 @@ async function getData(e){
         
       }
       getfileRef().then(async ()=>{
+        const test = await includeDocumentType
+        displayData.innerHTML +=test
         if (await displayData.childNodes.length == 0){
 
           websiteContainer.style.visibility = "hidden";
@@ -252,6 +253,7 @@ async function getData(e){
     setTimeout(function(){
       loadingElement.style.visibility = 'hidden';
     }, 500);
+    
 }
 
 getDataForm.onsubmit = getData;
