@@ -8,7 +8,8 @@
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-Redacted
+
+  Redacted
 
 
   };
@@ -180,6 +181,7 @@ async function getData(e){
 
     eachProject.forEach((collectionRef)=>{
       async function getfileRef(){
+        
         const snapshotRef = doc(db, "Projects", collectionRef);
         const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));
         const project = await getDoc(snapshotRef);
@@ -199,24 +201,27 @@ async function getData(e){
                 if(includeFile.indexOf(file.fileTitle) == -1) {
                   includeFile.push(file.fileTitle)
 
-                
-
+                  
 
                   if(includeDocumentType.indexOf(file.documentType) == -1){
                     includeDocumentType.push(file.documentType)
-                    // displayData.innerHTML += `<h2 id='documentTypeHeader'>${file.documentType}</h2>`;
+                    displayData.innerHTML += `
+                      <h2 id='documentTypeHeader'>${file.documentType}</h2>
+                      <div id='display${file.documentType}'></div>
+                    `;
+                  }
                   
                    
-                  }
-
+                 
                   includeDocumentType.forEach((type)=>{
+                    const displayDocument = document.getElementById('display'+type)
                     if (type==file.documentType){
-                      // displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
-                      }
+                      displayDocument.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
+                    }
                   })
 
-                  //use includes, but must iterate over many includes here or above
-                  // displayData.innerHTML += `<a id='data' href='${file.fileURL}' target="_blank" rel="noopener noreferrer">${file.fileTitle}</a>`;
+
+
                   if(includeWebsite.indexOf(websiteURL) == -1){
                     includeWebsite.push(websiteURL)
                     websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target="_blank" rel="noopener noreferrer">${websiteURL}</a>`;
@@ -232,9 +237,7 @@ async function getData(e){
         })
         
       }
-      getfileRef().then(async ()=>{
-        const test = await includeDocumentType
-        displayData.innerHTML +=test
+      getfileRef().then(async (includeDocumentType)=>{
         if (await displayData.childNodes.length == 0){
 
           websiteContainer.style.visibility = "hidden";
