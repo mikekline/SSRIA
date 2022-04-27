@@ -10,40 +10,16 @@
 	</head>
 
 	<body>
-		<div id="mainCountainer"> 
 
+		<!----------------------- container that holds all of the content for alignment --------------------->
+		<div id="mainCountainer"> 
 			<h1>Resource Library Upload</h1>
 
-
-
-
-			<!-- <div id="login">
-				<div class="header">
-					<h1>Getting Started with Firebase Auth</h1>
-				</div>
-				<form>
-					<div class="group">
-						<input id="txtEmail" type="email">
-						<label>Email</label>
-					</div>
-					<div class="group">
-						<input id="txtPassword" type="password">
-						<label>Password</label>
-					</div>
-					<div id="divLoginError" class="group">
-						<div id="lblLoginErrorMessage" class="errorlabel"></div>
-					</div>
-					<button id="btnLogin" type="button" class="button buttonBlue">Log in</button>
-					<button id="btnSignup" type="button" class="button buttonBlue">Sign up</button>
-				</form>
-			</div> -->
-
-
-
-
-		
-
+			<!-------------------------------- Main content box ---------------------------------------->
 			<div id="boxcontainer">
+
+
+				<!--------------- Main menu ------------------>
 				<div id="mainMenu">
 					<h2>Main Menu</h2>
 					<button id="addProject" class="menuBtn" type="submit">Add a Project</button>
@@ -51,6 +27,11 @@
 					<button id="deleteMenu" class="menuBtn" type="submit">Delete a File</button>
 				</div>
 
+
+
+
+
+				<!--------------- Add a project page------------------>
 				<form id='addProjectForm'>
 					<h2>Add a Project</h2>
 					<label for="projectName">Project Name:
@@ -66,12 +47,19 @@
 						</div>
 				</form>
 
+
+
+
+
+				<!--------------- Upload a file page------------------>
 				<form id='uploadForm'>
 					<h2>File to be uploaded</h2>
+
 					<div>
 						Select a Project: 
 						<select id='projects' name=”projects”></select>
 					</div>
+
 					Document Type:
 					<select name="documentType" id="documentType">
 						<option value="Database">Database</option>
@@ -84,7 +72,9 @@
 						<option value="Photos">Photos</option>
 						<option value="Renderings/Drawings">Renderings/Drawings</option>
 					</select>
+
 					<br/>
+
 					<label for="fileTitle">File Title:
 						<input type="text" id="fileTitle" placeholder="Enter a title for the file"/>
 					</label>
@@ -103,8 +93,7 @@
 					<p class="addFile">(Add only one)</p>	
 
 
-
-					<div id="buildingTypes">
+					<!-- <div id="buildingTypes">
 						<h3 id="h3">Building Types:</h3>
 						<div class="buildingTypesMultiselect">
 							<div id="buildingTypesSelectBox" >
@@ -114,8 +103,6 @@
 								<div class="buildingTypesOverSelect"></div>
 							</div>
 							<div id="buildingTypesCheckboxes">
-								<label for="buildingTypesAll">
-									<input type="checkbox" id="buildingTypesAll" value="" />All</label> 
 								<label for="SingleFamilyResidential">
 									<input type="checkbox" id="SingleFamilyResidential" value="SingleFamilyResidential" name="buildingTypes" />Single Family Residential</label>
 								<label for="MultiFamilyResidential">
@@ -128,274 +115,81 @@
 									<input type="checkbox" id="SchoolCommunityCentre" value="SchoolCommunityCentre" name="buildingTypes" />School/Community Centre</label>
 							</div>
 						</div>
-					</div> 
+					</div>  -->
 
-					<div id="BuildingSystems">
-						<h3 id="h3">Building Systems:</h3>
-						<div class="BuildingSystemsMultiselect">
-							<div id="BuildingSystemsSelectBox" >
-								<select>
-									<option>Select all that apply</option>
-								</select>
-								<div class="BuildingSystemsOverSelect"></div>
-							</div>
-							<div id="BuildingSystemsCheckboxes">
-								<label for="BuildingSystemsAll">
-									<input type="checkbox" id="BuildingSystemsAll" value="" />All</label> 
-								<label for="BuildingEnvelope">
-									<input type="checkbox" id="BuildingEnvelope" value="BuildingEnvelope" name="BuildingSystems" />Building Envelope</label>
-								<label for="EnergyMonitoring">
-									<input type="checkbox" id="EnergyMonitoring" value="EnergyMonitoring" name="BuildingSystems" />Energy Monitoring</label>
-								<label for="HeatingCooling">
-									<input type="checkbox" id="HeatingCooling" value="HeatingCooling" name="BuildingSystems" />Heating & Cooling</label>
-								<label for="MechanicalElectrical">
-									<input type="checkbox" id="MechanicalElectrical" value="MechanicalElectrical" name="BuildingSystems" />Mechanical & Electrical</label>
-								<label for="RenewableEnergy">
-									<input type="checkbox" id="RenewableEnergy" value="RenewableEnergy" name="BuildingSystems" />Renewable Energy</label>
-							</div>
-						</div>
-					</div> 
+					<h3 id="h3">Building Types:</h3>
+					<select name="buildingTypes" id="buildingTypes">
+						<option value="SingleFamilyResidential">Single Family Residential</option>
+						<option value="MultiFamilyResidential">Multi-Family Residential</option>
+						<option value="LowRiseCommercial">Low-Rise Commercial</option>
+						<option value="HiRiseCommercial">Hi-Rise Commercial</option>
+						<option value="SchoolCommunityCentre">School/Community Centre</option>
+					</select>
 
-					<div id="PopularSubjects">
-						<h3 id="h3">Popular Subjects:</h3>
-						<div class="PopularSubjectsMultiselect">
-							<div id="PopularSubjectsSelectBox" >
-								<select>
-									<option>Select all that apply</option>
-								</select>
-								<div class="PopularSubjectsOverSelect"></div>
-							</div>
-							<div id="PopularSubjectsCheckboxes">
-								<label for="PopularSubjectsAll">
-									<input type="checkbox" id="PopularSubjectsAll" value="" />All</label> 
-								<label for="DeepEnergyRetrofit">
-									<input type="checkbox" id="DeepEnergyRetrofit" value="DeepEnergyRetrofit" name="PopularSubjects" />Deep Energy Retrofit</label>
-								<label for="EmbodiedCarbon">
-									<input type="checkbox" id="EmbodiedCarbon" value="EmbodiedCarbon" name="PopularSubjects" />Embodied Carbon</label>
-								<label for="ModularPanelizedConstruction">
-									<input type="checkbox" id="ModularPanelizedConstruction" value="ModularPanelizedConstruction" name="PopularSubjects" />Modular & Panelized Construction</label>
-								<label for="NetZeroEnergy">
-									<input type="checkbox" id="NetZeroEnergy" value="NetZeroEnergy" name="PopularSubjects" />Net-Zero Energy</label>
-								<label for="NorthernRemoteConstruction">
-									<input type="checkbox" id="NorthernRemoteConstruction" value="NorthernRemoteConstruction" name="PopularSubjects" />Northern & Remote Construction</label>
-								<label for="PassiveHouse">
-									<input type="checkbox" id="PassiveHouse" value="PassiveHouse" name="PopularSubjects" />Passive House</label>
-							</div>
-						</div>
-					</div> 
-					
-					<!-- <div>
-						<div id="buildingSector">
-							<h3>Building sector</h3>
-							<label  for="Residential">
-								<input type="checkbox" id="Residential" value="Residential"/>Residential</label>
-							<label for="Commercial">
-								<input type="checkbox" id="Commercial" value="Commercial"/>Commercial</label>
-							<label for="Industrial">
-								<input type="checkbox" id="Industrial" value="Industrial"/>Industrial</label>
-							<label for="Institutional">
-								<input type="checkbox" id="Institutional" value="Institutional"/>Institutional</label>   
-						</div>
-						<div id="constructionType">
-							<h3 id="h3">Construction Type</h3>
-							<label for="New">
-								<input type="checkbox" id="New" value="New"/>New</label>
-							<label for="Retrofit">
-								<input type="checkbox" id="Retrofit" value="Retrofit"/>Retrofit</label>   
-						</div>
-
-
-
-
-						
-							
-							
-									
-						<div id="buildingTypology">
-							<h3 id="h3">Building Typology</h3>
-							<div class="buildingTypologyMultiselect">
-								<div id="buildingTypologySelectBox" >
-									<select>
-										<option>Select all that apply</option>
-									</select>
-									<div class="buildingTypologyOverSelect"></div>
+					<!----- Checkboxes ----->
+					<div id="checkboxContainer">
+						<div id="BuildingSystems">
+							<h3 id="h3">Building Systems:</h3>
+								<div id="BuildingSystemsCheckboxes">
+									<label for="BuildingSystemsAll">
+										<input type="checkbox" id="BuildingSystemsAll" value="" />All</label> 
+									<label for="BuildingEnvelope">
+										<input type="checkbox" id="BuildingEnvelope" value="BuildingEnvelope" name="BuildingSystems" />Building Envelope</label>
+									<label for="EnergyMonitoring">
+										<input type="checkbox" id="EnergyMonitoring" value="EnergyMonitoring" name="BuildingSystems" />Energy Monitoring</label>
+									<label for="HeatingCooling">
+										<input type="checkbox" id="HeatingCooling" value="HeatingCooling" name="BuildingSystems" />Heating & Cooling</label>
+									<label for="MechanicalElectrical">
+										<input type="checkbox" id="MechanicalElectrical" value="MechanicalElectrical" name="BuildingSystems" />Mechanical & Electrical</label>
+									<label for="RenewableEnergy">
+										<input type="checkbox" id="RenewableEnergy" value="RenewableEnergy" name="BuildingSystems" />Renewable Energy</label>
 								</div>
-								<div id="buildingTypologycheckboxes">
-									<label for="buildingTypologyAll">
-										<input type="checkbox" id="buildingTypologyAll" value="" />All</label> 
-									<label for="Single-Family">
-										<input type="checkbox" id="Single-Family" value="Single-Family" name="buildingTypology" />Single-Family</label>
-									<label for="Multi-Family">
-										<input type="checkbox" id="Multi-Family" value="Multi-Family" name="buildingTypology" />Multi-Family</label>
-									<label for="Agricultural">
-										<input type="checkbox" id="Agricultural" value="Agricultural" name="buildingTypology" />Agricultural</label>
-									<label for="Low-rise">
-										<input type="checkbox" id="Low-rise" value="Low-rise" name="buildingTypology" />Low-rise</label>
-									<label for="Hi-Rise">
-										<input type="checkbox" id="Hi-Rise" value="Hi-Rise" name="buildingTypology" />Hi-Rise</label>
-									<label for="Office">
-										<input type="checkbox" id="Office" value="Office" name="buildingTypology" />Office</label>
-									<label for="School">
-										<input type="checkbox" id="School" value="School" name="buildingTypology" />School</label>
-									<label for="Health">
-										<input type="checkbox" id="Health" value="Health" name="buildingTypology" />Health</label>
-									<label for="Community Centre">
-										<input type="checkbox" id="Community Centre" value="Community Centre" name="buildingTypology" />Community Centre</label>      
-								</div>
-							</div>
 						</div> 
-							
-					
-
-
-
-
-
-						<div id="Region">
-							<h3 id="h3">Region</h3>
-							<label  for="Urban">
-								<input type="checkbox" id="Urban" value="Urban"/>Urban</label>
-							<label for="Remote">
-								<input type="checkbox" id="Remote" value="Remote"/>Remote</label>
-							<label for="Rural">
-								<input type="checkbox" id="Rural" value="Rural"/>Rural</label>
-							<label for="Northern">
-								<input type="checkbox" id="Northern" value="Northern"/>Northern</label>   
-						</div>
+						<div id="PopularSubjects">
+							<h3 id="h3">Popular Subjects:</h3>
+								<div id="PopularSubjectsCheckboxes">
+									<label for="PopularSubjectsAll">
+										<input type="checkbox" id="PopularSubjectsAll" value="" />All</label> 
+									<label for="DeepEnergyRetrofit">
+										<input type="checkbox" id="DeepEnergyRetrofit" value="DeepEnergyRetrofit" name="PopularSubjects" />Deep Energy Retrofit</label>
+									<label for="EmbodiedCarbon">
+										<input type="checkbox" id="EmbodiedCarbon" value="EmbodiedCarbon" name="PopularSubjects" />Embodied Carbon</label>
+									<label for="ModularPanelizedConstruction">
+										<input type="checkbox" id="ModularPanelizedConstruction" value="ModularPanelizedConstruction" name="PopularSubjects" />Modular & Panelized Construction</label>
+									<label for="NetZeroEnergy">
+										<input type="checkbox" id="NetZeroEnergy" value="NetZeroEnergy" name="PopularSubjects" />Net-Zero Energy</label>
+									<label for="NorthernRemoteConstruction">
+										<input type="checkbox" id="NorthernRemoteConstruction" value="NorthernRemoteConstruction" name="PopularSubjects" />Northern & Remote Construction</label>
+									<label for="PassiveHouse">
+										<input type="checkbox" id="PassiveHouse" value="PassiveHouse" name="PopularSubjects" />Passive House</label>
+								</div>
+						</div> 
 					</div>
 
 					<br/>
 
-						
-					<div id="FocusArea">
-						<h3>Focus Area</h3>
-
-						<div id="focusAreaContainer1">
-							<div class="buildingEnvelopeMultiselect">
-								<h5>Building Envelope</h5>
-								<div id="buildingEnvelopeSelectBox" >
-									<select>
-										<option>Select all that apply</option>
-									</select>
-									<div class="buildingEnvelopeOverSelect"></div>
-								</div>
-								<div id="buildingEnvelopecheckboxes">
-									<label for="buildingEnvelopeAll">
-										<input type="checkbox" id="buildingEnvelopeAll" value="" />All</label> 
-									<label for="Walls">
-										<input type="checkbox" id="Walls" value="Walls" name="buildingEnvelope" />Walls</label>
-									<label for="Wallpanels">
-										<input type="checkbox" id="Wallpanels" value="Wall panels" name="buildingEnvelope" />Wall panels</label>
-									<label for="Windows">
-										<input type="checkbox" id="Windows" value="Windows" name="buildingEnvelope" />Windows</label>
-									<label for="Foundation">
-										<input type="checkbox" id="Foundation" value="Foundation" name="buildingEnvelope" />Foundation</label>
-									<label for="Roof">
-										<input type="checkbox" id="Roof" value="Roof" name="buildingEnvelope" />Roof</label>
-									<label for="CurtainWall">
-										<input type="checkbox" id="Curtainwall" value="CurtainWall" name="buildingEnvelope" />Curtain wall</label>  
-								</div>
-							</div>	
-							<div class="HeatingCoolingMultiselect">
-								<h5>Heating & Cooling</h5>
-								<div id="HeatingCoolingSelectBox">
-									<select>
-										<option>Select all that apply</option>
-									</select>
-									<div class="HeatingCoolingOverSelect"></div>
-								</div>
-								<div id="HeatingCoolingcheckboxes">
-									<label for="HeatingCoolingAll">
-										<input type="checkbox" id="HeatingCoolingAll" value="" />All</label> 
-									<label for="AirSourceHeatPump">
-										<input type="checkbox" id="AirSourceHeatPump" value="Air Source Heat Pump" name="HeatingCooling" />Air Source Heat Pump</label>
-									<label for="Boilersystem">
-										<input type="checkbox" id="Geothermal" value="Geothermal" name="HeatingCooling" />Geothermal</label>
-									<label for="GeoPiles">
-										<input type="checkbox" id="GeoPiles" value="Geo Piles" name="HeatingCooling" />Geo Piles</label>
-								</div>
-							</div>			
-						</div>
-
-						<div id="focusAreaContainer2">	
-							<div class="MechanicalElectricalMultiselect">
-								<h5>Mechanical & Electrical</h5>
-								<div id="MechanicalElectricalSelectBox" >
-									<select>
-										<option>Select all that apply</option>
-									</select>
-									<div class="MechanicalElectricalOverSelect"></div>
-								</div>
-								<div id="MechanicalElectricalcheckboxes">
-									<label for="MechanicalElectricalAll">
-										<input type="checkbox" id="MechanicalElectricalAll" value="" />All</label> 
-									<label for="Ventilation">
-										<input type="checkbox" id="Ventilation" value="Ventilation" name="MechanicalElectrical" />Ventilation</label>
-									<label for="Smartcontrols">
-										<input type="checkbox" id="Smartcontrols" value="Smart controls" name="MechanicalElectrical" />Smart controls</label>
-									<label for="MicroCHP">
-										<input type="checkbox" id="MicroCHP" value="Micro CHP" name="MechanicalElectrical" />Micro CHP</label>
-									<label for="HRVERV">
-										<input type="checkbox" id="HRVERV" value="HRVERV" name="MechanicalElectrical" />HRV/ERV</label>
-									<label for="EVCharging">
-										<input type="checkbox" id="EVCharging" value="EV Charging" name="MechanicalElectrical" />EV Charging</label>
-								</div>
-							</div>		
-							<div class="DesignProcessMultiselect">
-								<h5>Design Process</h5>
-								<div id="DesignProcessSelectBox" >
-									<select>
-										<option>Select all that apply</option>
-									</select>
-									<div class="DesignProcessOverSelect"></div>
-								</div>
-								<div id="DesignProcesscheckboxes">
-									<label for="DesignProcessAll">
-										<input type="checkbox" id="DesignProcessAll" value="" />All</label> 
-									<label for="NetZero">
-										<input type="checkbox" id="NetZero" value="NetZero" name="DesignProcess" />Net-zero</label>
-									<label for="PassiveHouse">
-										<input type="checkbox" id="PassiveHouse" value="Passive House" name="DesignProcess" />Passive House</label>
-									<label for="DeepEnergyRetrofit">
-										<input type="checkbox" id="DeepEnergyRetrofit" value="Deep Energy Retrofit" name="DesignProcess" />Deep Energy Retrofit</label>
-									<label for="EmbodiedCarbon">
-										<input type="checkbox" id="EmbodiedCarbon" value="Embodied Carbon" name="DesignProcess" />Embodied Carbon</label>
-									<label for="ModularConstruction">
-										<input type="checkbox" id="ModularConstruction" value="Modular Construction" name="DesignProcess" />Modular Construction</label>
-								</div>
-							</div>
-						</div>
-
-						<div id="RenewableEnergy">
-							<h5>Renewable Energy</h5>
-							<label  for="SolarPV">
-								<input type="checkbox" id="SolarPV" value="Solar PV"/>Solar PV</label>
-							<label for="WindEnergy">
-								<input type="checkbox" id="WindEnergy" value="Wind Energy "/>Wind Energy</label>
-						</div>
-
-						<div id="energyMonitoring">
-							<h5>Energy Monitoring</h5>
-							<label  for="MachineLearning">
-								<input type="checkbox" id="MachineLearning" value="Machine Learning"/>Machine Learning</label>
-							<label for="ArtificialIntelligence">
-								<input type="checkbox" id="ArtificialIntelligence" value="Artificial Intelligence"/>Artificial Intelligence</label>
-						</div>
-					</div>  -->
-
-					<br/>
+					<!------- buttons and uploading progress bar ------>
 					<div class="buttonContainer">
 						<button id="uploadBackMainMenu" type="button">Back to Main Menu</button>
 						<button id="btnUpload" type="submit">Submit</button>
 					</div>
+
 					<div id="progress1"></div>
 					<progress id="progress2" value="0" max="100"></progress>
 					<div id="loading">uploading...</div>
 				</form>
 
+
+
+
+
+
+				<!-- ------------- Confirmation page ---------------- -->
 				<div id="confirmPage">
-					<h2>Confirm File Details to be uploaded</h2>
+					<h2>Confirm File Details to be uploaded</h2 a project>
+
 					<div id="confirmData"></div>
+
 					<div id="confirmButtonContainer">
 						<button id="cancelBtn" class="confirmBtn" type="submit">Cancel</button>
 						<button id="okBtn" class="confirmBtn" type="submit">Ok</button>
@@ -403,6 +197,10 @@
 				</div>
 
 
+
+
+
+				<!-- ------------- Delete files page ---------------- -->
 				<form id='deleteForm'>
 					<h2>Delete Files</h2>
 
@@ -415,15 +213,19 @@
 					
 					<div id="filestoBeDeleted"></div>
 
-						<div class="deletebuttonContainer">
-							<button id="deleteBackMainMenu" type="button">Back to Main Menu</button>
-							<button id="deleteSelectProject" type="button">Select Project</button>
-						</div>
+					<div class="deletebuttonContainer">
+						<button id="deleteBackMainMenu" type="button">Back to Main Menu</button>
+						<button id="deleteSelectProject" type="button">Select Project</button>
+					</div>
 				</form>
 			</div>
-
 		</div>
 
+
+
+
+
+		<!-- ------------- Alert and Confirmation boxes ---------------- -->
 		<div id="alertBackground">
 			<div id="alertBox">
 				<h3 class="alertHeader">Attention</h3>
@@ -439,6 +241,10 @@
 				</div>
 			</div>		
 		</div>
+
+
+
+
 
 		<script type="module" src="js/javascript.js"></script>
 	</body>

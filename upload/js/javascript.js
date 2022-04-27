@@ -4,23 +4,18 @@
 	
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-analytics.js";
 
-  import { getStorage, ref as sRef, uploadBytes, uploadBytesResumable, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-storage.js";
+  import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-storage.js";
 
-  import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
-
-  // import {getAuth, connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, AuthErrorCodes, signOut} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
-
+  import {getFirestore, doc, getDoc, getDocs, setDoc, collection, deleteDoc} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
 
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-Redacted
 
+Redacted
 
   };
   
-
-
 /****************************************************Initialize Firebase****************************************************************/ 
 
   const app = initializeApp(firebaseConfig);
@@ -31,83 +26,6 @@ Redacted
 
   const storage = getStorage();
 
-  // const auth = getAuth(app);
-
-
-/****************************************************************Authentication********************************************************/ 
-
-
-// connectAuthEmulator(auth, "http://localhost:9099");
-// // const addProjectForm = document.getElementById('addProjectForm');
-
-// const showLoginError = (error) => {
-//   divLoginError.style.display = 'block'    
-//   if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
-//     lblLoginErrorMessage.innerHTML = `Wrong password. Try again.`
-//   }
-//   else {
-//     lblLoginErrorMessage.innerHTML = `Error: ${error.message}`      
-//   }
-// }
-
-
-// const createAccount = async () => {
-//   const loginEmail = txtEmail.value;
-//   const loginPassword =txtPassword.value;
-
-//   try {
-//     const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
-//     // console.log(userCredential.user)
-//   }
-//   catch(error) {
-//     console.log(error)
-//     showLoginError(error)
-//   }
-// }
-
-// btnSignup.addEventListener('click', createAccount);
-
-
-
-// const loginEmailPassword = async () => {
-//   const loginEmail = txtEmail.value;
-//   const loginPassword =txtPassword.value;
-
-//   try {
-//     const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-//     // console.log(userCredential.user)
-//   }
-//   catch(error) {
-//     // console.log(error)
-//     showLoginError(error)
-//   }
-// }
-
-// btnLogin.addEventListener('click', loginEmailPassword);
-
-
-// const monitorAuthState = async () => {
-//   onAuthStateChanged(auth, user =>{
-//     if(user){
-//       const test = user.uid
-//       console.log(user)
-//       //display menu
-//       //display login state(user)
-
-//     } else {
-//       //show login form
-//       //not loged in
-//     }
-//   });
-// }
-
-// monitorAuthState();
-
-// // const logout = async () => {
-// //   await signOut();
-// // }
-
-// // btnLogout.addEventListener('click', logout);
 /*******************************************************************Referances********************************************************/ 
 
 
@@ -125,45 +43,24 @@ const addProject = document.getElementById('addProject');
 const ProjectBackMainMenu = document.getElementById('ProjectBackMainMenu');
 //file to be uploaded page
 const documentType = document.getElementById('documentType');
+const buildingTypes = document.getElementById('buildingTypes');
 const fileTitleRef = document.getElementById('fileTitle');
 const videoURLRef = document.getElementById('videoURL');
 const fileInput = document.getElementById('file');
 const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
 //dropdown selectors on upload page
-const buildingTypes = document.getElementsByName("buildingTypes")
+// const buildingTypes = document.getElementsByName("buildingTypes")
 const buildingTypesAll = document.getElementById("buildingTypesAll");
 const buildingTypesSelectBox = document.getElementById("buildingTypesSelectBox");
 const buildingTypesCheckboxes = document.getElementById("buildingTypesCheckboxes");
-
 const BuildingSystems = document.getElementsByName("BuildingSystems")
 const BuildingSystemsAll = document.getElementById("BuildingSystemsAll");
 const BuildingSystemsSelectBox = document.getElementById("BuildingSystemsSelectBox");
 const BuildingSystemsCheckboxes = document.getElementById("BuildingSystemsCheckboxes");
-
 const PopularSubjects = document.getElementsByName("PopularSubjects")
 const PopularSubjectsAll = document.getElementById("PopularSubjectsAll");
 const PopularSubjectsSelectBox = document.getElementById("PopularSubjectsSelectBox");
 const PopularSubjectsCheckboxes = document.getElementById("PopularSubjectsCheckboxes");
-// const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
-// const buildingTypologycheckboxes = document.getElementById('buildingTypologycheckboxes');
-// const buildingEnvelopeSelectBox = document.getElementById('buildingEnvelopeSelectBox');
-// const buildingEnvelopecheckboxes= document.getElementById('buildingEnvelopecheckboxes');
-// const HeatingCoolingSelectBox = document.getElementById('HeatingCoolingSelectBox');
-// const HeatingCoolingcheckboxes = document.getElementById('HeatingCoolingcheckboxes');
-// const MechanicalElectricalSelectBox = document.getElementById('MechanicalElectricalSelectBox');
-// const MechanicalElectricalcheckboxes = document.getElementById("MechanicalElectricalcheckboxes");
-// const DesignProcessSelectBox = document.getElementById('DesignProcessSelectBox');
-// const DesignProcesscheckboxes = document.getElementById('DesignProcesscheckboxes');
-// const buildingTypologyAll = document.getElementById('buildingTypologyAll');
-// const buildingTypology = document.getElementsByName('buildingTypology');
-// const buildingEnvelopeAll = document.getElementById('buildingEnvelopeAll');
-// const buildingEnvelope = document.getElementsByName('buildingEnvelope');
-// const HeatingCoolingAll = document.getElementById('HeatingCoolingAll');
-// const HeatingCooling = document.getElementsByName('HeatingCooling');
-// const MechanicalElectricalAll = document.getElementById('MechanicalElectricalAll');
-// const MechanicalElectrical = document.getElementsByName('MechanicalElectrical');
-// const DesignProcessAll = document.getElementById('DesignProcessAll');
-// const DesignProcess = document.getElementsByName('DesignProcess');
 // file upload confirmation page
 const confirmPage = document.getElementById('confirmPage');
 const confirmData = document.getElementById('confirmData');
@@ -201,68 +98,28 @@ let fileURL = null;
 let checkboxValues = []
 
 const allDropdownsCheckboxes = [
-  buildingTypesCheckboxes,
-  BuildingSystemsCheckboxes,
-  PopularSubjectsCheckboxes
+  buildingTypesCheckboxes
+  // BuildingSystemsCheckboxes,
+  // PopularSubjectsCheckboxes
 ]
 
 const allCheckbox = [
-  buildingTypesAll,
+  // buildingTypesAll,
   BuildingSystemsAll,
   PopularSubjectsAll
 ];
 
 const checkBoxName = [
-  buildingTypes,
+  // buildingTypes,
   BuildingSystems,
   PopularSubjects
 ];
 
 const selectBoxes = [
-  buildingTypesSelectBox,
-  BuildingSystemsSelectBox,
-  PopularSubjectsSelectBox
+  buildingTypesSelectBox
+  // BuildingSystemsSelectBox,
+  // PopularSubjectsSelectBox
 ];
-
-// const allDropdownsCheckboxes = [
-//   buildingTypologycheckboxes,
-//   buildingEnvelopecheckboxes,
-//   HeatingCoolingcheckboxes,
-//   MechanicalElectricalcheckboxes,
-//   DesignProcesscheckboxes,
-// ];
-
-// const allCheckbox = [
-//   buildingTypologyAll,
-//   buildingEnvelopeAll,
-//   HeatingCoolingAll,
-//   MechanicalElectricalAll,
-//   DesignProcessAll
-// ];
-
-// const checkBoxName = [
-//   buildingTypology,
-//   buildingEnvelope,
-//   HeatingCooling,
-//   MechanicalElectrical,
-//   DesignProcess
-// ];
-
-// const selectBoxes = [
-//   buildingTypologySelectBox,
-//   buildingEnvelopeSelectBox,
-//   HeatingCoolingSelectBox,
-//   MechanicalElectricalSelectBox,
-//   DesignProcessSelectBox,
-// ];
-
-// const checkBoxesToBeDisplayed = [
-//   buildingTypologycheckboxes,
-//   buildingEnvelopecheckboxes,
-//   HeatingCoolingcheckboxes,
-//   MechanicalElectricalcheckboxes,
-//   DesignProcesscheckboxes
-// ];
 
 loadingElement.style.visibility = 'hidden';
 
@@ -272,7 +129,7 @@ loadingElement.style.visibility = 'hidden';
 
 
 /**************grabs file when added to form *******/
-fileInput.addEventListener("change", (e) => {
+fileInput.addEventListener('change', (e) => {
   files = e.target.files; 		
   reader.readAsDataURL(files[0]);
 });
@@ -284,7 +141,7 @@ reader.onload = () =>{
 
 /***** when all checkbox is clicked selectes all in drop down menu*/
 for (let i= 0; i<allCheckbox.length; i++){
-  allCheckbox[i].addEventListener("change", () =>{
+  allCheckbox[i].addEventListener('change', () =>{
     checkBoxName[i].forEach((element)=>{
       element.checked = allCheckbox[i].checked;
     });
@@ -333,19 +190,19 @@ deleteBackMainMenu.onclick = returnToMainMenu;
 /*********************************************Functions for Dropdown menu checkboxes********************************************************/
 
 
-for (let i = 0; i<selectBoxes.length; i++){
-  let expanded = false;
+// for (let i = 0; i<selectBoxes.length; i++){
+//   let expanded = false;
 
-  selectBoxes[i].onclick = () => {
-    if (!expanded) {
-      allDropdownsCheckboxes[i].style.display = "block";
-      expanded = true;
-    } else {
-      allDropdownsCheckboxes[i].style.display = "none";
-      expanded = false;
-    }
-  };
-};
+//   selectBoxes[i].onclick = () => {
+//     if (!expanded) {
+//       allDropdownsCheckboxes[i].style.display = "block";
+//       expanded = true;
+//     } else {
+//       allDropdownsCheckboxes[i].style.display = "none";
+//       expanded = false;
+//     }
+//   };
+// };
 
 
 
@@ -361,11 +218,13 @@ function GetFileName(file) {
   };
 };
 
+
 //Project name can not contain "spaces", ".", "#", "$", "[", or "]" check
 function ValidateProjectName(){
   let regex = /[\.#$\s\[\]]/;
   return !(regex.test(projectName.value));
 };
+
 
 //File title can not contain forward slash check
 function ValidateFileTitle(fileTitle){
@@ -373,11 +232,13 @@ function ValidateFileTitle(fileTitle){
   return !(regex.test(fileTitle));
 };
 
+
 //file name can not cotain special characters other than underscore
 function ValidateFileName(fileName){
     let regex = /^[a-zA-Z0-9_]+$/g;
     return (regex.test(fileName));
 };
+
 
 //URL must conatin https:// to be navigatable
 function ValidateURL(URLTest){
@@ -385,6 +246,7 @@ function ValidateURL(URLTest){
     return true;
   };
 };
+
 
 //gets all selected checkmarks and clears all after submiting
 function getCheckmarks(){
@@ -395,11 +257,12 @@ function getCheckmarks(){
   });
 };
 
+
 //displays alert box
 function Alert(alertText){
   alertContent.innerHTML = alertText;
-  alertBackground.style.display = "flex";
-  alertBox.style.display = "flex";
+  alertBackground.style.display = 'flex';
+  alertBox.style.display = 'flex';
   const alertOk = () => {
     clearForms();
   };
@@ -407,76 +270,77 @@ function Alert(alertText){
   return;
 };
 
+
 //displays confirmation box
 function Confirm(confirmText){
   confirmContent.innerHTML = confirmText;
-  alertBackground.style.display = "flex";
-  confirmBox.style.display = "flex";
+  alertBackground.style.display = 'flex';
+  confirmBox.style.display = 'flex';
   // clearForms();
 };
 
+
 //clears all forms, checkmarks and closes all dropdown menus
 function clearForms(){
-  alertBackground.style.display = "none";
-  alertBox.style.display = "none";
-  confirmBox.style.display = "none";
+  alertBackground.style.display = 'none';
+  alertBox.style.display = 'none';
+  confirmBox.style.display = 'none';
   projectName.value = '';
   projectWebsite.value = '';
   fileTitleRef.value = '';
   videoURLRef.value = '';
   fileInput.value = '';
-  allDropdownsCheckboxes.forEach((countainer)=>{
-    countainer.style.display = "none";
-  });
+  filestoBeDeleted.innerHTML = '';
+  // allDropdownsCheckboxes.forEach((countainer)=>{
+  //   countainer.style.display = "none";
+  // });
   getCheckmarks();
 };
 
 
 
-//checks to see if the file or URL has already been uploaded to the database
-async function TestForExistingFile(URL, uploadFile){
-  /*gets project name then gets each file and the file URL Reference */
+//checks to see if the file or URL has already been uploaded to the database if not then uploads file 
+async function TestForExistingFileandUpload(URL, uploadFile){
   const projects = await getDocs(collection(db, "Projects")); 
-  const projectName = []
-  let flag =false
-  let URLtest = []
+  const projectName = [];
+  let flag = false;
+  let URLtest = [];
   let shouldSkip = false;
   
   projects.forEach((documentRef) => {
     const projectNameRef = documentRef.data().ProjectName;    
     projectName.push(projectNameRef);
-  })
-  
+  });
   
   projectName.forEach((collectionRef)=>{
     async function getfileRef(){
       const snapshotRef = doc(db, "Projects", collectionRef);
       const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));     
-      
+      //checks each file's url on database
       docSnapshot.forEach((Snapshot)=>{
         const file = Snapshot.data() 
         if (URL == file.fileURL){
-          flag = true
+          flag = true;
           URLtest.push(flag);
         } else{
-          flag = false
+          flag = false;
           URLtest.push(flag);
         } 
       })
-      return URLtest
+      return URLtest;
     }
-    
-    
+      
     getfileRef().then((result)=>{
+      //if file exists from the check alerts that already exists otherwise if doesn't exist then uploads file
+      //once uploaded or alerted will break loop as file has already been uploaded or the file aready exists 
       if (shouldSkip) {
         return;
       }
-      
       if (result.includes(true)){
-        Alert('File already exists! Please choose a differant one!')
+        Alert('File already exists! Please choose a differant one!');
         shouldSkip = true;
       }else{
-        uploadFile()
+        uploadFile();
         shouldSkip = true;
       }
     })
@@ -485,67 +349,61 @@ async function TestForExistingFile(URL, uploadFile){
 
 
 
-
-
+//Displays all of the file information before uploading
 function checkFileToBeUploaded(URL, fileName, fileTitle){
+  getCheckmarks();
+  uploadForm.style.display = 'none';
+  confirmPage.style.display = 'flex';
+
   let URLToDisplay = null;
-  getCheckmarks()
+  const projectName = projectList.value;
+  const docType = documentType.value;
+  const buildingType = buildingTypes.value;
+  const tags = [projectName, docType, buildingType, checkboxValues];
+  //converts tags to a single array, removes empty elements from all element, and filters to be displayed properly
+  const tagsToUpload=[].concat.apply([], tags);
+  const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
+  const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
+
+  //verifies valid URL
   if (files[0]==undefined){
     if (!ValidateURL(URL)){
       Alert(`URL must conatin https:// at the begining!`);
       return;
     }
-    URLToDisplay = URL
+    URLToDisplay = URL;
   } else {
-    URLToDisplay = fileURL
-  }
+    URLToDisplay = fileURL;
+  };
 
+  //verifies file title
   if(!(fileTitleRef.value)){
-    Alert("Please add a Title for the file!");
+    Alert('Please add a Title for the file!');
+    return;
+  };
+  
+  
+  confirmData.innerHTML = `
+    <h3 class='dataHeader'>File Title</h3>fileRef
+    <p class='datacontent'>${fileTitle}</p>
+    <h3 class='dataHeader'>Project</h3>
+    <p class='datacontent'>${projectName}</p>
+    <h3 class='dataHeader'>File or URL to be uploaded</h3>
+    <P><a class='datacontent' href="${URLToDisplay}" target="_blank" rel="noopener noreferrer">${fileName}</a></p>
+    <h3 class='dataHeader'>Document Type</h3>
+    <p class='datacontent'>${docType}</p>
+    <h3 class='dataHeader'>Tags for Files</h3>
+    <p class='datacontent'>${filteredTagsToDisplay}</p>
+  `;
+
+  const cancel = () => {
+    uploadForm.style.display = 'block';
+    confirmPage.style.display = 'none';
+    checkboxValues.length = 0;
+    clearForms();
     return;
   }
-
-  uploadForm.style.display = "none";
-  confirmPage.style.display = "flex";
-
-  
-  const projectName = projectList.value;
-  const docType = documentType.value;
-  
-  const tags = [projectName, docType, checkboxValues];
-  
-
-  const tagsToUpload=[].concat.apply([], tags);
-  const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
-  const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
-  
-  
-
-    confirmData.innerHTML = `
-      <h3 class='dataHeader'>File Title</h3>
-      <p class='datacontent'>${fileTitle}</p>
-      <h3 class='dataHeader'>Project</h3>
-      <p class='datacontent'>${projectName}</p>
-      <h3 class='dataHeader'>File or URL to be uploaded</h3>
-      <P><a class='datacontent' href="${URLToDisplay}" target="_blank" rel="noopener noreferrer">${fileName}</a></p>
-      <h3 class='dataHeader'>Document Type</h3>
-      <p class='datacontent'>${docType}</p>
-      <h3 class='dataHeader'>Tags for Files</h3>
-      <p class='datacontent'>${filteredTagsToDisplay}</p>
-    `;
-
-    const cancel = () => {
-      uploadForm.style.display = "block";
-      confirmPage.style.display = "none";
-      checkboxValues.length = 0;
-      clearForms()
-      return
-    }
-
-   
-
-  cancelBtn.onclick = cancel;
-  
+  cancelBtn.onclick = cancel;  
 }
 
 
@@ -554,19 +412,15 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 
 
 
-
-
-
-
-/*************************************Uploading files to Cloud Storage and video url to Database*********************************************/
+/********************************************function for uploading files to Cloud Storage and video url to Database*********************************************/
 
 
 async function Upload(e){
   e.preventDefault();
-  
+  //verifies and validates files to be uploaded and file title/URL
   if(projectList.value == 0){
     Alert('Please add a project');
-    document.getElementById("btnUpload").disabled = true;
+    document.getElementById('btnUpload').disabled = true;
     return;
   }
 
@@ -576,7 +430,7 @@ async function Upload(e){
    }
 
    if((files[0]==undefined) && (videoURLRef.value == '')){
-    Alert("Please add a file or video URL to be uploaded!");
+    Alert('Please add a file or video URL to be uploaded!');
     return;
   }
  
@@ -588,51 +442,55 @@ async function Upload(e){
   
   if (files[0]==undefined){
     let videoURL = videoURLRef.value;
-    
+    //opens confirmation page, and saves the data  
+    //with URL to the database on clicking the okay button 
     const okay = async (fileTitle) => {
-      uploadForm.style.display = "block";
-      confirmPage.style.display = "none";
-      saveFileURLtoDB(videoURL, videoURL, fileTitle);
+      uploadForm.style.display = 'block';
+      confirmPage.style.display = 'none';
+      saveFileURLtoDB(videoURL, videoURL, fileTitle); //see below
       loadingElement.style.visibility = 'visible';
     } 
     okBtn.onclick = okay.bind(okBtn, fileTitleRef.value);
     checkFileToBeUploaded(videoURL, videoURL, fileTitleRef.value);
 
   } else {
-
-    let fileName = files[0].name;
-    let fileToUpload = files[0];
-    let fileNameOnly = GetFileName(files[0])
+    //opens confirmation page, and uploads the file to the firebase storage then saves  
+    // the data to the database on clicking the okay button 
     
+    //validates file name
+    let fileNameOnly = GetFileName(files[0])
     if (!ValidateFileName(fileNameOnly)){
       Alert(`File name can't contain spaces or any special characters, except for Underscore!`);
       return;
     }
 
     const okay = async (fileTitle) => {
-      uploadForm.style.display = "block";
-      confirmPage.style.display = "none";
-
+      uploadForm.style.display = 'block';
+      confirmPage.style.display = 'none';
+      let fileName = files[0].name;
+      let fileToUpload = files[0];
+      const storageRef = sRef(storage, 'Files/'+ fileName);
+      
+      //forSecurityAuth metadata added for simplified firebase storage rules to allow uploading  
       const metaData = {
         contentType: fileToUpload.type,
-        customMetadata: {forSecurityAuth: "*qUD2VR19SRIA23#-:Rk4^r"},
+        customMetadata: {forSecurityAuth: '*qUD2VR19SRIA23#-:Rk4^r'},
       };
-
-      const storageRef = sRef(storage, 'Files/'+ fileName);
 
       
       getDownloadURL(storageRef).then(
-
+        //checks to see if file is already in the firebase storage
         () => {
-          Alert("File already exists! Please choose a differant one!");
+          Alert('File already exists! Please choose a differant one!');
           return;
         },
         () => {
+          //uploades file to the storage and displays progress bar untill file is uploaded 
           const uploadTask = uploadBytesResumable(storageRef, fileToUpload, metaData);
 
           uploadTask.on('state-changed', (snapshot) => {
               let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              progressIndicator1.innerHTML = "Uploaded: " + progress + "%";
+              progressIndicator1.innerHTML = 'Uploaded: ' + progress + '%';
               progressIndicator2.style.display = 'block';
               progressIndicator2.value =  progress;
               
@@ -642,16 +500,13 @@ async function Upload(e){
               }, 2100);
             },
             (error) => {
-              Alert("error: file not uploaded!");
+              Alert('error: file not uploaded!');
             },
             ()=>{
+              //gets the URL location of the file once stored on the firebase storage and 
+              //adds it to the rest of the data uploaded to the database
               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{  
-                
-                
-              
-              saveFileURLtoDB(downloadURL, fileName, fileTitle);
-                
-
+                saveFileURLtoDB(downloadURL, fileName, fileTitle); //see below
               })
             }
           );
@@ -659,15 +514,16 @@ async function Upload(e){
           Alert('File not uploaded, error: '+ error)
           return;
       });
-    } 
+    }
+    //opens confirmation page, and saves the data  
+    //with file location to the database on clicking the okay button  
     okBtn.onclick = okay.bind(okBtn, fileTitleRef.value);
     checkFileToBeUploaded(fileName, fileName, fileTitleRef.value);
   }
 
 };
 
-
-  uploadForm.onsubmit = Upload;
+uploadForm.onsubmit = Upload;
   
 
   
@@ -675,9 +531,11 @@ async function Upload(e){
 
 
   
-/*********************************************Functions for Database********************************************************/
+
+/*******************************************************************Functions for Database****************************************************************/
 
 
+//gets a list of projects and populates project lists where aplicable
 async function getProjectNameList() {
   projectList.innerHTML = '';
   deleteFileFromProject.innerHTML = '';
@@ -690,9 +548,6 @@ async function getProjectNameList() {
   });
 };
 
-
-
-
 window.onload = () => {
   getProjectNameList();
 };
@@ -700,11 +555,15 @@ window.onload = () => {
 
 
 
+
+//Adds a project name and website to the Database
 async function addProjectName()  {
+  const ref = doc(db, "Projects", projectNameUpload);
+  const docSnapshot = await getDoc(doc(db, "Projects", projectNameUpload));
   let projectNameUpload = projectName.value;
   let projectWebsiteUpload = projectWebsite.value;
   
-
+  //validates project name and website and checks to see if it already exists
   if(!ValidateProjectName() || projectNameUpload == ''){
     Alert(`Project name can't contain "spaces", ".", "#", "$", "[", or "]"`);
     return;
@@ -713,20 +572,14 @@ async function addProjectName()  {
     return;
   }
 
-
-  const ref = doc(db, "Projects", projectNameUpload);
-  const docSnapshot = await getDoc(doc(db, "Projects", projectNameUpload));
-
-  
   if(docSnapshot.exists()){
-    Alert('Project already exists, Please enter another name!')
+    Alert('Project already exists, Please enter another name!');
   } else {
- 
 
-    Confirm("<h4>Project to be added: </h4>" + "<br/>" + projectNameUpload + "<br/>" + projectWebsiteUpload)
-
+  //opens confirmation page then oploads on confirmation.
+  //forSecurityAuth added for simplified firebase firestore rules to allow uploading  
+  Confirm("<h4>Project to be added: </h4>" + "<br/>" + projectNameUpload + "<br/>" + projectWebsiteUpload)
     confirmOk.addEventListener('click', async () => {
-      
         await setDoc(ref, {
             ProjectName: projectNameUpload,
             ProjectURL: projectWebsiteUpload,
@@ -745,11 +598,7 @@ async function addProjectName()  {
           Alert("Project was not added: " + error)
         })
     })
-
-
-
-
-    
+    //refreshes project list on other pages 
     getProjectNameList();
   }
   confirmCancel.addEventListener('click', () => {
@@ -761,33 +610,31 @@ createProject.onclick = addProjectName;
 
 
 
+
+
+
+//Takes all the data including url referance to be uploaded to database after checking if the file already exists
 async function saveFileURLtoDB (URL, fileName, fileTitle){
-  
   getCheckmarks()
   const projectName = projectList.value;
   const docType = documentType.value;
-  const tags = [projectName, docType, checkboxValues];
+  const buildingType = buildingTypes.value;
+  const tags = [projectName, docType, buildingType, checkboxValues];
   const ref = doc(db, "Projects", projectName);
   const fileRef = doc(ref, projectName, fileTitle)
   const snapshotRef = doc(db, "Projects", projectName);
   const docSnapshot = await getDoc(doc(snapshotRef, projectName, fileTitle))
-  
-  
-
-
+  //converts tags to a single array, removes empty elements from all element
   const tagsToUpload=[].concat.apply([], tags);
   const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
   
-
-
-
   async function uploadFile(){
     if(docSnapshot.exists()){
       Alert('This Title already exists, Please enter another Title name!')
       return
 
     } else {
-    
+      //forSecurityAuth added for simplified firebase firestore rules to allow uploading 
       await setDoc(fileRef, {
         fileTitle: fileTitle,
         fileName:fileName,
@@ -805,12 +652,10 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
       .catch((error) =>{
         Alert('An error occurred, did not upload file: '+ error);
       });
-      
     }
   }
- 
- await TestForExistingFile(URL, uploadFile)
- 
+
+ await TestForExistingFileandUpload(URL, uploadFile)
 }
 
 
@@ -823,14 +668,10 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
 
 
-/***************************************************Functions for deleteing files**************************************************************/
-
-
-
+/************************************************************Functions for deleteing files****************************************************************/
 
 
 async function deleteFiles () {
-
   /*gets each file and adds each file to the delete menu. with a delete button for each file 
   while the counter is to differentiate between each file in the code */
   filestoBeDeleted.innerHTML = '';

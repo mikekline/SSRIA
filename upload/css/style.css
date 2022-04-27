@@ -1,3 +1,5 @@
+/* **************************************************** Headers ************************************************************ */
+
 #h3 {
   margin-top: 20px;
 }
@@ -11,11 +13,25 @@ h4 {
   margin: 0 0 -15px 0;
 }
 
-h5 {
-  margin-bottom: 5px;
-}
+/* ***************************************** Main Menu and Background containers ******************************************** */
 
 #mainCountainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#boxcontainer {
+  background-color: lightgray;
+  border-radius: 50px;
+  box-shadow: 2px 4px 8px 2px black;
+  font-size: 16px;
+  height: auto;
+  min-width: 550px;
+  padding: 50px;
+}
+
+#mainMenu {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -27,37 +43,17 @@ h5 {
   flex-direction: column;
 }
 
+#uploadForm {
+  display: none;
+}
+
 #deleteForm {
-  align-items: center;
+  align-items: flex-start;
   display: none;
   flex-direction: column;
 }
 
-.deleteFileContainer {
-  display: flex;
-  margin-bottom: 5px;
-  /* justify-content: space-between; */
-}
-
-.deleteBtn {
-  margin-left: 8px;
-  padding: 0px 15px;
-  border: 2px outset black;
-  border-radius: 10px;
-  font-weight: bold;
-  color: red;
-}
-
-#filestoBeDeleted {
-  /* align-items: center; */
-  display: flex;
-  flex-direction: column;
-  margin-top: 25px;
-}
-
-#filestoBeDeleted .datacontent {
-  margin: 8px 0 8px 0;
-}
+/* ******************************************************* Upload Form ********************************************************* */
 
 #projects {
   width: 100px;
@@ -65,6 +61,7 @@ h5 {
 
 .addFile {
   margin-top: 0;
+  margin-bottom: 40px;
   color: red;
   font-size: smaller;
 }
@@ -78,69 +75,20 @@ h5 {
   display: none;
 }
 
-.buttonContainer,
-.addProjectbuttonContainer,
-.deletebuttonContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 70px;
+/* ************************ Loading element ************************** */
+
+#loading {
+  animation: blinker 1s linear infinite;
+  margin: 0 200px;
 }
 
-.addProjectbuttonContainer,
-.deletebuttonContainer {
-  width: 500px;
-}
-#deleteFileFromProject:hover,
-#deleteProjects:hover {
-  background-color: whitesmoke;
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 
-#boxcontainer {
-  background-color: lightgray;
-  border-radius: 50px;
-  box-shadow: 4px 4px 14px 2px black;
-  font-size: 16px;
-  height: auto;
-  min-width: 500px;
-  padding: 50px;
-}
-
-#mainMenu {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.menuBtn {
-  margin: 5px;
-}
-
-#uploadForm {
-  display: none;
-}
-
-#focusAreaContainer1 {
-  margin-top: -20px;
-}
-
-#focusAreaContainer1,
-#focusAreaContainer2 {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-button:hover {
-  background-color: lightslategrey;
-}
-
-button {
-  border: 3px outset black;
-  border-radius: 10px;
-  font-weight: bolder;
-  padding: 5px 15px;
-}
+/* *************************************************** File Confirmation Page ************************************************ */
 
 #confirmPage {
   align-items: center;
@@ -156,15 +104,6 @@ button {
   word-break: normal;
 }
 
-#confirmButtonContainer {
-  display: flex;
-  margin-left: 400px;
-}
-
-.confirmBtn {
-  margin-right: 5px;
-}
-
 .dataHeader {
   margin-bottom: -15px;
   font-weight: bolder;
@@ -174,15 +113,87 @@ button {
   color: blue;
 }
 
-#loading {
-  animation: blinker 1s linear infinite;
-  margin: 0 200px;
+/* ****************************************************** Delete Form ****************************************************** */
+
+.deleteFileContainer {
+  display: flex;
+  margin-bottom: 5px;
 }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
+#filestoBeDeleted {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+#filestoBeDeleted .datacontent {
+  margin: 8px 0 8px 0;
+}
+
+/* ************************************************** Button Containers **************************************************** */
+
+.buttonContainer,
+.addProjectbuttonContainer,
+.deletebuttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.addProjectbuttonContainer,
+.deletebuttonContainer {
+  width: 550px;
+}
+
+#confirmButtonContainer {
+  display: flex;
+  margin-left: 400px;
+}
+
+/* ********************************************************** Buttons ***************************************************** */
+
+button {
+  border: 3px outset black;
+  border-radius: 10px;
+  font-weight: bolder;
+  padding: 5px 15px;
+}
+
+button:hover {
+  background-color: lightslategrey;
+}
+
+.menuBtn {
+  margin: 5px;
+}
+
+.deleteBtn {
+  border: 2px outset black;
+  border-radius: 10px;
+  color: red;
+  font-weight: bold;
+  margin-left: 8px;
+  padding: 0px 15px;
+}
+
+.confirmBtn {
+  margin-right: 5px;
+}
+
+/* ******************************************** Custom Alert and Confirm popups **************************************** */
+
+#alertBox,
+#confirmBox {
+  align-items: flex-end;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  display: none;
+  flex-direction: column;
+  height: auto;
+  justify-content: space-between;
+  min-width: 450px;
+  padding: 10px;
 }
 
 #alertBackground {
@@ -199,20 +210,6 @@ button {
   z-index: 2;
 }
 
-#alertBox,
-#confirmBox {
-  align-items: flex-end;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 15px;
-  display: none;
-  flex-direction: column;
-  height: auto;
-  justify-content: space-between;
-  min-width: 450px;
-  padding: 10px;
-}
-
 .alertHeader {
   align-self: center;
   margin-bottom: 15px;
@@ -224,105 +221,55 @@ button {
   margin-bottom: 10px;
 }
 
-/******************** multi select checkbox dropdowns ****************************/
-
-.buildingTypesMultiselect,
-.BuildingSystemsMultiselect,
-.PopularSubjectsMultiselect {
-  width: 200px;
-}
-
-#buildingTypesSelectBox,
-#BuildingSystemsSelectBox,
-#PopularSubjectsSelectBox {
-  position: relative;
-}
-
-#buildingTypesSelectBox select,
-#BuildingSystemsSelectBox select,
-#PopularSubjectsSelectBox select {
-  width: 100%;
-}
+/* *****************************************************  Dropdown Hover ********************************************** */
 
 #projects:hover,
+#buildingTypes:hover,
 #documentType:hover,
-#buildingTypesSelectBox:hover select,
-#BuildingSystemsSelectBox:hover select,
-#PopularSubjectsSelectBox:hover select {
+#deleteFileFromProject:hover,
+#deleteProjects:hover {
   background-color: whitesmoke;
 }
 
-.buildingTypesOverSelect,
-.BuildingSystemsOverSelect,
-.PopularSubjectsOverSelect {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+/* ******************************************************* CheckBoxes ************************************************** */
+
+#checkboxContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
-#buildingTypesCheckboxes,
 #BuildingSystemsCheckboxes,
 #PopularSubjectsCheckboxes {
-  background-color: lightgray;
-  border: 1px solid #dadada;
-  box-shadow: 2px 2px 4px black;
-  display: none;
-  padding: 5px;
-  position: absolute;
-  z-index: 5;
+  display: flex;
+  flex-direction: column;
 }
 
-#buildingTypesCheckboxes label,
-#BuildingSystemsCheckboxes label,
-#PopularSubjectsCheckboxes label {
-  display: block;
-}
-
-#buildingTypesCheckboxes label:hover,
+/* #buildingTypesCheckboxes label:hover, */
 #BuildingSystemsCheckboxes label:hover,
 #PopularSubjectsCheckboxes label:hover {
   background-color: #1e90ff;
 }
 
-/* .buildingTypologyMultiselect,
-.buildingEnvelopeMultiselect,
-.HeatingCoolingMultiselect,
-.MechanicalElectricalMultiselect,
-.DesignProcessMultiselect {
+/* ******************************************** multi select checkbox dropdowns **************************************** */
+
+/* .buildingTypesMultiselect {
   width: 200px;
 }
 
-#buildingTypologySelectBox,
-#buildingEnvelopeSelectBox,
-#HeatingCoolingSelectBox,
-#MechanicalElectricalSelectBox,
-#DesignProcessSelectBox {
+#buildingTypesSelectBox {
   position: relative;
 }
 
-#buildingTypologySelectBox select,
-#buildingEnvelopeSelectBox select,
-#HeatingCoolingSelectBox select,
-#MechanicalElectricalSelectBox select,
-#DesignProcessSelectBox select {
+#buildingTypesSelectBox select {
   width: 100%;
 }
 
-#buildingTypologySelectBox:hover select,
-#buildingEnvelopeSelectBox:hover select,
-#HeatingCoolingSelectBox:hover select,
-#MechanicalElectricalSelectBox:hover select,
-#DesignProcessSelectBox:hover select {
+#buildingTypesSelectBox:hover select {
   background-color: whitesmoke;
 }
 
-.buildingTypologyOverSelect,
-.buildingEnvelopeOverSelect,
-.HeatingCoolingOverSelect,
-.MechanicalElectricalOverSelect,
-.DesignProcessOverSelect {
+.buildingTypesOverSelect {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -330,11 +277,7 @@ button {
   right: 0;
 }
 
-#buildingTypologycheckboxes,
-#buildingEnvelopecheckboxes,
-#HeatingCoolingcheckboxes,
-#MechanicalElectricalcheckboxes,
-#DesignProcesscheckboxes {
+#buildingTypesCheckboxes {
   background-color: lightgray;
   border: 1px solid #dadada;
   box-shadow: 2px 2px 4px black;
@@ -344,18 +287,6 @@ button {
   z-index: 5;
 }
 
-#buildingTypologycheckboxes label,
-#buildingEnvelopecheckboxes label,
-#HeatingCoolingcheckboxes label,
-#MechanicalElectricalcheckboxes label,
-#DesignProcesscheckboxes label {
+#buildingTypesCheckboxes label {
   display: block;
-}
-
-#buildingTypologycheckboxes label:hover,
-#buildingEnvelopecheckboxes label:hover,
-#HeatingCoolingcheckboxes label:hover,
-#MechanicalElectricalcheckboxes label:hover,
-#DesignProcesscheckboxes label:hover {
-  background-color: #1e90ff;
 } */
