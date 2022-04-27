@@ -5,12 +5,40 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="css/style.css" />
+		<script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
 	</head>
 
 	<body>
 		<div id="mainCountainer"> 
 
 			<h1>Resource Library Upload</h1>
+
+
+
+
+			<!-- <div id="login">
+				<div class="header">
+					<h1>Getting Started with Firebase Auth</h1>
+				</div>
+				<form>
+					<div class="group">
+						<input id="txtEmail" type="email">
+						<label>Email</label>
+					</div>
+					<div class="group">
+						<input id="txtPassword" type="password">
+						<label>Password</label>
+					</div>
+					<div id="divLoginError" class="group">
+						<div id="lblLoginErrorMessage" class="errorlabel"></div>
+					</div>
+					<button id="btnLogin" type="button" class="button buttonBlue">Log in</button>
+					<button id="btnSignup" type="button" class="button buttonBlue">Sign up</button>
+				</form>
+			</div> -->
+
+
 
 
 		
@@ -73,8 +101,90 @@
 					Add a file: <input type="file" id='file'>
 
 					<p class="addFile">(Add only one)</p>	
+
+
+
+					<div id="buildingTypes">
+						<h3 id="h3">Building Types:</h3>
+						<div class="buildingTypesMultiselect">
+							<div id="buildingTypesSelectBox" >
+								<select>
+									<option>Select all that apply</option>
+								</select>
+								<div class="buildingTypesOverSelect"></div>
+							</div>
+							<div id="buildingTypesCheckboxes">
+								<label for="buildingTypesAll">
+									<input type="checkbox" id="buildingTypesAll" value="" />All</label> 
+								<label for="SingleFamilyResidential">
+									<input type="checkbox" id="SingleFamilyResidential" value="SingleFamilyResidential" name="buildingTypes" />Single Family Residential</label>
+								<label for="MultiFamilyResidential">
+									<input type="checkbox" id="MultiFamilyResidential" value="MultiFamilyResidential" name="buildingTypes" />Multi-Family Residential</label>
+								<label for="LowRiseCommercial">
+									<input type="checkbox" id="LowRiseCommercial" value="LowRiseCommercial" name="buildingTypes" />Low-Rise Commercial</label>
+								<label for="HiRiseCommercial">
+									<input type="checkbox" id="HiRiseCommercial" value="HiRiseCommercial" name="buildingTypes" />Hi-Rise Commercial</label>
+								<label for="SchoolCommunityCentre">
+									<input type="checkbox" id="SchoolCommunityCentre" value="SchoolCommunityCentre" name="buildingTypes" />School/Community Centre</label>
+							</div>
+						</div>
+					</div> 
+
+					<div id="BuildingSystems">
+						<h3 id="h3">Building Systems:</h3>
+						<div class="BuildingSystemsMultiselect">
+							<div id="BuildingSystemsSelectBox" >
+								<select>
+									<option>Select all that apply</option>
+								</select>
+								<div class="BuildingSystemsOverSelect"></div>
+							</div>
+							<div id="BuildingSystemsCheckboxes">
+								<label for="BuildingSystemsAll">
+									<input type="checkbox" id="BuildingSystemsAll" value="" />All</label> 
+								<label for="BuildingEnvelope">
+									<input type="checkbox" id="BuildingEnvelope" value="BuildingEnvelope" name="BuildingSystems" />Building Envelope</label>
+								<label for="EnergyMonitoring">
+									<input type="checkbox" id="EnergyMonitoring" value="EnergyMonitoring" name="BuildingSystems" />Energy Monitoring</label>
+								<label for="HeatingCooling">
+									<input type="checkbox" id="HeatingCooling" value="HeatingCooling" name="BuildingSystems" />Heating & Cooling</label>
+								<label for="MechanicalElectrical">
+									<input type="checkbox" id="MechanicalElectrical" value="MechanicalElectrical" name="BuildingSystems" />Mechanical & Electrical</label>
+								<label for="RenewableEnergy">
+									<input type="checkbox" id="RenewableEnergy" value="RenewableEnergy" name="BuildingSystems" />Renewable Energy</label>
+							</div>
+						</div>
+					</div> 
+
+					<div id="PopularSubjects">
+						<h3 id="h3">Popular Subjects:</h3>
+						<div class="PopularSubjectsMultiselect">
+							<div id="PopularSubjectsSelectBox" >
+								<select>
+									<option>Select all that apply</option>
+								</select>
+								<div class="PopularSubjectsOverSelect"></div>
+							</div>
+							<div id="PopularSubjectsCheckboxes">
+								<label for="PopularSubjectsAll">
+									<input type="checkbox" id="PopularSubjectsAll" value="" />All</label> 
+								<label for="DeepEnergyRetrofit">
+									<input type="checkbox" id="DeepEnergyRetrofit" value="DeepEnergyRetrofit" name="PopularSubjects" />Deep Energy Retrofit</label>
+								<label for="EmbodiedCarbon">
+									<input type="checkbox" id="EmbodiedCarbon" value="EmbodiedCarbon" name="PopularSubjects" />Embodied Carbon</label>
+								<label for="ModularPanelizedConstruction">
+									<input type="checkbox" id="ModularPanelizedConstruction" value="ModularPanelizedConstruction" name="PopularSubjects" />Modular & Panelized Construction</label>
+								<label for="NetZeroEnergy">
+									<input type="checkbox" id="NetZeroEnergy" value="NetZeroEnergy" name="PopularSubjects" />Net-Zero Energy</label>
+								<label for="NorthernRemoteConstruction">
+									<input type="checkbox" id="NorthernRemoteConstruction" value="NorthernRemoteConstruction" name="PopularSubjects" />Northern & Remote Construction</label>
+								<label for="PassiveHouse">
+									<input type="checkbox" id="PassiveHouse" value="PassiveHouse" name="PopularSubjects" />Passive House</label>
+							</div>
+						</div>
+					</div> 
 					
-					<div>
+					<!-- <div>
 						<div id="buildingSector">
 							<h3>Building sector</h3>
 							<label  for="Residential">
@@ -271,7 +381,7 @@
 							<label for="ArtificialIntelligence">
 								<input type="checkbox" id="ArtificialIntelligence" value="Artificial Intelligence"/>Artificial Intelligence</label>
 						</div>
-					</div> 
+					</div>  -->
 
 					<br/>
 					<div class="buttonContainer">

@@ -8,11 +8,13 @@
 
   import {getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, onSnapshot} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
 
+  // import {getAuth, connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, AuthErrorCodes, signOut} from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
+
+
 /****************************************** web app's Firebase configuration***********************************************************/ 
 
   const firebaseConfig = {
-
-    Redacted
+Redacted
 
 
   };
@@ -29,9 +31,84 @@
 
   const storage = getStorage();
 
+  // const auth = getAuth(app);
 
 
-/******************************************************************* Referances********************************************************/ 
+/****************************************************************Authentication********************************************************/ 
+
+
+// connectAuthEmulator(auth, "http://localhost:9099");
+// // const addProjectForm = document.getElementById('addProjectForm');
+
+// const showLoginError = (error) => {
+//   divLoginError.style.display = 'block'    
+//   if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+//     lblLoginErrorMessage.innerHTML = `Wrong password. Try again.`
+//   }
+//   else {
+//     lblLoginErrorMessage.innerHTML = `Error: ${error.message}`      
+//   }
+// }
+
+
+// const createAccount = async () => {
+//   const loginEmail = txtEmail.value;
+//   const loginPassword =txtPassword.value;
+
+//   try {
+//     const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
+//     // console.log(userCredential.user)
+//   }
+//   catch(error) {
+//     console.log(error)
+//     showLoginError(error)
+//   }
+// }
+
+// btnSignup.addEventListener('click', createAccount);
+
+
+
+// const loginEmailPassword = async () => {
+//   const loginEmail = txtEmail.value;
+//   const loginPassword =txtPassword.value;
+
+//   try {
+//     const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+//     // console.log(userCredential.user)
+//   }
+//   catch(error) {
+//     // console.log(error)
+//     showLoginError(error)
+//   }
+// }
+
+// btnLogin.addEventListener('click', loginEmailPassword);
+
+
+// const monitorAuthState = async () => {
+//   onAuthStateChanged(auth, user =>{
+//     if(user){
+//       const test = user.uid
+//       console.log(user)
+//       //display menu
+//       //display login state(user)
+
+//     } else {
+//       //show login form
+//       //not loged in
+//     }
+//   });
+// }
+
+// monitorAuthState();
+
+// // const logout = async () => {
+// //   await signOut();
+// // }
+
+// // btnLogout.addEventListener('click', logout);
+/*******************************************************************Referances********************************************************/ 
 
 
 //main menu
@@ -53,26 +130,40 @@ const videoURLRef = document.getElementById('videoURL');
 const fileInput = document.getElementById('file');
 const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
 //dropdown selectors on upload page
-const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
-const buildingTypologycheckboxes = document.getElementById('buildingTypologycheckboxes');
-const buildingEnvelopeSelectBox = document.getElementById('buildingEnvelopeSelectBox');
-const buildingEnvelopecheckboxes= document.getElementById('buildingEnvelopecheckboxes');
-const HeatingCoolingSelectBox = document.getElementById('HeatingCoolingSelectBox');
-const HeatingCoolingcheckboxes = document.getElementById('HeatingCoolingcheckboxes');
-const MechanicalElectricalSelectBox = document.getElementById('MechanicalElectricalSelectBox');
-const MechanicalElectricalcheckboxes = document.getElementById("MechanicalElectricalcheckboxes");
-const DesignProcessSelectBox = document.getElementById('DesignProcessSelectBox');
-const DesignProcesscheckboxes = document.getElementById('DesignProcesscheckboxes');
-const buildingTypologyAll = document.getElementById('buildingTypologyAll');
-const buildingTypology = document.getElementsByName('buildingTypology');
-const buildingEnvelopeAll = document.getElementById('buildingEnvelopeAll');
-const buildingEnvelope = document.getElementsByName('buildingEnvelope');
-const HeatingCoolingAll = document.getElementById('HeatingCoolingAll');
-const HeatingCooling = document.getElementsByName('HeatingCooling');
-const MechanicalElectricalAll = document.getElementById('MechanicalElectricalAll');
-const MechanicalElectrical = document.getElementsByName('MechanicalElectrical');
-const DesignProcessAll = document.getElementById('DesignProcessAll');
-const DesignProcess = document.getElementsByName('DesignProcess');
+const buildingTypes = document.getElementsByName("buildingTypes")
+const buildingTypesAll = document.getElementById("buildingTypesAll");
+const buildingTypesSelectBox = document.getElementById("buildingTypesSelectBox");
+const buildingTypesCheckboxes = document.getElementById("buildingTypesCheckboxes");
+
+const BuildingSystems = document.getElementsByName("BuildingSystems")
+const BuildingSystemsAll = document.getElementById("BuildingSystemsAll");
+const BuildingSystemsSelectBox = document.getElementById("BuildingSystemsSelectBox");
+const BuildingSystemsCheckboxes = document.getElementById("BuildingSystemsCheckboxes");
+
+const PopularSubjects = document.getElementsByName("PopularSubjects")
+const PopularSubjectsAll = document.getElementById("PopularSubjectsAll");
+const PopularSubjectsSelectBox = document.getElementById("PopularSubjectsSelectBox");
+const PopularSubjectsCheckboxes = document.getElementById("PopularSubjectsCheckboxes");
+// const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
+// const buildingTypologycheckboxes = document.getElementById('buildingTypologycheckboxes');
+// const buildingEnvelopeSelectBox = document.getElementById('buildingEnvelopeSelectBox');
+// const buildingEnvelopecheckboxes= document.getElementById('buildingEnvelopecheckboxes');
+// const HeatingCoolingSelectBox = document.getElementById('HeatingCoolingSelectBox');
+// const HeatingCoolingcheckboxes = document.getElementById('HeatingCoolingcheckboxes');
+// const MechanicalElectricalSelectBox = document.getElementById('MechanicalElectricalSelectBox');
+// const MechanicalElectricalcheckboxes = document.getElementById("MechanicalElectricalcheckboxes");
+// const DesignProcessSelectBox = document.getElementById('DesignProcessSelectBox');
+// const DesignProcesscheckboxes = document.getElementById('DesignProcesscheckboxes');
+// const buildingTypologyAll = document.getElementById('buildingTypologyAll');
+// const buildingTypology = document.getElementsByName('buildingTypology');
+// const buildingEnvelopeAll = document.getElementById('buildingEnvelopeAll');
+// const buildingEnvelope = document.getElementsByName('buildingEnvelope');
+// const HeatingCoolingAll = document.getElementById('HeatingCoolingAll');
+// const HeatingCooling = document.getElementsByName('HeatingCooling');
+// const MechanicalElectricalAll = document.getElementById('MechanicalElectricalAll');
+// const MechanicalElectrical = document.getElementsByName('MechanicalElectrical');
+// const DesignProcessAll = document.getElementById('DesignProcessAll');
+// const DesignProcess = document.getElementsByName('DesignProcess');
 // file upload confirmation page
 const confirmPage = document.getElementById('confirmPage');
 const confirmData = document.getElementById('confirmData');
@@ -110,44 +201,68 @@ let fileURL = null;
 let checkboxValues = []
 
 const allDropdownsCheckboxes = [
-  buildingTypologycheckboxes,
-  buildingEnvelopecheckboxes,
-  HeatingCoolingcheckboxes,
-  MechanicalElectricalcheckboxes,
-  DesignProcesscheckboxes,
-];
+  buildingTypesCheckboxes,
+  BuildingSystemsCheckboxes,
+  PopularSubjectsCheckboxes
+]
 
 const allCheckbox = [
-  buildingTypologyAll,
-  buildingEnvelopeAll,
-  HeatingCoolingAll,
-  MechanicalElectricalAll,
-  DesignProcessAll
+  buildingTypesAll,
+  BuildingSystemsAll,
+  PopularSubjectsAll
 ];
 
 const checkBoxName = [
-  buildingTypology,
-  buildingEnvelope,
-  HeatingCooling,
-  MechanicalElectrical,
-  DesignProcess
+  buildingTypes,
+  BuildingSystems,
+  PopularSubjects
 ];
 
 const selectBoxes = [
-  buildingTypologySelectBox,
-  buildingEnvelopeSelectBox,
-  HeatingCoolingSelectBox,
-  MechanicalElectricalSelectBox,
-  DesignProcessSelectBox,
+  buildingTypesSelectBox,
+  BuildingSystemsSelectBox,
+  PopularSubjectsSelectBox
 ];
 
-const checkBoxesToBeDisplayed = [
-  buildingTypologycheckboxes,
-  buildingEnvelopecheckboxes,
-  HeatingCoolingcheckboxes,
-  MechanicalElectricalcheckboxes,
-  DesignProcesscheckboxes
-];
+// const allDropdownsCheckboxes = [
+//   buildingTypologycheckboxes,
+//   buildingEnvelopecheckboxes,
+//   HeatingCoolingcheckboxes,
+//   MechanicalElectricalcheckboxes,
+//   DesignProcesscheckboxes,
+// ];
+
+// const allCheckbox = [
+//   buildingTypologyAll,
+//   buildingEnvelopeAll,
+//   HeatingCoolingAll,
+//   MechanicalElectricalAll,
+//   DesignProcessAll
+// ];
+
+// const checkBoxName = [
+//   buildingTypology,
+//   buildingEnvelope,
+//   HeatingCooling,
+//   MechanicalElectrical,
+//   DesignProcess
+// ];
+
+// const selectBoxes = [
+//   buildingTypologySelectBox,
+//   buildingEnvelopeSelectBox,
+//   HeatingCoolingSelectBox,
+//   MechanicalElectricalSelectBox,
+//   DesignProcessSelectBox,
+// ];
+
+// const checkBoxesToBeDisplayed = [
+//   buildingTypologycheckboxes,
+//   buildingEnvelopecheckboxes,
+//   HeatingCoolingcheckboxes,
+//   MechanicalElectricalcheckboxes,
+//   DesignProcesscheckboxes
+// ];
 
 loadingElement.style.visibility = 'hidden';
 
@@ -192,6 +307,7 @@ const mainMenuUpload = () => {
 };
 
 const deletePage = () => {
+  clearForms()
   deleteForm.style.display = "flex";
   mainMenu.style.display = "none";
   deleteSelectProject.onclick = deleteFiles;
@@ -222,10 +338,10 @@ for (let i = 0; i<selectBoxes.length; i++){
 
   selectBoxes[i].onclick = () => {
     if (!expanded) {
-      checkBoxesToBeDisplayed[i].style.display = "block";
+      allDropdownsCheckboxes[i].style.display = "block";
       expanded = true;
     } else {
-      checkBoxesToBeDisplayed[i].style.display = "none";
+      allDropdownsCheckboxes[i].style.display = "none";
       expanded = false;
     }
   };
@@ -296,6 +412,7 @@ function Confirm(confirmText){
   confirmContent.innerHTML = confirmText;
   alertBackground.style.display = "flex";
   confirmBox.style.display = "flex";
+  // clearForms();
 };
 
 //clears all forms, checkmarks and closes all dropdown menus
@@ -497,7 +614,8 @@ async function Upload(e){
       confirmPage.style.display = "none";
 
       const metaData = {
-        contentType: fileToUpload.type
+        contentType: fileToUpload.type,
+        customMetadata: {forSecurityAuth: "*qUD2VR19SRIA23#-:Rk4^r"},
       };
 
       const storageRef = sRef(storage, 'Files/'+ fileName);
@@ -561,10 +679,10 @@ async function Upload(e){
 
 
 async function getProjectNameList() {
-
-projectList.innerHTML='';
-
+  projectList.innerHTML = '';
+  deleteFileFromProject.innerHTML = '';
   const querySnapshot = await getDocs(collection(db, "Projects"));
+  
   querySnapshot.forEach((doc) => {
     let projectNameDocument = doc.data().ProjectName;     
     projectList.innerHTML += `<option value=${projectNameDocument}>${projectNameDocument}</option>`;
@@ -612,6 +730,7 @@ async function addProjectName()  {
         await setDoc(ref, {
             ProjectName: projectNameUpload,
             ProjectURL: projectWebsiteUpload,
+            forSecurityAuth: '*qUD2VR19SRIA23#-:Rk4^r'
           },
           {
             merge: true
@@ -662,34 +781,33 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
 
 
- async function uploadFile(){
-  if(docSnapshot.exists()){
-    Alert('This Title already exists, Please enter another Title name!')
-    return
+  async function uploadFile(){
+    if(docSnapshot.exists()){
+      Alert('This Title already exists, Please enter another Title name!')
+      return
 
-  } else {
-
-    await setDoc(fileRef, {
-      fileTitle: fileTitle,
-      fileName:fileName,
-      fileURL: URL,
-      documentType: docType,
-      tags: filteredTagsToUpload
+    } else {
+    
+      await setDoc(fileRef, {
+        fileTitle: fileTitle,
+        fileName:fileName,
+        fileURL: URL,
+        documentType: docType,
+        tags: filteredTagsToUpload,
+        forSecurityAuth: '*qUD2VR19SRIA23#-:Rk4^r'
+      })
+      .then(()=>{
+        setTimeout(function(){
+          loadingElement.style.visibility = 'hidden';
+        }, 500);
+        Alert('File was uploaded!');
+      })
+      .catch((error) =>{
+        Alert('An error occurred, did not upload file: '+ error);
+      });
+      
     }
-  )
-  .then(()=>{
-    setTimeout(function(){
-      loadingElement.style.visibility = 'hidden';
-    }, 500);
-    Alert('File was uploaded!');
-  })
-  .catch((error) =>{
-    Alert('An error occurred, did not upload file: '+ error);
-  });
-   
   }
-  clearForms()
- }
  
  await TestForExistingFile(URL, uploadFile)
  
@@ -712,6 +830,7 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
 
 
 async function deleteFiles () {
+
   /*gets each file and adds each file to the delete menu. with a delete button for each file 
   while the counter is to differentiate between each file in the code */
   filestoBeDeleted.innerHTML = '';
@@ -753,11 +872,12 @@ async function deleteFiles () {
       Confirm("Delete: " + fileTitle)
 
       confirmOk.addEventListener('click', async () => {
-          //deletes Database entry and file reference     
+          clearForms();
+        //deletes Database entry and file reference    
           await deleteDoc(fileRef)
           .then(()=>{
             Alert('File Deleted')
-            fileContainer.remove()
+            fileContainer.remove() 
           })
           .catch((error)=>{
             Alert('Deletion Unsuccessful, error: '+ error)
@@ -781,7 +901,6 @@ async function deleteFiles () {
               Alert('Deletion of storage file Unsuccessful, error: '+ error)
               return;
           })
-        clearForms();  
       })
 
       confirmCancel.addEventListener('click', () => {
