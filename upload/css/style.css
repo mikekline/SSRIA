@@ -1,4 +1,8 @@
 /* **************************************************** Headers ************************************************************ */
+h1 {
+  font-weight: 900;
+  color: #817979;
+}
 
 #h3 {
   margin-top: 20px;
@@ -245,48 +249,7 @@ button:hover {
   flex-direction: column;
 }
 
-/* #buildingTypesCheckboxes label:hover, */
 #BuildingSystemsCheckboxes label:hover,
 #PopularSubjectsCheckboxes label:hover {
   background-color: #1e90ff;
 }
-
-/* ******************************************** multi select checkbox dropdowns **************************************** */
-
-/* .buildingTypesMultiselect {
-  width: 200px;
-}
-
-#buildingTypesSelectBox {
-  position: relative;
-}
-
-#buildingTypesSelectBox select {
-  width: 100%;
-}
-
-#buildingTypesSelectBox:hover select {
-  background-color: whitesmoke;
-}
-
-.buildingTypesOverSelect {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-#buildingTypesCheckboxes {
-  background-color: lightgray;
-  border: 1px solid #dadada;
-  box-shadow: 2px 2px 4px black;
-  display: none;
-  padding: 5px;
-  position: absolute;
-  z-index: 5;
-}
-
-#buildingTypesCheckboxes label {
-  display: block;
-} */

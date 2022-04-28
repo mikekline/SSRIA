@@ -38,56 +38,22 @@ const websiteRef = document.getElementById("websites");
 const backBtn = document.getElementById('backBtn');
 const loadingElement = document.getElementById('loading');
 //dropdown selectors
-// const documentTypeSelectBox = document.getElementById('documentTypeSelectBox');
-// const documentTypeCheckboxes = document.getElementById("documentTypeCheckboxes");
-// const buildingTypologySelectBox = document.getElementById('buildingTypologySelectBox');
-// const buildingTypologycheckboxes = document.getElementById("buildingTypologycheckboxes");
-// const buildingEnvelopeSelectBox = document.getElementById('buildingEnvelopeSelectBox');
-// const buildingEnvelopecheckboxes= document.getElementById("buildingEnvelopecheckboxes");
-// const HeatingCoolingSelectBox = document.getElementById('HeatingCoolingSelectBox');
-// const HeatingCoolingcheckboxes = document.getElementById("HeatingCoolingcheckboxes");
-// const MechanicalElectricalSelectBox = document.getElementById('MechanicalElectricalSelectBox');
-// const MechanicalElectricalcheckboxes = document.getElementById("MechanicalElectricalcheckboxes");
-// const DesignProcessSelectBox = document.getElementById('DesignProcessSelectBox');
-// const DesignProcesscheckboxes = document.getElementById("DesignProcesscheckboxes");
-// const documentTypeAll = document.getElementById("documentTypeAll");
-// const documentType = document.getElementsByName("documentType");
-// const buildingTypologyAll = document.getElementById("buildingTypologyAll");
-// const buildingTypology = document.getElementsByName("buildingTypology");
-// const buildingEnvelopeAll = document.getElementById("buildingEnvelopeAll");
-// const buildingEnvelope = document.getElementsByName("buildingEnvelope");
-// const HeatingCoolingAll = document.getElementById("HeatingCoolingAll");
-// const HeatingCooling = document.getElementsByName("HeatingCooling");
-// const MechanicalElectricalAll = document.getElementById("MechanicalElectricalAll");
-// const MechanicalElectrical = document.getElementsByName("MechanicalElectrical");
-// const DesignProcessAll = document.getElementById("DesignProcessAll");
-// const DesignProcess = document.getElementsByName("DesignProcess");
-
-
-
 const documentType = document.getElementsByName("documentType")
 const documentTypeAll = document.getElementById("documentTypeAll");
 const documentTypeSelectBox = document.getElementById("documentTypeSelectBox");
 const documentTypeCheckboxes = document.getElementById("documentTypeCheckboxes");
-
 const buildingTypes = document.getElementsByName("buildingTypes")
 const buildingTypesAll = document.getElementById("buildingTypesAll");
 const buildingTypesSelectBox = document.getElementById("buildingTypesSelectBox");
 const buildingTypesCheckboxes = document.getElementById("buildingTypesCheckboxes");
-
 const BuildingSystems = document.getElementsByName("BuildingSystems")
 const BuildingSystemsAll = document.getElementById("BuildingSystemsAll");
 const BuildingSystemsSelectBox = document.getElementById("BuildingSystemsSelectBox");
 const BuildingSystemsCheckboxes = document.getElementById("BuildingSystemsCheckboxes");
-
 const PopularSubjects = document.getElementsByName("PopularSubjects")
 const PopularSubjectsAll = document.getElementById("PopularSubjectsAll");
 const PopularSubjectsSelectBox = document.getElementById("PopularSubjectsSelectBox");
 const PopularSubjectsCheckboxes = document.getElementById("PopularSubjectsCheckboxes");
-
-
-  
-  
 
 
 
@@ -100,11 +66,6 @@ const allDropdownsCheckboxes = [
   buildingTypesCheckboxes,
   BuildingSystemsCheckboxes,
   PopularSubjectsCheckboxes
-  // buildingTypologycheckboxes,
-  // buildingEnvelopecheckboxes,
-  // HeatingCoolingcheckboxes,
-  // MechanicalElectricalcheckboxes,
-  // DesignProcesscheckboxes,
 ]
 
 const allCheckbox = [
@@ -112,14 +73,6 @@ const allCheckbox = [
   buildingTypesAll,
   BuildingSystemsAll,
   PopularSubjectsAll
-
-
-
-  // buildingTypologyAll,
-  // buildingEnvelopeAll,
-  // HeatingCoolingAll,
-  // MechanicalElectricalAll,
-  // DesignProcessAll
 ];
 
 const checkBoxName = [
@@ -127,11 +80,6 @@ const checkBoxName = [
   buildingTypes,
   BuildingSystems,
   PopularSubjects
-  // buildingTypology,
-  // buildingEnvelope,
-  // HeatingCooling,
-  // MechanicalElectrical,
-  // DesignProcess
 ];
 
 const selectBoxes = [
@@ -139,12 +87,6 @@ const selectBoxes = [
   buildingTypesSelectBox,
   BuildingSystemsSelectBox,
   PopularSubjectsSelectBox
-
-  // buildingTypologySelectBox,
-  // buildingEnvelopeSelectBox,
-  // HeatingCoolingSelectBox,
-  // MechanicalElectricalSelectBox,
-  // DesignProcessSelectBox,
 ];
 
 
@@ -334,50 +276,12 @@ backBtn.onclick = backToSearch;
 
 
 
-// const tags2 = [0, 2, 2, 2, 1,4, 5];
-// const checkmarks2 = [0, 2, 2, 2,4,1,  ];
-// const compareArrays = (tags2, checkmarks2) => {
-//    const areEqual = checkmarks2.every(el => {
-//      console.log(el)
-//       return tags2.includes(el, el);
-//    });
-//    return areEqual;
-// };
-// console.log(compareArrays(tags2, checkmarks2));
-
-
-
-// const tags2 = [0, 2, 2, 2, 1,4, 5];
-// const checkmarks2 = [0, 2, 2, 2,1,4, 5 ];
-// const compareArrays = (tags2, checkmarks2) => {
-//    const areEqual = tags2.includes(0);
-//    return areEqual;
-// };
-// console.log(compareArrays(tags2, checkmarks2));
-
-
-//put below inside of every------------------------------
-// const tags2 = [0, 2, 2, 2,4,1,  ];
-// const checkmarks2 = [0, 2,  1,4, 6];
-// var flag = true;
-// for(let i=0; i<tags2.length; i++) {
-//   if(!checkmarks2.includes(tags2[i])) {
-//     flag = false;
-
-//   }
-// }
-// if(flag) {
-//   console.log("true");
-// }
 
 
 
 
 
- 
-
-
-//***********************************************use*************************************************************** */
+//***********************************************extra*************************************************************** */
 
  let tags2 = ['a', 'b', 'y', 'z'];
  let checkmarks2 = ['a', 'y', 'k'];
@@ -403,125 +307,3 @@ if (str1 == str2){
   console.log("sucess")
 }
 //************************************************************************************************************
-// let test = []
-
-
-//  for(let i=0; i<tags2.length; i++) {
-//    if (checkmarks2.includes(tags2[i])){
-//      test.push('true')
-     
-//    }
-//    if (!checkmarks2.includes(tags2[i])){
-//     test.push('false')
-    
-//   }
-//  }
-
-//  console.log(test)
-
-// if (test.includes("false")){
-//   console.log("nope")
-// } else {
-//   console.log('sucsess')
-// }
-
-
-
-
-
-//async function getData (e) {
-  //   e.preventDefault();
-  //   loadingElement.style.visibility = 'visible';
-  //   const projects = await getDocs(collection(db, "Projects"));
-  //   const projectName = [];
-    
-  //   getDataForm.style.display = 'none';
-  //   results.style.display = 'flex';
-  //   websiteContainer.style.visibility = "visible";
-  //   displayData.innerHTML = '';
-  //   websiteRef.innerHTML = '';
-  
-  //    projects.forEach((documentRef) => {
-  //     const projectNameRef = documentRef.data().ProjectName;     
-  //     projectName.push(projectNameRef);
-  //   })
-    
-    
-   
-  
-  
-  //         const checkboxValues = [];
-  //         let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-  
-  //         checkboxes.forEach((checkbox) => {
-  //           checkboxValues.push(checkbox.value);
-  //           checkbox.checked= false
-  //         });
-   
-    
-          
-          
-  //   projectName.forEach((collectionRef)=>{
-  //     async function getFileName(){
-  //       const snapshotRef = doc(db, "Projects", collectionRef);
-  //       const docSnapshot = await getDocs(collection(snapshotRef, collectionRef));
-  //       const website = await getDoc(snapshotRef)
-        
-        
-  //        docSnapshot.forEach((documentRef)=>{
-  //         const file = documentRef.data();
-  //         const fileName = [];
-  //         const fileURL = [];
-  
-  //         let result = false;      
-  //         if(checkboxValues.length===0){
-  //           result = false;
-  //         }else {
-  //           result = checkboxValues.every( (checkmarks)=>{
-  //           return file.tags.includes(checkmarks);
-  //           });
-            
-  //         };
-        
-  //         // let result = false;
-         
-  //         // const test=[]
-           
-  //         //   console.log(test)
-            
-  //          //*************************usethis below to get to loop like */
-  //         //   if(checkboxValues.length===0){
-  //         //     result = false;
-  //         //   }else {
-  //         //     result = checkboxValues.forEach( (checkmarks)=>{
-  //         //       test.push( file.tags.includes(checkmarks));
-  //         //     });
-              
-  //         //   };
-  
-  //         if (result === true){
-  //           fileName.push(file.fileName);
-  //           fileURL.push(file.fileURL);
-               
-  //           async function websites(){      
-  //             const website = await getDoc(snapshotRef)           
-  //             return website
-  //           }
-  //           websites().then((website) =>{  
-  //             websiteURL.add(website.data().ProjectURL)    
-  //           })
-  //           displayData.innerHTML += `<a id='data' href='${fileURL}' target="_blank" rel="noopener noreferrer">${fileName}</a>`;
-  //         } else {
-  //          return;
-  //         }
-  //       })
-  //     }
-  //   getFileName()
-  // })
-      
-  //   setTimeout(function(){
-  //     loadingElement.style.visibility = 'hidden';
-  //   }, 500);
-  // };
-  
-  // // getDataForm.onsubmit = getData;

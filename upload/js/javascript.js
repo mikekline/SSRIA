@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-Redacted
+ Redacted
 
   };
   
@@ -50,17 +50,10 @@ const fileInput = document.getElementById('file');
 const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
 //dropdown selectors on upload page
 // const buildingTypes = document.getElementsByName("buildingTypes")
-const buildingTypesAll = document.getElementById("buildingTypesAll");
-const buildingTypesSelectBox = document.getElementById("buildingTypesSelectBox");
-const buildingTypesCheckboxes = document.getElementById("buildingTypesCheckboxes");
 const BuildingSystems = document.getElementsByName("BuildingSystems")
 const BuildingSystemsAll = document.getElementById("BuildingSystemsAll");
-const BuildingSystemsSelectBox = document.getElementById("BuildingSystemsSelectBox");
-const BuildingSystemsCheckboxes = document.getElementById("BuildingSystemsCheckboxes");
 const PopularSubjects = document.getElementsByName("PopularSubjects")
 const PopularSubjectsAll = document.getElementById("PopularSubjectsAll");
-const PopularSubjectsSelectBox = document.getElementById("PopularSubjectsSelectBox");
-const PopularSubjectsCheckboxes = document.getElementById("PopularSubjectsCheckboxes");
 // file upload confirmation page
 const confirmPage = document.getElementById('confirmPage');
 const confirmData = document.getElementById('confirmData');
@@ -97,28 +90,14 @@ let reader = new FileReader();
 let fileURL = null;
 let checkboxValues = []
 
-const allDropdownsCheckboxes = [
-  buildingTypesCheckboxes
-  // BuildingSystemsCheckboxes,
-  // PopularSubjectsCheckboxes
-]
-
 const allCheckbox = [
-  // buildingTypesAll,
   BuildingSystemsAll,
   PopularSubjectsAll
 ];
 
 const checkBoxName = [
-  // buildingTypes,
   BuildingSystems,
   PopularSubjects
-];
-
-const selectBoxes = [
-  buildingTypesSelectBox
-  // BuildingSystemsSelectBox,
-  // PopularSubjectsSelectBox
 ];
 
 loadingElement.style.visibility = 'hidden';
@@ -184,25 +163,6 @@ deleteMenu.onclick = deletePage;
 ProjectBackMainMenu.onclick = returnToMainMenu;
 uploadBackMainMenu.onclick = returnToMainMenu;
 deleteBackMainMenu.onclick = returnToMainMenu;
-
-
-
-/*********************************************Functions for Dropdown menu checkboxes********************************************************/
-
-
-// for (let i = 0; i<selectBoxes.length; i++){
-//   let expanded = false;
-
-//   selectBoxes[i].onclick = () => {
-//     if (!expanded) {
-//       allDropdownsCheckboxes[i].style.display = "block";
-//       expanded = true;
-//     } else {
-//       allDropdownsCheckboxes[i].style.display = "none";
-//       expanded = false;
-//     }
-//   };
-// };
 
 
 
@@ -276,7 +236,6 @@ function Confirm(confirmText){
   confirmContent.innerHTML = confirmText;
   alertBackground.style.display = 'flex';
   confirmBox.style.display = 'flex';
-  // clearForms();
 };
 
 
@@ -291,9 +250,6 @@ function clearForms(){
   videoURLRef.value = '';
   fileInput.value = '';
   filestoBeDeleted.innerHTML = '';
-  // allDropdownsCheckboxes.forEach((countainer)=>{
-  //   countainer.style.display = "none";
-  // });
   getCheckmarks();
 };
 
@@ -384,7 +340,7 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
   
   
   confirmData.innerHTML = `
-    <h3 class='dataHeader'>File Title</h3>fileRef
+    <h3 class='dataHeader'>File Title</h3>
     <p class='datacontent'>${fileTitle}</p>
     <h3 class='dataHeader'>Project</h3>
     <p class='datacontent'>${projectName}</p>
@@ -558,10 +514,11 @@ window.onload = () => {
 
 //Adds a project name and website to the Database
 async function addProjectName()  {
+  const projectNameUpload = projectName.value;
+  const projectWebsiteUpload = projectWebsite.value;
   const ref = doc(db, "Projects", projectNameUpload);
   const docSnapshot = await getDoc(doc(db, "Projects", projectNameUpload));
-  let projectNameUpload = projectName.value;
-  let projectWebsiteUpload = projectWebsite.value;
+ 
   
   //validates project name and website and checks to see if it already exists
   if(!ValidateProjectName() || projectNameUpload == ''){

@@ -1,5 +1,6 @@
 h1 {
   font-weight: 900;
+  color: #817979;
 }
 
 h2 {
@@ -160,12 +161,6 @@ button {
 .buildingTypesMultiselect,
 .BuildingSystemsMultiselect,
 .PopularSubjectsMultiselect {
-  /* .buildingTypologyMultiselect,
-.documentTypeMultiselect,
-.buildingEnvelopeMultiselect,
-.HeatingCoolingMultiselect,
-.MechanicalElectricalMultiselect,
-.DesignProcessMultiselect { */
   width: 200px;
 }
 
@@ -173,12 +168,6 @@ button {
 #buildingTypesSelectBox,
 #BuildingSystemsSelectBox,
 #PopularSubjectsSelectBox {
-  /* #buildingTypologySelectBox,
-#documentTypeSelectBox,
-#buildingEnvelopeSelectBox,
-#HeatingCoolingSelectBox,
-#MechanicalElectricalSelectBox,
-#DesignProcessSelectBox { */
   position: relative;
 }
 
@@ -186,12 +175,6 @@ button {
 #buildingTypesSelectBox select,
 #BuildingSystemsSelectBox select,
 #PopularSubjectsSelectBox select {
-  /* #buildingTypologySelectBox select,
-#documentTypeSelectBox select,
-#buildingEnvelopeSelectBox select,
-#HeatingCoolingSelectBox select,
-#MechanicalElectricalSelectBox select,
-#DesignProcessSelectBox select { */
   width: 100%;
 }
 
@@ -199,12 +182,6 @@ button {
 #buildingTypesSelectBox:hover select,
 #BuildingSystemsSelectBox:hover select,
 #PopularSubjectsSelectBox:hover select {
-  /* #buildingTypologySelectBox:hover select,
-#documentTypeSelectBox:hover select,
-#buildingEnvelopeSelectBox:hover select,
-#HeatingCoolingSelectBox:hover select,
-#MechanicalElectricalSelectBox:hover select,
-#DesignProcessSelectBox:hover select { */
   background-color: whitesmoke;
 }
 
@@ -212,12 +189,6 @@ button {
 .buildingTypesOverSelect,
 .BuildingSystemsOverSelect,
 .PopularSubjectsOverSelect {
-  /* .buildingTypologyOverSelect,
-.documentTypeOverSelect,
-.buildingEnvelopeOverSelect,
-.HeatingCoolingOverSelect,
-.MechanicalElectricalOverSelect,
-.DesignProcessOverSelect { */
   position: absolute;
   top: 0;
   bottom: 0;
@@ -229,12 +200,6 @@ button {
 #buildingTypesCheckboxes,
 #BuildingSystemsCheckboxes,
 #PopularSubjectsCheckboxes {
-  /* #buildingTypologycheckboxes,
-#documentTypeCheckboxes,
-#buildingEnvelopecheckboxes,
-#HeatingCoolingcheckboxes,
-#MechanicalElectricalcheckboxes,
-#DesignProcesscheckboxes { */
   background-color: lightgray;
   border: 1px solid #dadada;
   box-shadow: 2px 2px 4px black;
@@ -248,12 +213,6 @@ button {
 #buildingTypesCheckboxes label,
 #BuildingSystemsCheckboxes label,
 #PopularSubjectsCheckboxes label {
-  /* #buildingTypologycheckboxes label,
-#documentTypeCheckboxes label,
-#buildingEnvelopecheckboxes label,
-#HeatingCoolingcheckboxes label,
-#MechanicalElectricalcheckboxes label,
-#DesignProcesscheckboxes label { */
   display: block;
 }
 
@@ -261,11 +220,5 @@ button {
 #buildingTypesCheckboxes label:hover,
 #BuildingSystemsCheckboxes label:hover,
 #PopularSubjectsCheckboxes label:hover {
-  /* #buildingTypologycheckboxes label:hover,
-#documentTypeCheckboxes label:hover,
-#buildingEnvelopecheckboxes label:hover,
-#HeatingCoolingcheckboxes label:hover,
-#MechanicalElectricalcheckboxes label:hover,
-#DesignProcesscheckboxes label:hover { */
   background-color: #1e90ff;
 }
