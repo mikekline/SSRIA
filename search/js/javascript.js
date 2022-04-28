@@ -11,7 +11,7 @@
 
   const firebaseConfig = {
 
-Redacted
+  Redacted
 
   };
   
@@ -38,35 +38,24 @@ const websiteRef = document.getElementById("websites");
 const backBtn = document.getElementById('backBtn');
 const loadingElement = document.getElementById('loading');
 //dropdown selectors
-const documentType = document.getElementsByName("documentType")
-const documentTypeAll = document.getElementById("documentTypeAll");
 const documentTypeSelectBox = document.getElementById("documentTypeSelectBox");
 const documentTypeCheckboxes = document.getElementById("documentTypeCheckboxes");
+//checkbox selectors
+const documentType = document.getElementsByName("documentType")
+const documentTypeAll = document.getElementById("documentTypeAll");
 const buildingTypes = document.getElementsByName("buildingTypes")
 const buildingTypesAll = document.getElementById("buildingTypesAll");
-const buildingTypesSelectBox = document.getElementById("buildingTypesSelectBox");
-const buildingTypesCheckboxes = document.getElementById("buildingTypesCheckboxes");
 const BuildingSystems = document.getElementsByName("BuildingSystems")
 const BuildingSystemsAll = document.getElementById("BuildingSystemsAll");
-const BuildingSystemsSelectBox = document.getElementById("BuildingSystemsSelectBox");
-const BuildingSystemsCheckboxes = document.getElementById("BuildingSystemsCheckboxes");
 const PopularSubjects = document.getElementsByName("PopularSubjects")
 const PopularSubjectsAll = document.getElementById("PopularSubjectsAll");
-const PopularSubjectsSelectBox = document.getElementById("PopularSubjectsSelectBox");
-const PopularSubjectsCheckboxes = document.getElementById("PopularSubjectsCheckboxes");
+
 
 
 
 
 /****************************************************************Global Variables and inital states********************************************************/ 
 
-
-const allDropdownsCheckboxes = [
-  documentTypeCheckboxes,
-  buildingTypesCheckboxes,
-  BuildingSystemsCheckboxes,
-  PopularSubjectsCheckboxes
-]
 
 const allCheckbox = [
   documentTypeAll,
@@ -83,12 +72,12 @@ const checkBoxName = [
 ];
 
 const selectBoxes = [
-  documentTypeSelectBox,
-  buildingTypesSelectBox,
-  BuildingSystemsSelectBox,
-  PopularSubjectsSelectBox
+  documentTypeSelectBox
 ];
 
+const allDropdownsCheckboxes = [
+  documentTypeCheckboxes
+]
 
 
 /***********************************************************EventListeners**************************************************************************/
@@ -106,7 +95,7 @@ for (let i= 0; i<allCheckbox.length; i++){
 
 /*********************************************Functions for Dropdown menu checkboxes********************************************************/
 
-
+//using for loop incase want to add more dropdowns later on
 for (let i = 0; i<selectBoxes.length; i++){
   let expanded = false;
 
@@ -120,7 +109,6 @@ for (let i = 0; i<selectBoxes.length; i++){
     }
   };
 };
-
 
 
 /*********************************************************Selections and Helpers***************************************************************/
@@ -235,7 +223,7 @@ async function getData(e){
       };
       // if there is no search results hides the website Associated 
       //Project Websites title and makes visible if there are results
-      getfileRef().then(async (includeDocumentType)=>{
+      getfileRef().then(async ()=>{
         if (await displayData.childNodes.length == 0){
           websiteContainer.style.visibility = 'hidden';
         };

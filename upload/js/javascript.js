@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
- Redacted
+Redacted
 
   };
   
@@ -48,13 +48,12 @@ const fileTitleRef = document.getElementById('fileTitle');
 const videoURLRef = document.getElementById('videoURL');
 const fileInput = document.getElementById('file');
 const uploadBackMainMenu = document.getElementById('uploadBackMainMenu');
-//dropdown selectors on upload page
-// const buildingTypes = document.getElementsByName("buildingTypes")
+//checkbox selectors on upload page
 const BuildingSystems = document.getElementsByName("BuildingSystems")
 const BuildingSystemsAll = document.getElementById("BuildingSystemsAll");
 const PopularSubjects = document.getElementsByName("PopularSubjects")
 const PopularSubjectsAll = document.getElementById("PopularSubjectsAll");
-// file upload confirmation page
+//file upload confirmation page
 const confirmPage = document.getElementById('confirmPage');
 const confirmData = document.getElementById('confirmData');
 const cancelBtn = document.getElementById('cancelBtn');
