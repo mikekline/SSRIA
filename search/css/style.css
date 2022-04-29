@@ -1,10 +1,5 @@
 /* ************************************************** Headers ********************************************************** */
 
-h1 {
-  color: #817979;
-  font-weight: 900;
-}
-
 h2 {
   font-weight: 900;
 }
@@ -20,14 +15,10 @@ h3 {
 
 /* *********************************************** Background containers ********************************************** */
 
-#mainCountainer {
+#mainContentContainer {
   align-items: center;
   display: flex;
   flex-direction: column;
-}
-
-#boxcontainer {
-  display: flex;
   font-size: 16px;
   height: auto;
   margin-top: -50px;
@@ -35,12 +26,12 @@ h3 {
   padding: 50px;
 }
 
-#boxcontainer a {
+#mainContentContainer a {
   color: blue;
   text-decoration: underline;
 }
 
-#boxcontainer a:visited {
+#mainContentContainer a:visited {
   color: purple;
 }
 
@@ -132,7 +123,6 @@ button:hover {
   padding: 5px 80px 5px 80px;
 }
 
-#documentTypeCheckboxes label:hover,
 #buildingTypesCheckboxes label:hover,
 #BuildingSystemsCheckboxes label:hover,
 #PopularSubjectsCheckboxes label:hover {
@@ -152,54 +142,10 @@ button:hover {
   }
 }
 
-/* *********************************************** multi select checkbox dropdowns ************************************* */
-
-.documentTypeMultiselect {
-  width: 200px;
-}
-
-#documentTypeSelectBox {
-  position: relative;
-}
-
-#documentTypeSelectBox select {
-  width: 100%;
-}
-
-#documentTypeSelectBox:hover select {
-  background-color: whitesmoke;
-}
-
-.documentTypeOverSelect {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-#documentTypeCheckboxes {
-  background-color: lightgray;
-  border: 1px solid #dadada;
-  box-shadow: 2px 2px 4px black;
-  display: none;
-  padding: 5px;
-  position: absolute;
-}
-
-#documentTypeCheckboxes label {
-  display: block;
-}
-
 /* *********************************************** For Mobile ************************************* */
 
 @media only screen and (max-width: 820px) {
-  #maincontainer {
-    width: 200px;
-  }
-
-  #boxcontainer {
-    align-items: center;
+  #mainContentContainer {
     min-width: 200px;
     font-size: x-small;
   }

@@ -11,12 +11,12 @@
 
   const firebaseConfig = {
 
- Redacted
+  Redacted
 
   };
   
 
-/****************************************************Initialize Firebase****************************************************************/ 
+/***************************************************************Initialize Firebase***************************************************/ 
 
   const app = initializeApp(firebaseConfig);
 
@@ -25,7 +25,7 @@
   const db = getFirestore();
 
 
-/********************************************************Referances**************************************************/ 
+/********************************************************************Referances******************************************************/ 
 
 
 //search form
@@ -37,12 +37,7 @@ const websiteContainer = document.getElementById('websiteContainer');
 const websiteRef = document.getElementById("websites");
 const backBtn = document.getElementById('backBtn');
 const loadingElement = document.getElementById('loading');
-//dropdown selectors
-const documentTypeSelectBox = document.getElementById("documentTypeSelectBox");
-const documentTypeCheckboxes = document.getElementById("documentTypeCheckboxes");
 //checkbox selectors
-const documentType = document.getElementsByName("documentType")
-const documentTypeAll = document.getElementById("documentTypeAll");
 const buildingTypes = document.getElementsByName("buildingTypes")
 const buildingTypesAll = document.getElementById("buildingTypesAll");
 const BuildingSystems = document.getElementsByName("BuildingSystems")
@@ -54,33 +49,23 @@ const PopularSubjectsAll = document.getElementById("PopularSubjectsAll");
 
 
 
-/****************************************************************Global Variables and inital states********************************************************/ 
+/**************************************************************Global Variables ****************************************************/ 
 
 
 const allCheckbox = [
-  documentTypeAll,
   buildingTypesAll,
   BuildingSystemsAll,
   PopularSubjectsAll
 ];
 
 const checkBoxName = [
-  documentType,
   buildingTypes,
   BuildingSystems,
   PopularSubjects
 ];
 
-const selectBoxes = [
-  documentTypeSelectBox
-];
 
-const allDropdownsCheckboxes = [
-  documentTypeCheckboxes
-]
-
-
-/***********************************************************EventListeners**************************************************************************/
+/***********************************************************EventListeners**********************************************************/
 
 
 /***** when all checkbox is clicked selectes all in drop down menu*/
@@ -93,25 +78,7 @@ for (let i= 0; i<allCheckbox.length; i++){
 };
 
 
-/*********************************************Functions for Dropdown menu checkboxes********************************************************/
-
-//using for loop incase want to add more dropdowns later on
-for (let i = 0; i<selectBoxes.length; i++){
-  let expanded = false;
-
-  selectBoxes[i].onclick = () => {
-    if (!expanded) {
-      allDropdownsCheckboxes[i].style.display = "block";
-      expanded = true;
-    } else {
-      allDropdownsCheckboxes[i].style.display = "none";
-      expanded = false;
-    }
-  };
-};
-
-
-/*********************************************************Selections and Helpers***************************************************************/
+/*********************************************************Selections and Helpers***************************************************/
 
 
 //gets list of projects
@@ -232,10 +199,7 @@ async function getData(e){
         };
       });
     });
-  //resets all drop downs to closed
-  allDropdownsCheckboxes.forEach((countainer)=>{
-    countainer.style.display = 'none';
-  });
+
   //hides loading once search is completed loading
   setTimeout(function(){
     loadingElement.style.visibility = 'hidden';
