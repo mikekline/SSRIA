@@ -131,11 +131,13 @@ for (let i= 0; i<allCheckbox.length; i++){
 /**********************************************************Functions for Main Menu**************************************************************/
 
 const mainMenuProjectPage = () => {
+  clearForms()
   addProjectForm.style.display = "flex";
   mainMenu.style.display = "none";
 };
 
 const mainMenuUpload = () => {
+  clearForms()
   getProjectNameList();
   uploadForm.style.display = "block";
   mainMenu.style.display = "none";
@@ -143,6 +145,7 @@ const mainMenuUpload = () => {
 
 const deletePage = () => {
   clearForms()
+  filestoBeDeleted.innerHTML = '';
   deleteForm.style.display = "flex";
   mainMenu.style.display = "none";
   deleteSelectProject.onclick = deleteFiles;
@@ -178,7 +181,7 @@ function GetFileName(file) {
 };
 
 
-//Project name can not contain "spaces", ".", "#", "$", "[", or "]" check
+//Project name can not contain "spaces", ".", "#", "$", "[", or "]"
 function ValidateProjectName(){
   let regex = /[\.#$\s\[\]]/;
   return !(regex.test(projectName.value));
@@ -248,7 +251,6 @@ function clearForms(){
   fileTitleRef.value = '';
   videoURLRef.value = '';
   fileInput.value = '';
-  filestoBeDeleted.innerHTML = '';
   getCheckmarks();
 };
 
@@ -372,6 +374,8 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 
 async function Upload(e){
   e.preventDefault();
+  let fileName = files[0].name;
+
   //verifies and validates files to be uploaded and file title/URL
   if(projectList.value == 0){
     Alert('Please add a project');
@@ -422,7 +426,6 @@ async function Upload(e){
     const okay = async (fileTitle) => {
       uploadForm.style.display = 'block';
       confirmPage.style.display = 'none';
-      let fileName = files[0].name;
       let fileToUpload = files[0];
       const storageRef = sRef(storage, 'Files/'+ fileName);
       
@@ -437,6 +440,7 @@ async function Upload(e){
         //checks to see if file is already in the firebase storage
         () => {
           Alert('File already exists! Please choose a differant one!');
+          clearForms()
           return;
         },
         () => {
@@ -685,10 +689,6 @@ async function deleteFiles () {
           getDownloadURL(storageRef).then(
             () => {
               deleteObject(storageRef)
-              .catch((error)=>{
-                Alert('Deletion of storage file Unsuccessful, error: '+ error)
-                return;
-              })
             },
             () => {
               console.log("File to be deleted is a URL!");
