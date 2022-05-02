@@ -11,7 +11,7 @@
 
   const firebaseConfig = {
 
-Redacted
+ Redacted
 
   };
   
@@ -84,24 +84,38 @@ for (let i= 0; i<allCheckbox.length; i++){
 //gets list of projects
 async function getProjects(){
   const projects = await getDocs(collection(db, "Projects")); 
-  return projects
+  return projects;
 }
 
 //gets project names
 async function getProjectNames(){
-  const projectNames = []
-  const projects = await getProjects()
+  const projectNames = [];
+  const projects = await getProjects();
 
   projects.forEach((documentRef) => {
     const projectNameRef = documentRef.data().ProjectName;    
     projectNames.push(projectNameRef);
   })
-  
+
   return projectNames;
 }
 
 
 
+//gets list and location of document type images and document type name
+async function getDocumentTypeImages(){
+  const docType = await getDocs(collection(db, "DocumentTypeImages")); 
+  const documentTypeImages = [];
+
+  docType.forEach((documentRef) => {
+    const documentImageNameRef = documentRef.data(); 
+    documentTypeImages.push(documentImageNameRef)
+  }); 
+
+  return documentTypeImages;
+}
+
+ 
 /*********************************************Functions for Search form********************************************************/
 
 
@@ -109,11 +123,14 @@ async function getData(e){
   e.preventDefault();
   loadingElement.style.visibility = 'visible';
   const eachProject = await getProjectNames()
+  const documentImages = await getDocumentTypeImages()
   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+  let counter = 0;
   let includeFile = []
   let includeWebsite = [];
   let includeDocumentType = [];
   const checkboxValues = [];
+
 
   //removes search form and clears any previous results
   getDataForm.style.display = 'none';
@@ -129,7 +146,7 @@ async function getData(e){
     checkbox.checked = false
   });
 
-
+    
 
 
     eachProject.forEach((collectionRef)=>{
@@ -148,6 +165,8 @@ async function getData(e){
           if(checkboxValues.length===0){
             return;
           }
+        
+
           
           checkboxValues.forEach( (checkmarks)=>{
             if(file.tags.includes(checkmarks)){
@@ -155,18 +174,36 @@ async function getData(e){
               //adds file to results if equals to selected checkmarks
               if(includeFile.indexOf(file.fileTitle) == -1) {
                 includeFile.push(file.fileTitle);
+                
 
                 //gets and displays results document type if applicable
                 //from search results and removes duplicates
                 if(includeDocumentType.indexOf(file.documentType) == -1){
                   includeDocumentType.push(file.documentType);
 
-                  displayData.innerHTML += `
-                    <h2 id='documentTypeHeader'>${file.documentType}</h2>
-                    <div id='display${file.documentType}'></div>
-                  `;
+                
+                  //displays each Document Type Image and container to hold each result
+                  documentImages.forEach((eachImage)=>{ 
+                    if (file.documentType == eachImage.documentType) {
+                      counter++
+                      displayData.innerHTML += `
+                        <div id='gridItem${counter}' class='gridItems' name='${file.documentType}'>
+                          <img 
+                            id='documentTypeHeader' 
+                            class='documentTypeHeaders'
+                            src='${eachImage.imageURL}.imageURL' 
+                            alt='${eachImage.documentType}' 
+                            width='50%' 
+                            height='50%'
+                          >
+                          <div id='display${file.documentType}'></div>
+                        </div>
+                      `;
+                    }
+                  });
                 };
-                  
+                
+
                    
                 //displays each results file under appropriate document type listed
                 includeDocumentType.forEach((type)=>{
@@ -188,6 +225,8 @@ async function getData(e){
           }); 
         });
       };
+      
+   
       // if there is no search results hides the website Associated 
       //Project Websites title and makes visible if there are results
       getfileRef().then(async ()=>{
@@ -203,7 +242,7 @@ async function getData(e){
   //hides loading once search is completed loading
   setTimeout(function(){
     loadingElement.style.visibility = 'hidden';
-  }, 500);   
+  }, 500); 
 };
 
 getDataForm.onsubmit = getData;
@@ -218,9 +257,6 @@ const backToSearch = () =>{
 };
 
 backBtn.onclick = backToSearch;
-
-
-
 
 
 

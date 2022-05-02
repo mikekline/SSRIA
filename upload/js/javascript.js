@@ -12,7 +12,7 @@
 
   const firebaseConfig = {
 
-Redacted
+  Redacted
 
   };
   
@@ -374,7 +374,7 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 
 async function Upload(e){
   e.preventDefault();
-  let fileName = files[0].name;
+  
 
   //verifies and validates files to be uploaded and file title/URL
   if(projectList.value == 0){
@@ -417,6 +417,7 @@ async function Upload(e){
     // the data to the database on clicking the okay button 
     
     //validates file name
+    let fileName = files[0].name;
     let fileNameOnly = GetFileName(files[0])
     if (!ValidateFileName(fileNameOnly)){
       Alert(`File name can't contain spaces or any special characters, except for Underscore!`);

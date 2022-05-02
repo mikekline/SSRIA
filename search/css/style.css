@@ -59,28 +59,34 @@ h3 {
 /* ***************************************************** Results page ********************************************************* */
 
 #results {
+  align-items: center;
   display: none;
   flex-direction: column;
-  height: auto;
-  width: 500px;
 }
 
 #displayData {
   align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 60vw;
+}
+
+#displayData div {
   display: flex;
   flex-direction: column;
-  inline-size: 500px;
-  word-break: break-all;
+  margin-bottom: 40px;
 }
 
 #documentTypeHeader {
-  font-weight: 100;
+  font-size: x-large;
+  font-weight: 900;
   margin-bottom: 4px;
 }
 
 #data {
-  display: flex;
+  inline-size: 500px;
   padding: 5px;
+  word-break: break-all;
 }
 
 #websites {
@@ -165,6 +171,7 @@ button:hover {
   }
 
   #displayData {
+    grid-template-columns: 1fr;
     inline-size: 80vw;
   }
 
