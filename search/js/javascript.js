@@ -11,7 +11,7 @@
 
   const firebaseConfig = {
 
-Redacted
+ Redacted
 
   };
   
@@ -125,7 +125,6 @@ async function getData(e){
   const eachProject = await getProjectNames()
   const documentImages = await getDocumentTypeImages()
   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-  let counter = 0;
   let includeFile = []
   let includeWebsite = [];
   let includeDocumentType = [];
@@ -213,7 +212,14 @@ async function getData(e){
                 includeDocumentType.forEach((type)=>{
                   const displayDocument = document.getElementById('display'+type);
                   if (type==file.documentType){
-                    displayDocument.innerHTML += `<a id='data' href='${file.fileURL}' target='_blank' rel='noopener noreferrer'>${file.fileTitle}</a>`;
+                    displayDocument.innerHTML += `<a 
+                                                    id='data' 
+                                                    href='${file.fileURL}' 
+                                                    target='_blank' 
+                                                    rel='noopener 
+                                                    noreferrer'>
+                                                      ${file.fileTitle}
+                                                    </a>`;
                   }
                 });
 
@@ -223,7 +229,14 @@ async function getData(e){
                 //removes duplicates
                 if(includeWebsite.indexOf(websiteURL) == -1){
                   includeWebsite.push(websiteURL)
-                  websiteRef.innerHTML += `<a id='webURL' href='${websiteURL}' target='_blank' rel='noopener noreferrer'>${websiteURL}</a>`;
+                  websiteRef.innerHTML += `<a 
+                                            id='webURL' 
+                                            href='${websiteURL}' 
+                                            target='_blank' 
+                                            rel='noopener 
+                                            noreferrer'>
+                                             ${websiteURL}
+                                            </a>`;
                 };
               };
             };

@@ -45,8 +45,6 @@ h3 {
 #websiteContainer {
   align-items: center;
   background-color: lightgrey;
-  border-radius: 20px;
-  box-shadow: 2px 4px 8px 2px black;
   display: flex;
   flex-direction: column;
   inline-size: 500px;
@@ -63,6 +61,7 @@ h3 {
   display: none;
   flex-direction: column;
 }
+
 
 #displayData {
   align-items: flex-start;
@@ -85,7 +84,7 @@ h3 {
 
 #data {
   inline-size: 500px;
-  padding: 5px;
+  padding: 5px 0 5px 0;
   word-break: break-all;
 }
 
@@ -148,7 +147,30 @@ button:hover {
   }
 }
 
-/* *********************************************** For Mobile ************************************* */
+
+/* *********************************************************** For small screens **************************************** */
+
+@media only screen and (max-width: 1800px) and (min-width: 821px) {
+  #results h2 {
+    margin-left: -12vw;
+  }
+
+  #displayData {
+    width: 85vw;
+  }
+
+  #data {
+    inline-size: 400px;
+  }
+
+  #websiteContainer {
+    inline-size: 700px;
+  }
+
+}
+
+/* ************************************************************** For Mobile **************************************** */
+
 
 @media only screen and (max-width: 820px) {
   #mainContentContainer {
