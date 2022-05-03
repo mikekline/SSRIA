@@ -11,7 +11,7 @@
 
   const firebaseConfig = {
 
- Redacted
+Redacted
 
   };
   
@@ -129,7 +129,9 @@ async function getData(e){
   let includeFile = []
   let includeWebsite = [];
   let includeDocumentType = [];
+  let filteredImages= [];
   const checkboxValues = [];
+  
 
 
   //removes search form and clears any previous results
@@ -181,13 +183,16 @@ async function getData(e){
                 if(includeDocumentType.indexOf(file.documentType) == -1){
                   includeDocumentType.push(file.documentType);
 
+                  
                 
                   //displays each Document Type Image and container to hold each result
+                  //and removes duplicates
                   documentImages.forEach((eachImage)=>{ 
-                    if (file.documentType == eachImage.documentType) {
-                      counter++
+                    if(filteredImages.indexOf(eachImage.documentType) == -1){
+                      filteredImages.push(eachImage.documentType);
+                          
                       displayData.innerHTML += `
-                        <div id='gridItem${counter}' class='gridItems' name='${file.documentType}'>
+                        <div id='gridItem${eachImage.documentType}' class='gridItems'>
                           <img 
                             id='documentTypeHeader' 
                             class='documentTypeHeaders'
@@ -196,22 +201,22 @@ async function getData(e){
                             width='50%' 
                             height='50%'
                           >
-                          <div id='display${file.documentType}'></div>
+                          <div id='display${eachImage.documentType}' class="displayFiles"></div>
                         </div>
                       `;
                     }
                   });
                 };
                 
-
-                   
+  
                 //displays each results file under appropriate document type listed
                 includeDocumentType.forEach((type)=>{
-                  const displayDocument = document.getElementById('display'+type)
+                  const displayDocument = document.getElementById('display'+type);
                   if (type==file.documentType){
                     displayDocument.innerHTML += `<a id='data' href='${file.fileURL}' target='_blank' rel='noopener noreferrer'>${file.fileTitle}</a>`;
                   }
                 });
+
 
 
                 //displays website of project if there is an associated file displayed
@@ -222,7 +227,17 @@ async function getData(e){
                 };
               };
             };
-          }); 
+          });
+        
+        //removes images and grid item if no data is to be displayd of that document type
+        //must have else with display flex or creates a bug and may not display an item that should be displayed  
+        const displayedFiles = document.getElementById('display'+file.documentType);
+        const gridItem = document.getElementById('gridItem'+file.documentType);
+          if(displayedFiles.innerHTML === ''){
+            gridItem.style.display = 'none';
+          } else {
+            gridItem.style.display = 'flex';
+          }
         });
       };
       
