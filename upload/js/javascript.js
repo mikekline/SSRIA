@@ -317,7 +317,7 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
   const docType = documentType.value;
   const buildingType = buildingTypes.value;
   const tags = [projectName, docType, buildingType, checkboxValues];
-  //converts tags to a single array, removes empty elements from all element, and filters to be displayed properly
+  //converts tags to a single array, removes empty elements, and filters to be displayed properly
   const tagsToUpload=[].concat.apply([], tags);
   const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
   const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
@@ -492,7 +492,7 @@ uploadForm.onsubmit = Upload;
 
   
 
-/*******************************************************************Functions for Database****************************************************************/
+/*******************************************************************Functions for the Database****************************************************************/
 
 
 //gets a list of projects and populates project lists where aplicable
@@ -660,7 +660,7 @@ async function deleteFiles () {
   });
  
   for (var i = 0; i < deleteBtns.length; i++) {
-    /*for each delete button, gets location of files that are not URLs. When clicking a delete button brings up a 
+    /*for each delete button when clicking a delete button brings up a 
     confirmation window, on confirm deletes database reference and file from storage in aplicable, if not  then 
     just logs that it is an URL and no need to let the user know. Otherwise just cancels back to delete menu. 
     Clearing the forms is so that it updates the delete list after removing the file*/

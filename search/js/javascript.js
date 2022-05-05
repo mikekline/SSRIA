@@ -11,7 +11,7 @@
 
   const firebaseConfig = {
 
- Redacted
+Redacted
 
   };
   
@@ -81,13 +81,13 @@ for (let i= 0; i<allCheckbox.length; i++){
 /*********************************************************Selections and Helpers***************************************************/
 
 
-//gets list of projects
+//gets list of projects from the database
 async function getProjects(){
   const projects = await getDocs(collection(db, "Projects")); 
   return projects;
 }
 
-//gets project names
+//gets project names from the database
 async function getProjectNames(){
   const projectNames = [];
   const projects = await getProjects();
@@ -102,7 +102,7 @@ async function getProjectNames(){
 
 
 
-//gets list and location of document type images and document type name
+//gets list and location of document type images and document type name from the database
 async function getDocumentTypeImages(){
   const docType = await getDocs(collection(db, "DocumentTypeImages")); 
   const documentTypeImages = [];

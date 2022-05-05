@@ -252,8 +252,3 @@ button:hover {
   display: flex;
   flex-direction: column;
 }
-
-#BuildingSystemsCheckboxes label:hover,
-#PopularSubjectsCheckboxes label:hover {
-  background-color: #1e90ff;
-}
