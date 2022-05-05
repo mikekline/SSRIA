@@ -297,29 +297,34 @@ backBtn.onclick = backToSearch;
 
 
 
-//***********************************************extra*************************************************************** */
-
- let tags2 = ['a', 'b', 'y', 'z'];
- let checkmarks2 = ['a', 'y', 'k'];
- 
- 
- 
- let intersection = tags2.filter(x => checkmarks2.includes(x)); 
- 
- 
- 
- console.log(intersection);
 
 
- intersection.sort();
-checkmarks2.sort()
 
-let str1 = intersection.toString();
-let str2 = checkmarks2.toString();
-console.log(str1)
-console.log(str2)
 
-if (str1 == str2){
-  console.log("sucess")
-}
-//************************************************************************************************************
+
+// //***********************************************extra*************************************************************** */
+
+//  let tags2 = ['a', 'b', 'y', 'z'];
+//  let checkmarks2 = ['a', 'y', 'k'];
+ 
+ 
+ 
+//  let intersection = tags2.filter(x => checkmarks2.includes(x)); 
+ 
+ 
+ 
+//  console.log(intersection);
+
+
+//  intersection.sort();
+// checkmarks2.sort()
+
+// let str1 = intersection.toString();
+// let str2 = checkmarks2.toString();
+// console.log(str1)
+// console.log(str2)
+
+// if (str1 == str2){
+//   console.log("sucess")
+// }
+// //************************************************************************************************************

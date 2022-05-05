@@ -320,11 +320,7 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
   const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
   const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
 
-  //verifies valid URL
-  if (!ValidateURL(URL)){
-    Alert(`URL must conatin https:// at the begining!`);
-    return;
-  }
+
 
   //verifies file title
   if(!(fileTitleRef.value)){
@@ -334,6 +330,11 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 
   //adds appropriate URL or file to be displayed
   if (files[0]==undefined){
+      //verifies valid URL
+    if (!ValidateURL(URL)){
+      Alert(`URL must conatin https:// at the begining!`);
+      return;
+    }
     URLToDisplay = URL;
   } else {
     URLToDisplay = fileURL;
@@ -376,6 +377,10 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 
 async function Upload(e){
   e.preventDefault();
+  const projectName = projectList.value;
+  const snapshotRef = doc(db, "Projects", projectName);
+  const docSnapshot = await getDoc(doc(snapshotRef, projectName, fileTitleRef.value));
+
   
 
   //verifies and validates files to be uploaded and file title/URL
@@ -400,9 +405,12 @@ async function Upload(e){
     return;
   }
 
+  if(docSnapshot.exists()){
+    Alert('This Title already exists, Please enter another Title name!');
+    return;
+  } 
   
-  
-  
+  //determines if URL or file that is to be uploaded
   if (files[0]==undefined){
     let videoURL = videoURLRef.value;
     //opens confirmation page, and saves the data  
@@ -588,15 +596,15 @@ async function saveFileURLtoDB (URL, fileName, fileTitle){
   const ref = doc(db, "Projects", projectName);
   const fileRef = doc(ref, projectName, fileTitle)
   const snapshotRef = doc(db, "Projects", projectName);
-  const docSnapshot = await getDoc(doc(snapshotRef, projectName, fileTitle))
+  const docSnapshot = await getDoc(doc(snapshotRef, projectName, fileTitle));
   //converts tags to a single array, removes empty elements from all element
   const tagsToUpload=[].concat.apply([], tags);
   const filteredTagsToUpload = tagsToUpload.filter(Boolean); 
   
   async function uploadFile(){
     if(docSnapshot.exists()){
-      Alert('This Title already exists, Please enter another Title name!')
-      return
+      Alert('This Title already exists, Please enter another Title name!');
+      return;
 
     } else {
       //forSecurityAuth added for simplified firebase firestore rules to allow uploading 
@@ -710,4 +718,4 @@ async function deleteFiles () {
       })
     }
   }
-}    
+}
