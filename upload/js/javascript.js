@@ -309,8 +309,6 @@ async function TestForExistingFileandUpload(URL, uploadFile){
 //Displays all of the file information before uploading
 function checkFileToBeUploaded(URL, fileName, fileTitle){
   getCheckmarks();
-  uploadForm.style.display = 'none';
-  confirmPage.style.display = 'flex';
 
   let URLToDisplay = null;
   const projectName = projectList.value;
@@ -323,30 +321,34 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
   const filteredTagsToDisplay = filteredTagsToUpload.join(', ');
 
   //verifies valid URL
-  if (files[0]==undefined){
-    if (!ValidateURL(URL)){
-      Alert(`URL must conatin https:// at the begining!`);
-      return;
-    }
-    URLToDisplay = URL;
-  } else {
-    URLToDisplay = fileURL;
-  };
+  if (!ValidateURL(URL)){
+    Alert(`URL must conatin https:// at the begining!`);
+    return;
+  }
 
   //verifies file title
   if(!(fileTitleRef.value)){
     Alert('Please add a Title for the file!');
     return;
   };
+
+  //adds appropriate URL or file to be displayed
+  if (files[0]==undefined){
+    URLToDisplay = URL;
+  } else {
+    URLToDisplay = fileURL;
+  };
   
-  
+  uploadForm.style.display = 'none';
+  confirmPage.style.display = 'flex';
+
   confirmData.innerHTML = `
     <h3 class='dataHeader'>File Title</h3>
     <p class='datacontent'>${fileTitle}</p>
     <h3 class='dataHeader'>Project</h3>
     <p class='datacontent'>${projectName}</p>
     <h3 class='dataHeader'>File or URL to be uploaded</h3>
-    <P><a class='datacontent' href="${URLToDisplay}" target="_blank" rel="noopener noreferrer">${fileName}</a></p>
+    <P><a id='confirmLink' class='datacontent' href="${URLToDisplay}" target="_blank" rel="noopener noreferrer">${fileName}</a></p>
     <h3 class='dataHeader'>Document Type</h3>
     <p class='datacontent'>${docType}</p>
     <h3 class='dataHeader'>Tags for Files</h3>
@@ -397,6 +399,8 @@ async function Upload(e){
     Alert('There can be only one or the other! Either a Video url or a file to upload!')
     return;
   }
+
+  
   
   
   if (files[0]==undefined){
