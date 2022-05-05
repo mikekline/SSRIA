@@ -242,15 +242,20 @@ async function getData(e){
             };
           });
         
-        //removes images and grid item if no data is to be displayd of that document type
-        //must have else with display flex or creates a bug and may not display an item that should be displayed  
-        const displayedFiles = document.getElementById('display'+file.documentType);
-        const gridItem = document.getElementById('gridItem'+file.documentType);
-          if(displayedFiles.innerHTML === ''){
-            gridItem.style.display = 'none';
-          } else {
-            gridItem.style.display = 'flex';
-          }
+          //removes images and grid item if no data is to be displayd of that document type
+          //must have else with display flex or creates a bug and may not display an item that should be displayed  
+          documentImages.forEach((eachImage)=>{ 
+            const displayedFiles = document.getElementById('display'+eachImage.documentType);
+            const gridItem = document.getElementById('gridItem'+eachImage.documentType);
+            if(displayedFiles == null){
+              return;
+            }
+            if(displayedFiles.innerHTML === '' && !(displayedFiles == null)){
+              gridItem.style.display = 'none';
+            } else {
+              gridItem.style.display = 'flex';
+            }
+          });
         });
       };
       

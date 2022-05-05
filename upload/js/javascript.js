@@ -377,10 +377,6 @@ function checkFileToBeUploaded(URL, fileName, fileTitle){
 
 async function Upload(e){
   e.preventDefault();
-  const projectName = projectList.value;
-  const snapshotRef = doc(db, "Projects", projectName);
-  const docSnapshot = await getDoc(doc(snapshotRef, projectName, fileTitleRef.value));
-
   
 
   //verifies and validates files to be uploaded and file title/URL
@@ -405,6 +401,9 @@ async function Upload(e){
     return;
   }
 
+  const projectName = projectList.value;
+  const snapshotRef = doc(db, "Projects", projectName);
+  const docSnapshot = await getDoc(doc(snapshotRef, projectName, fileTitleRef.value));
   if(docSnapshot.exists()){
     Alert('This Title already exists, Please enter another Title name!');
     return;
